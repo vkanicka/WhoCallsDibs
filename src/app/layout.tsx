@@ -3,6 +3,12 @@ import "./globals.css";
 import Header from "@/components/header";
 // import Footer from "@/components/footer";
 import Subnav from "@/components/subnav"
+import { Cabin } from 'next/font/google'
+const cabin = Cabin({
+  subsets: ['latin'],
+  display: 'swap',
+})
+ 
 
 export const metadata: Metadata = {
   title: "Want this?",
@@ -15,7 +21,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html className="h-screen" lang="en">
+    <html className={`${cabin.className} h-screen`} lang="en">
       <body className='w-screen min-w-[375px] overflow-hidden bg-green-950'>
         <Header />
         <Subnav />
