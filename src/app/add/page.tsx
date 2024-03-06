@@ -13,18 +13,12 @@ const submitForm = async (e) => {
     let imageUrl: string;
     AddImageStorageFx().then((addImageResult) => {
         GetImageStorageFx(addImageResult as string).then((getImageResult) => {
-        //     AddItemFx({ItemName: name.toString(), ImageURL: getImageResult as string, Email: email.toString()})
-        // })
             imageUrl = getImageResult as string;
             console.log('imageUrl',imageUrl)
         }).then(() => 
             AddItemFx({ItemName: name.toString(), ImageURL: imageUrl, Email: email.toString()})
         )
     })
-    
-
-    // AddItemFx({ItemName: name.toString(), Email: email.toString()})
-
 }
 
 const AddItem = () => {

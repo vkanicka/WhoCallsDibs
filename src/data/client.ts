@@ -3,6 +3,8 @@
 import { Client, Databases, ID, Storage } from 'appwrite';
 
 const client = new Client();
+const storage = new Storage(client);
+
 
 client
     .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT_ID as string)
@@ -25,7 +27,6 @@ export const AddItemFx = async ({ ItemName, ImageURL, Email }: Item) => {
                 { "ItemName": ItemName, "ImageURL": ImageURL, "Email": Email }
             );
         console.log(response)
-
     } catch (error) {
         console.error(error)
     }
@@ -34,25 +35,13 @@ export const AddItemFx = async ({ ItemName, ImageURL, Email }: Item) => {
 export const AddImageStorageFx = async () => {
     let imageId;
     const clientFiles = (document?.getElementById('uploader') as HTMLInputElement)?.files?.[0]
-    console.log('clientFiles')
-    console.log(clientFiles)
-    const storage = new Storage(client);
     try {
         const response = await storage.createFile(
-    process.env.NEXT_PUBLIC_APPWRITE_BUCKET_ID as string,
-    ID.unique(),
+            process.env.NEXT_PUBLIC_APPWRITE_BUCKET_ID as string,
+            ID.unique(),
             clientFiles as File
         )
-        // console.log(response)
         imageId = response.$id
-        // console.log('imageId')
-        // console.log(imageId)
-        // try {
-        //     const response2 = await storage.getFile(process.env.NEXT_PUBLIC_APPWRITE_BUCKET_ID as string, imageId)
-        //     console.log(response2)
-        // } catch (error) {
-        //     console.error(error)
-        // }
         return imageId
     } catch (error) {
         console.error(error)
@@ -60,13 +49,15 @@ export const AddImageStorageFx = async () => {
 }
 
 export const GetImageStorageFx = async (imageId: string) => {
-    const storage = new Storage(client);
     try {
         const response = await storage.getFilePreview(process.env.NEXT_PUBLIC_APPWRITE_BUCKET_ID as string, imageId)
-        // console.log(response)
         return response.href
     }
     catch (error) {
         console.error(error)
     }
+}
+
+export const GetAllItems = async () => {
+
 }
