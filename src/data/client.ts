@@ -59,5 +59,18 @@ export const GetImageStorageFx = async (imageId: string) => {
 }
 
 export const GetAllItems = async () => {
+    try {
+        const response = await databases.listDocuments(
+            process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string, 
+            process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID as string, 
+
+        )
+        if (!!response) {
+            return response
+        }
+    }
+    catch (error) {
+        console.error(error)
+    }
 
 }
