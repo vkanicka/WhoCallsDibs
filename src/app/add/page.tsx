@@ -1,14 +1,29 @@
 'use client'
 import { AddItemFx } from '../../data/client'
+import { AddImageStorageFx } from '../../data/client'
+import { GetImageStorageFx } from '../../data/client'
 
-const submitForm = (e) => {
+const submitForm = async (e) => {
     e.preventDefault();
 
     const formData = new FormData(e.target)
     const payload = Object.fromEntries(formData)
-    console.log(payload)
     const { name, email } = payload
-    AddItemFx({ItemName: name.toString(), Email: email.toString()})
+
+    let imageUrl: string;
+    AddImageStorageFx().then((addImageResult) => {
+        GetImageStorageFx(addImageResult as string).then((getImageResult) => {
+        //     AddItemFx({ItemName: name.toString(), ImageURL: getImageResult as string, Email: email.toString()})
+        // })
+            imageUrl = getImageResult as string;
+            console.log('imageUrl',imageUrl)
+        }).then(() => 
+            AddItemFx({ItemName: name.toString(), ImageURL: imageUrl, Email: email.toString()})
+        )
+    })
+    
+
+    // AddItemFx({ItemName: name.toString(), Email: email.toString()})
 
 }
 
@@ -21,7 +36,7 @@ const AddItem = () => {
             </div>
             <div className="flex flex-col text-green-100">
                 <label>Photo</label>
-                <input name='photo' className="text-green-950" type="file"></input>
+                <input id="uploader" name='photo' className="text-green-950" type="file"></input>
             </div>
             <div className="flex flex-col text-green-100">
                 <label>Email</label>
