@@ -1,7 +1,7 @@
 'use client'
 
 import { Client, Databases, ID, Storage } from 'appwrite';
-
+import Item from '../data/models/item'
 const client = new Client();
 const storage = new Storage(client);
 
@@ -11,12 +11,6 @@ client
     .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID as string);
 
 const databases = new Databases(client);
-
-type Item = {
-    ItemName: string;
-    ImageURL: string;
-    Email: string;
-}
 
 export const AddItemFx = async ({ ItemName, ImageURL, Email }: Item) => {
     try {
@@ -60,17 +54,12 @@ export const GetImageStorageFx = async (imageId: string) => {
 
 export const GetAllItems = async () => {
     try {
-        const response = await databases.listDocuments(
-            process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string, 
-            process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID as string, 
-
-        )
-        if (!!response) {
-            return response
-        }
+        const response = await databases.listDocuments(process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string,
+            process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID as string,)
+        const items = response.documents as Item[]
+        return items
     }
     catch (error) {
         console.error(error)
     }
-
 }
