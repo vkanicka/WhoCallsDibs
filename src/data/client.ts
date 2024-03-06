@@ -15,7 +15,7 @@ type Item = {
     Email: string;
 }
 
-export const AddItemFx = async ({ItemName, Email}: Item) => {
+export const AddItemFx = async ({ ItemName, Email }: Item) => {
     try {
             const response = await databases.createDocument(
                 process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string, 
