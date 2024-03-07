@@ -63,3 +63,15 @@ export const GetAllItems = async () => {
         console.error(error)
     }
 }
+
+export const GetItem = async (id:string) => {
+    try {
+        const response = await databases.getDocument(process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string,
+            process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID as string, id)
+        const item = response as Item
+        return item
+    }
+    catch (error) {
+        console.error(error)
+    }
+}
