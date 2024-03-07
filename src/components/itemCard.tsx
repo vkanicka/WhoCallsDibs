@@ -9,9 +9,10 @@ type Props = {
 const ItemCard = ({ item }: Props) => {
     console.log(item.ImageURL)
     return (
-        <Link href={`/item/${item.$id}/`}>
-            <p>{item.ItemName}</p>
+        <Link className="flex flex-col rounded-lg w-full p-2 border border-sold border-green-300" href={`/item/${item.$id}/`}>
+            <h3 className="text-lg font-semibold">{item.ItemName}</h3>
             <Image
+                className="self-center"
                 width={50}
                 height={50}
                 src={item.ImageURL}

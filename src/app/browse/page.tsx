@@ -17,13 +17,14 @@ const Browse = () => {
 
     return (
         <div>
-            <h1>Browse</h1>
-            {!!allItems?.length ? allItems.map((item, index) => {
-                // return <p key={index}>{item.ItemName}</p>
-                return <ItemCard key={index} item={item} />
-            }) : (
-                <p>Loading...</p> 
-            )}
+            <h1 className='text-lg font-bold mb-4'>Browse</h1>
+            <div className='grid grid-cols-2 w-full gap-2'>
+                {!!allItems?.length ? allItems.map((item, index) => {
+                    return <ItemCard key={index} item={item} />
+                }) : (
+                    <p>Loading...</p> 
+                )}
+            </div>
         </div>
     )
 }
