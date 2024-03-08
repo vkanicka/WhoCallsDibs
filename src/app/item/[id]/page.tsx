@@ -1,4 +1,5 @@
 'use client'
+import DibsButton from "@/components/dibsButton";
 import { GetItem } from "@/data/client";
 import Item from "@/data/models/item";
 import Image from 'next/image'
@@ -16,8 +17,6 @@ const ItemPage = () => {
         const gottenItem = await GetItem(id)
         console.log(gottenItem)
         setItem(gottenItem)
-
-
     }
 
     useEffect(() => {
@@ -25,17 +24,27 @@ const ItemPage = () => {
     }, [])
 
     return (
-        <div>
-            <p>{params.id}</p>
+        <div className="flex flex-col">
             {!!item ? (
-                <div>
+                <div className="flex flex-col">
                     <p>{item.ItemName}</p>
                     <Image
-                        width={50}
-                        height={50}
+                        className="place-self-center w-full py-2 rounded-xl aspect-square object-cover"
+                        width={200}
+                        height={200}
                         src={item.ImageURL}
                         alt={`User photo of item ${item.ItemName}`}
                     />
+                    {/* Image gallery swipe/grid if multiple */}
+                    {/* Is owner offering to pay postage */}
+                    {/* Description if provided */}
+                    {/* Ask quesiton / message owner if consent */}
+                    {/* View Q&A */}
+
+                    {/* Make footer button sticky */}
+                    <div className="sticky bottom-0">
+                        <DibsButton item={item} />
+                    </div>
                 </div>
             ) : (
                     <p>Loading...</p>

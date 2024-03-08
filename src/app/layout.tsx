@@ -22,7 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html className={`${cabin.className} h-screen`} lang="en">
-      <body className='w-screen min-w-[375px] overflow-hidden bg-green-950'>
+      <body className='min-h-screen w-screen min-w-[375px] overflow-x-hidden bg-green-950'>
         <Header />
         <Subnav />
         <div className="bg-green-800 h-full flex flex-col p-2">
