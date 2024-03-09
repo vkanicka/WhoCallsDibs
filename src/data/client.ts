@@ -20,7 +20,8 @@ export const AddItemFx = async ({ ItemName, ImageURL, Email }: Item) => {
                 ID.unique(),
                 { "ItemName": ItemName, "ImageURL": ImageURL, "Email": Email }
             );
-        console.log(response)
+        // console.log(response)
+        return response
     } catch (error) {
         console.error(error)
     }

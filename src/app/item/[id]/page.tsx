@@ -10,12 +10,9 @@ const ItemPage = () => {
     const [item, setItem] = useState<Item>()
     const params = useParams()
     const { id: itemId } = params
-    console.log(itemId)
-    console.log(params)
 
     const getAndSetItem = async (id: string) => {
         const gottenItem = await GetItem(id)
-        console.log(gottenItem)
         setItem(gottenItem)
     }
 

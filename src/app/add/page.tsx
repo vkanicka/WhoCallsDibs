@@ -14,10 +14,14 @@ const submitForm = async (e) => {
     AddImageStorageFx().then((addImageResult) => {
         GetImageStorageFx(addImageResult as string).then((getImageResult) => {
             imageUrl = getImageResult as string;
-            console.log('imageUrl',imageUrl)
-        }).then(() => 
-            AddItemFx({ItemName: name.toString(), ImageURL: imageUrl, Email: email.toString()})
-        )
+        }).then(() => {
+            const addItemResponse = AddItemFx({ ItemName: name.toString(), ImageURL: imageUrl, Email: email.toString() })
+            return addItemResponse
+        }
+        ).then((addItemResponse) => {
+            console.log('potato response')
+            console.log(addItemResponse)
+        })
     })
 }
 
