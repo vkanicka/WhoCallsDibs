@@ -6,6 +6,7 @@ const Subnav = () => {
             <Link href='/add/'>Add New</Link>
             <Link href='/browse/'>Browse</Link>
             <Link href='/categories/'>Categories</Link>
+            <Link href='/about/'>About</Link>
         </nav>
     )
 }

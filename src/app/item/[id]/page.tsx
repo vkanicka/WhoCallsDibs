@@ -41,7 +41,6 @@ const ItemPage = () => {
                     {/* Ask quesiton / message owner if consent */}
                     {/* View Q&A */}
 
-                    {/* Make footer button sticky */}
                     <div className="sticky bottom-0">
                         <DibsButton item={item} />
                     </div>
