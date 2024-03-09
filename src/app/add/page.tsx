@@ -2,30 +2,40 @@
 import { AddItemFx } from '../../data/client'
 import { AddImageStorageFx } from '../../data/client'
 import { GetImageStorageFx } from '../../data/client'
+import { useRouter } from 'next/navigation'
 
-const submitForm = async (e) => {
-    e.preventDefault();
 
-    const formData = new FormData(e.target)
-    const payload = Object.fromEntries(formData)
-    const { name, email } = payload
-
-    let imageUrl: string;
-    AddImageStorageFx().then((addImageResult) => {
-        GetImageStorageFx(addImageResult as string).then((getImageResult) => {
-            imageUrl = getImageResult as string;
-        }).then(() => {
-            const addItemResponse = AddItemFx({ ItemName: name.toString(), ImageURL: imageUrl, Email: email.toString() })
-            return addItemResponse
-        }
-        ).then((addItemResponse) => {
-            console.log('potato response')
-            console.log(addItemResponse)
-        })
-    })
-}
 
 const AddItem = () => {
+
+    const router = useRouter()
+
+    const Success = (newItemPath: string) => {
+        router.push(newItemPath)
+    }
+
+    const submitForm = async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target)
+        const payload = Object.fromEntries(formData)
+        const { name, email } = payload
+
+        let imageUrl: string;
+        AddImageStorageFx().then((addImageResult) => {
+            GetImageStorageFx(addImageResult as string).then((getImageResult) => {
+                imageUrl = getImageResult as string;
+            }).then(() => {
+                const addItemResponse = AddItemFx({ ItemName: name.toString(), ImageURL: imageUrl, Email: email.toString() })
+                return addItemResponse
+            }
+            ).then((addItemResponse) => {
+                // add error response path if undefined
+                const newItemPath = `/item/${addItemResponse?.$id}`
+                Success(newItemPath)
+                })
+        })
+    }
+    
     return (
         <form onSubmit={submitForm} className="flex flex-col gap-2">
             <div className="flex flex-col text-green-100">
