@@ -18,7 +18,7 @@ const Browse = () => {
     return (
         <div>
             <h1 className='text-lg font-bold mb-4'>Browse</h1>
-            <div className='grid grid-cols-2 w-full gap-2'>
+            <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 w-full gap-2'>
                 {!!allItems?.length ? allItems.map((item, index) => {
                     return <ItemCard key={index} item={item} />
                 }) : (

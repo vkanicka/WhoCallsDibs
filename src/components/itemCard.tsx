@@ -8,7 +8,7 @@ type Props = {
 
 const ItemCard = ({ item }: Props) => {
     return (
-        <Link className="flex flex-col rounded-lg w-full p-2 border border-sold border-green-300" href={`/item/${item.$id}/`}>
+        <Link className="flex flex-col rounded-lg w-full p-2 border border-sold border-green-300 hover:cursor-pointer bg-green-700" href={`/item/${item.$id}/`}>
             <h3 className="text-lg font-semibold">{item.ItemName}</h3>
             <Image
                 className="self-center w-full aspect-square object-cover"

@@ -40,13 +40,15 @@ const ItemPage = () => {
             {!!item ? (
                 <div className="flex flex-col">
                     <p>{item.ItemName}</p>
-                    <Image
-                        className="place-self-center w-full py-2 rounded-xl aspect-square object-cover"
-                        width={200}
-                        height={200}
-                        src={item.ImageURL}
-                        alt={`User photo of item ${item.ItemName}`}
-                    />
+                    <div>
+                        <Image
+                            className="place-self-center w-full md:w-1/2 lg:w-1/3 xl:w-1/4 py-2 rounded-xl aspect-square object-cover"
+                            width={200}
+                            height={200}
+                            src={item.ImageURL}
+                            alt={`User photo of item ${item.ItemName}`}
+                        />
+                    </div>
                     {/* Image gallery swipe/grid if multiple */}
                     {/* Is owner offering to pay postage */}
                     {/* Description if provided */}
