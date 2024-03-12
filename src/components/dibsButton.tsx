@@ -9,7 +9,6 @@ type Props = {
 
 const DibsButton = ({ item, setClickedCallDibs }: Props) => {
     const callDibs = (item: Item, setClickedCallDibs: Function) => {
-    console.log(`Calling dibs on item ${item.$id}`)
     setClickedCallDibs(true)
     // open dibs modal or redirect to confirmation message page
     // are you sure confirm button before sending

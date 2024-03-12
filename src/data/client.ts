@@ -76,3 +76,18 @@ export const GetItem = async (id:string) => {
         console.error(error)
     }
 }
+
+export const UpdateItemIsDibbed = async (id: string) => {
+    try {
+        const response = await databases.updateDocument(
+            process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string, process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID as string, id,
+            {
+            "isDibbed": true
+            }
+        )
+        return response
+    }
+    catch (error) {
+        console.error(error)
+    }
+}

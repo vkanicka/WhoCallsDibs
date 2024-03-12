@@ -2,8 +2,9 @@ import { Models } from "appwrite";
 
 interface Item extends Models.Document {
     ItemName: string;
-    ImageURL: string;
+    ImageURL?: string;
     Email: string;
+    isDibbed?: boolean;
 }
 
 export default Item;

@@ -1,7 +1,7 @@
 'use client'
 import DibsButton from "@/components/dibsButton";
 import ItemCard from "@/components/itemCard";
-import { GetItem } from "@/data/client";
+import { GetItem, UpdateItemIsDibbed } from "@/data/client";
 import Item from "@/data/models/item";
 import Image from 'next/image'
 import { useParams, useRouter } from 'next/navigation'
@@ -24,11 +24,11 @@ const ItemPage = () => {
         router.push(newItemPath)
     }
 
-    const confirmCallingDibs = () => {
+    const confirmCallingDibs = async () => {
         setConfirmedCallingDibs(true)
-        setClickedCallDibs(false)
+        const hasUpdated = await UpdateItemIsDibbed(item?.$id as string)
         const nextPagePath = `/item/${item?.$id}/calledDibs`
-        SendToNextPage(nextPagePath)
+        !!hasUpdated && hasUpdated.isDibbed == true && SendToNextPage(nextPagePath)
     }
 
     useEffect(() => {
@@ -64,8 +64,17 @@ const ItemPage = () => {
             )}
             {!!clickedCallDibs && !!item && (
                 <div className="bg-green-900 text-green-100 flex flex-col place-items-center justify-around absolute h-screen w-screen top-0 left-0 z-999">
-                    <h1>Confirm Calling Dibs</h1>
-                    <ItemCard item={item} />
+                    <h1 className="text-3xl">Confirm Calling Dibs</h1>
+                    <div className="w-full m-4 flex flex-col items-center space-y-4">
+                        <h3 className="text-xl">{item.ItemName}</h3>
+                        <Image
+                            className="self-center w-fit aspect-square object-cover"
+                            width={100}
+                            height={100}
+                            src={item?.ImageURL}
+                            alt={`User photo of item ${item.ItemName}`}
+                        />
+                    </div>
                     <button className="bg-green-700 ring-2 ring-violet-300 py-4 px-8 rounded-xl" onClick={confirmCallingDibs}>Confirm</button>
                 </div>
 
