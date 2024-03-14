@@ -45,17 +45,19 @@ const ItemPage = () => {
                     <div>
                         {item.ImageURL && (
                             <Image
-                                className="place-self-center w-full md:w-1/2 lg:w-1/3 xl:w-1/4 py-2 rounded-xl aspect-square object-cover"
-                                width={200}
-                                height={200}
+                                className="place-self-center w-1/2 md:w-1/2 lg:w-1/3 xl:w-1/4 py-2 rounded-xl aspect-square object-cover"
+                                width={100}
+                                height={100}
                                 src={item.ImageURL}
                                 alt={`User photo of item ${item.ItemName}`}
                             />
                         )}
                     </div>
+                    {item.Description && (
+                        <p className="text-lime-200">{item.Description}</p>
+                    )}
                     {/* Image gallery swipe/grid if multiple */}
                     {/* Is owner offering to pay postage */}
-                    {/* Description if provided */}
                     {/* Ask quesiton / message owner if consent */}
                     {/* View Q&A */}
 

@@ -12,13 +12,13 @@ client
 
 const databases = new Databases(client);
 
-export const AddItemFx = async ({ ItemName, ImageURL, Email }: Item) => {
+export const AddItemFx = async ({ ItemName, ImageURL, Email, Description }: Item) => {
     try {
             const response = await databases.createDocument(
                 process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string, 
                 process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID as string, 
                 ID.unique(),
-                { "ItemName": ItemName, "ImageURL": ImageURL, "Email": Email }
+                { "ItemName": ItemName, "ImageURL": ImageURL, "Email": Email, "Description": Description }
             );
         // console.log(response)
         return response
