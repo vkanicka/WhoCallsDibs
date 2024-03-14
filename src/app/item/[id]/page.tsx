@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 const ItemPage = () => {
     const [item, setItem] = useState<Item>()
     const [clickedCallDibs, setClickedCallDibs] = useState(false)
-    const [confirmedCallingDibs, setConfirmedCallingDibs] = useState(false)
     const params = useParams()
     const { id: itemId } = params
 
@@ -23,7 +22,6 @@ const ItemPage = () => {
     }
 
     const confirmCallingDibs = async () => {
-        setConfirmedCallingDibs(true)
         const hasUpdated = await UpdateItemIsDibbed(item?.$id as string)
         const nextPagePath = `/item/${item?.$id}/calledDibs`
         !!hasUpdated && hasUpdated.isDibbed == true && SendToNextPage(nextPagePath)
