@@ -39,8 +39,8 @@ const ItemPage = () => {
         <div className="flex flex-col">
             {!!item ? (
                 <div className="flex flex-col">
-                    <p>{item.ItemName}</p>
-                    <div>
+                    <p className="text-green-950 text-2xl">{item.ItemName}</p>
+                    <div className="flex justify-center">
                         {item.ImageURL && (
                             <Image
                                 className="place-self-center w-1/2 md:w-1/2 lg:w-1/3 xl:w-1/4 py-2 rounded-xl aspect-square object-cover"
