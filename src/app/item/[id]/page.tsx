@@ -1,3 +1,7 @@
+/**
+ * useEffect only works in client components
+ */
+
 'use client'
 import { GetItem, UpdateItemIsDibbed } from "@/data/client";
 import Item from "@/data/models/item";

@@ -1,3 +1,7 @@
+/**
+ * useEffect only works in cliient components
+ */
+
 'use client'
 import { useEffect, useState } from 'react'
 import { GetAllItems } from '../../data/client'

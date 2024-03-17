@@ -1,3 +1,7 @@
+/**
+ * useRouter only works in client components
+ */
+
 'use client'
 import { AddItemFx } from '../../data/client'
 import { AddImageStorageFx } from '../../data/client'

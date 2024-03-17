@@ -1,5 +1,3 @@
-'use client'
-
 import { Client, Databases, ID, Storage } from 'appwrite';
 import Item from '../data/models/item'
 const client = new Client();
