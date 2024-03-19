@@ -3,6 +3,7 @@
  */
 
 'use client'
+import Link from 'next/link'
 import { GetItem, UpdateItemIsDibbed } from "@/data/client";
 import Item from "@/data/models/item";
 import Image from 'next/image'
@@ -62,6 +63,15 @@ const ItemPage = () => {
                     {/* Is owner offering to pay postage */}
                     {/* Ask quesiton / message owner if consent */}
                     {/* View Q&A */}
+
+                    {item.ListingURL && (
+                        <div>
+                            <p>Item Listing URL: </p>
+                            <Link rel="noopener noreferrer" target="_blank" className='underline text-violet-500 italic' href={item.ListingURL}>
+                                {item.ListingURL}
+                            </Link>
+                            </div>
+                    )}
 
                     <div className="absolute w-full bottom-0 left-0 right-0 p-2">
                         <button onClick={()=>setClickedCallDibs(true)} className="w-full border-2 border-solid border-violet-400 rounded-xl py-4 px-4 bg-green-600 text-violet-900">

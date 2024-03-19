@@ -6,6 +6,7 @@ interface Item extends Models.Document {
     ImageURL?: string;
     isDibbed?: boolean;
     Description?: string;
+    ListingURL?: string;
     // $id?: string;
     // $collectionId?: string;
     // $databaseId?: string;
