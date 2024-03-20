@@ -12,7 +12,7 @@ const ItemCard = ({ item }: Props) => {
             <h3 className="text-lg font-semibold">{item.ItemName}</h3>
             {item.ImageURL && (
                 <Image
-                className="self-center w-full aspect-square object-cover"
+                className="transition-opacity self-center w-full aspect-square object-cover"
                 width={50}
                 height={50}
                 src={item.ImageURL}
