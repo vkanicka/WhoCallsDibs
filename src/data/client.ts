@@ -1,14 +1,15 @@
-import { Client, Databases, ID, Storage } from 'appwrite';
+import { Client, Databases, ID, Storage, Account } from 'appwrite';
 import Item from '../data/models/item'
 const client = new Client();
 const storage = new Storage(client);
+const databases = new Databases(client);
+const account = new Account(client);
 
 
 client
     .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT_ID as string)
     .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID as string);
 
-const databases = new Databases(client);
 
 export const AddItemFx = async ({ ItemName, ImageURL, Email, ListingURL, Description }: Item) => {
     try {
@@ -87,5 +88,16 @@ export const UpdateItemIsDibbed = async (id: string) => {
     }
     catch (error) {
         console.error(error)
+    }
+}
+
+export const CreateUser = async (password: string, email: string, name: string) => {
+    try {
+        const response = account.create(ID.unique(), email, password, name)
+        console.log(response)
+        return response
+    }
+    catch (error) {
+        console.log(error)
     }
 }

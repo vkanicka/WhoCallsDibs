@@ -3,9 +3,17 @@
  */
 'use client'
 
+import { CreateUser } from "@/data/client"
+
 const LoginPage = () => {
-    const submitForm = () => {
+    const submitForm = (e) => {
+        e.preventDefault()
         console.log('submitting create account form...')
+        console.log(e)
+        const {email, password, name} = e
+        CreateUser(email, password, name).then((createUserResponse) => {
+            console.log(createUserResponse)
+        })
     }
     return (
         <div>

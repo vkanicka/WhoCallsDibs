@@ -10,7 +10,8 @@ const Subnav = () => {
             {/* <Link href='/categories/'>Categories</Link> */}
             {/* <Link href='/about/'>About</Link> */}
             <div className="space-x-8">
-                <Link href='/account/view/'>Account</Link>
+                <Link href='/account/view/'>View Account</Link>
+                <Link href='/account/create/'>Create Account</Link>
                 <Link href='/account/login/'>Login</Link>
             </div>
         </nav>
