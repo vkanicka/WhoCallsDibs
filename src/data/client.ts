@@ -1,5 +1,6 @@
 import { Client, Databases, ID, Storage, Account } from 'appwrite';
 import Item from '../data/models/item'
+import User from '../data/models/user'
 const client = new Client();
 const storage = new Storage(client);
 const databases = new Databases(client);
@@ -91,10 +92,20 @@ export const UpdateItemIsDibbed = async (id: string) => {
     }
 }
 
-export const CreateUser = async (password: string, email: string, name: string) => {
+export const CreateUser = async ({ email, password, name }: User) => {
     try {
         const response = account.create(ID.unique(), email, password, name)
         return response
+    }
+    catch (error) {
+        console.log(error)
+    }
+}
+
+export const LoginUser = async ({ email, password }: User) => {
+    try {
+        const response = account.createEmailPasswordSession(email, password)
+        console.log(response)
     }
     catch (error) {
         console.log(error)

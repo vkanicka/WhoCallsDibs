@@ -4,6 +4,7 @@
 'use client'
 
 import { CreateUser } from "@/data/client"
+import User from "@/data/models/user"
 import { useRouter } from 'next/navigation'
 
 
@@ -18,23 +19,24 @@ const LoginPage = () => {
         const formData = new FormData(e.target)
         const payload = Object.fromEntries(formData)
         const { name, email, password } = payload
+        
+        const newUser: User = {
+            email: email.toString(),
+            password: password.toString(),
+            name: name.toString(),
+        }
 
         try {
-            const createUserResponse = CreateUser(
-                name.toString(),
-                email.toString(),
-                password.toString(),
-            ).then((createUserResponse) => {
-                // add error response path if undefined
-                const newItemPath = `/account/view`
-                Success(newItemPath)
+            CreateUser(newUser).then((createUserResponse) => {
+                    console.log(createUserResponse)
+            }).then(() => {
+                    Success(`/account/login/`)
                 })
-            return createUserResponse
         }
         catch (error) {
             console.log(error)
         }
-    }
+    }   
     return (
         <div>
             <h1>Create Account</h1>
