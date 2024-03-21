@@ -112,3 +112,14 @@ export const LoginUser = async ({ email, password }: User) => {
         console.log(error)
     }
 }
+
+export const LogoutUser = async () => {
+    try {
+        const response = await account.deleteSession('current');
+        console.log(response)
+        return response
+    }
+    catch (error) {
+        console.log(error)
+    }
+}

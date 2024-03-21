@@ -13,6 +13,7 @@ const Subnav = () => {
                 <Link href='/account/view/'>View Account</Link>
                 <Link href='/account/create/'>Create Account</Link>
                 <Link href='/account/login/'>Login</Link>
+                <Link href='/account/logout/'>Logout</Link>
             </div>
         </nav>
     )
