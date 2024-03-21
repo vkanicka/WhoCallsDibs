@@ -4,19 +4,30 @@
 'use client'
 
 import { LoginUser } from "@/data/client"
-import User from "@/data/models/user";
+import { useRouter } from "next/navigation";
 
-const LoginPage = (e) => {
-    const submitForm = async () => {
+const LoginPage = () => {
+        const router = useRouter()
+        const Success = (newItemPath: string) => {
+            router.push(newItemPath)
+        }
+    
+    const submitForm = async (e) => {
         e.preventDefault();
         const formData = new FormData(e.target)
         const payload = Object.fromEntries(formData)
         const { email, password } = payload
-        console.log(formData)
-        console.log(payload)
-        console.log('email', email)
-        console.log('password', password)
-        LoginUser({ email: email.toString(), password: password.toString() })
+        
+        try {
+            LoginUser({ email: email.toString(), password: password.toString() }).then((loginUserResponse) => {
+                console.log(loginUserResponse)
+        }).then(() => {
+                Success(`/account/view/`)
+            })
+        }
+        catch (error) {
+            console.log(error)
+        }
     }
     return (
         <div>

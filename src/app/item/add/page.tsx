@@ -9,8 +9,6 @@ import { AddImageStorageFx } from '../../../data/client'
 import { GetImageStorageFx } from '../../../data/client'
 import OptionalComponent from '../../../components/optional'
 
-
-
 const AddItem = () => {
 
     const router = useRouter()

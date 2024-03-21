@@ -8,7 +8,7 @@ import User from "@/data/models/user"
 import { useRouter } from 'next/navigation'
 
 
-const LoginPage = () => {
+const CreateAccountPage = () => {
         const router = useRouter()
         const Success = (newItemPath: string) => {
             router.push(newItemPath)
@@ -61,4 +61,4 @@ const LoginPage = () => {
         </div>
     )
 }
-export default LoginPage;
+export default CreateAccountPage;

@@ -94,7 +94,7 @@ export const UpdateItemIsDibbed = async (id: string) => {
 
 export const CreateUser = async ({ email, password, name }: User) => {
     try {
-        const response = account.create(ID.unique(), email, password, name)
+        const response = await account.create(ID.unique(), email, password, name)
         return response
     }
     catch (error) {
@@ -104,8 +104,9 @@ export const CreateUser = async ({ email, password, name }: User) => {
 
 export const LoginUser = async ({ email, password }: User) => {
     try {
-        const response = account.createEmailPasswordSession(email, password)
+        const response = await account.createEmailPasswordSession(email, password)
         console.log(response)
+        return response
     }
     catch (error) {
         console.log(error)
