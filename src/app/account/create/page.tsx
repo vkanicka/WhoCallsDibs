@@ -4,16 +4,36 @@
 'use client'
 
 import { CreateUser } from "@/data/client"
+import { useRouter } from 'next/navigation'
+
 
 const LoginPage = () => {
-    const submitForm = (e) => {
-        e.preventDefault()
-        console.log('submitting create account form...')
-        console.log(e)
-        const {email, password, name} = e
-        CreateUser(email, password, name).then((createUserResponse) => {
-            console.log(createUserResponse)
-        })
+        const router = useRouter()
+        const Success = (newItemPath: string) => {
+            router.push(newItemPath)
+        }
+
+        const submitForm = async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target)
+        const payload = Object.fromEntries(formData)
+        const { name, email, password } = payload
+
+        try {
+            const createUserResponse = CreateUser(
+                name.toString(),
+                email.toString(),
+                password.toString(),
+            ).then((createUserResponse) => {
+                // add error response path if undefined
+                const newItemPath = `/account/view`
+                Success(newItemPath)
+                })
+            return createUserResponse
+        }
+        catch (error) {
+            console.log(error)
+        }
     }
     return (
         <div>
@@ -29,7 +49,7 @@ const LoginPage = () => {
             </div>
             <div className="flex flex-col text-green-100">
                 <label>Password</label>
-                <input name='email' id='email' className="text-green-950" required type="password"></input>
+                <input name='password' id='password' className="text-green-950" required type="password"></input>
             </div>
             {/* <button className="border p-1 border-solid border-green-300 rounded-lg hover:font-bold" type="submit">Submit</button> */}
             <div className='bg-green-800 sticky bottom-0 top-0 left-0 right-0 w-full py-2'>

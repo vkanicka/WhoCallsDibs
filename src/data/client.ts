@@ -94,7 +94,6 @@ export const UpdateItemIsDibbed = async (id: string) => {
 export const CreateUser = async (password: string, email: string, name: string) => {
     try {
         const response = account.create(ID.unique(), email, password, name)
-        console.log(response)
         return response
     }
     catch (error) {
