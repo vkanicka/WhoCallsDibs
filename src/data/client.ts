@@ -105,7 +105,6 @@ export const CreateUser = async ({ email, password, name }: User) => {
 export const LoginUser = async ({ email, password }: User) => {
     try {
         const response = await account.createEmailPasswordSession(email, password)
-        console.log(response)
         return response
     }
     catch (error) {

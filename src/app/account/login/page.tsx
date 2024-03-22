@@ -20,7 +20,6 @@ const LoginPage = () => {
         
         try {
             LoginUser({ email: email.toString(), password: password.toString() }).then((loginUserResponse) => {
-                console.log(loginUserResponse)
         }).then(() => {
                 Success(`/account/view/`)
             })
