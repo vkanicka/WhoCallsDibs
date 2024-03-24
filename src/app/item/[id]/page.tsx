@@ -48,7 +48,7 @@ const ItemPage = () => {
                     <div className="flex justify-center">
                         {item.ImageURL && (
                             <Image
-                                className="transition-opacity place-self-center w-1/2 md:w-1/2 lg:w-1/3 xl:w-1/4 py-2 rounded-xl aspect-square object-cover"
+                                className="transition-opacity place-self-center w-1/2 md:w-1/2 lg:w-1/3 xl:w-1/4 py-2 rounded-xl aspect-square object-contain"
                                 width={100}
                                 height={100}
                                 src={item.ImageURL}
@@ -73,7 +73,7 @@ const ItemPage = () => {
                             </div>
                     )}
 
-                    <div className="absolute w-full bottom-0 left-0 right-0 p-2">
+                    <div className="sticky w-full bottom-0 left-0 right-0 p-2">
                         <button onClick={()=>setClickedCallDibs(true)} className="w-full border-2 border-solid border-violet-400 rounded-xl py-4 px-4 bg-green-600 text-violet-900">
                     I call dibs!
                         </button>
@@ -88,7 +88,7 @@ const ItemPage = () => {
                     <div className="w-full m-4 flex flex-col items-center space-y-4">
                         <h3 className="text-xl">{item.ItemName}</h3>
                         {item.ImageURL && (<Image
-                            className="self-center w-fit aspect-square object-cover"
+                            className="self-center w-fit aspect-square object-contain"
                             width={100}
                             height={100}
                             src={item?.ImageURL}
