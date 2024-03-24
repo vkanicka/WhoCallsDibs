@@ -1,19 +1,29 @@
+'use client'
+import SUBNAV_TABS from "@/data/const/subNavTabs"
 import Link from "next/link"
+import { usePathname } from 'next/navigation'
 
 const Subnav = () => {
+    const pathname = usePathname()
+
     return (
-        <nav className="bg-green-900 p-2 px-4 pt-14 flex flex-col sm:flex-row sm:justify-between text-green-400 gap-6">
+        <nav className="bg-green-900 pt-14 pb-2 flex flex-col lg:flex-row lg:justify-between text-green-400 gap-6">
             <div className="space-x-8">
-                <Link href='/item/add/'>Add New</Link>
-                <Link href='/browse/'>Browse</Link>
+                {Object.entries(SUBNAV_TABS.itemTabs).map((tab, tabIndex) => {
+                    return (
+                        <Link className={`${pathname === tab[1].path ? 'underline bg-green-800 font-bold' : 'no-underline'} p-4`} key={tabIndex} href={tab[1].path}>{tab[1].text}</Link>
+                    )
+                })}
             </div>
-            {/* <Link href='/categories/'>Categories</Link> */}
-            {/* <Link href='/about/'>About</Link> */}
             <div className="space-x-8">
-                <Link href='/account/view/'>View Account</Link>
-                <Link href='/account/create/'>Create Account</Link>
-                <Link href='/account/login/'>Login</Link>
-                <Link href='/account/logout/'>Logout</Link>
+                {Object.entries(SUBNAV_TABS.accountTabs).map((tab, tabIndex) => {
+                    return (
+                        <Link className={`${pathname === tab[1].path ? 'underline bg-green-800 font-bold' : 'no-underline'} p-4`} key={tabIndex} href={tab[1].path}>{tab[1].text}</Link>
+
+
+                        
+                    )
+                })}
             </div>
         </nav>
     )

@@ -4,9 +4,9 @@
 
 'use client'
 import { useEffect, useState } from 'react'
-import { GetAllItems } from '../../data/client'
-import Item from '../../data/models/item'
-import ItemCard from '@/components/itemCard'
+import { GetAllItems } from '@data/client'
+import Item from '@models/item'
+import ItemCard from '@components/itemCard'
 const Browse = () => {
     const [allItems, setAllItems] = useState<Item[]>()
     const getStarted = async () => {

@@ -1,6 +1,6 @@
 import { Client, Databases, ID, Storage, Account } from 'appwrite';
-import Item from '../data/models/item'
-import User from '../data/models/user'
+import Item from '@models/item'
+import User from '@models/user'
 const client = new Client();
 const storage = new Storage(client);
 const databases = new Databases(client);

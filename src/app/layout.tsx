@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Header from "@/components/header";
+import Header from "@components/header";
 // import Footer from "@/components/footer";
-import Subnav from "@/components/subnav"
+import Subnav from "@components/subnav"
 import { Cabin } from 'next/font/google'
 const cabin = Cabin({
   subsets: ['latin'],

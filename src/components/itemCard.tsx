@@ -1,4 +1,4 @@
-import Item from "@/data/models/item";
+import Item from "@models/item";
 import Image from 'next/image'
 import Link from 'next/link'
 

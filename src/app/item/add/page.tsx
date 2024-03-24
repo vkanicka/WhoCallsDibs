@@ -4,10 +4,10 @@
 
 'use client'
 import { useRouter } from 'next/navigation'
-import { AddItemFx } from '../../../data/client'
-import { AddImageStorageFx } from '../../../data/client'
-import { GetImageStorageFx } from '../../../data/client'
-import OptionalComponent from '../../../components/optional'
+import { AddItemFx } from '@data/client'
+import { AddImageStorageFx } from '@data/client'
+import { GetImageStorageFx } from '@data/client'
+import OptionalComponent from '@components/optional'
 
 const AddItem = () => {
 

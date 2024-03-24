@@ -4,8 +4,8 @@
 
 'use client'
 import Link from 'next/link'
-import { GetItem, UpdateItemIsDibbed } from "@/data/client";
-import Item from "@/data/models/item";
+import { GetItem, UpdateItemIsDibbed } from "@data/client";
+import Item from "@models/item";
 import Image from 'next/image'
 import { useParams, useRouter } from 'next/navigation'
 import { useEffect, useState } from "react";

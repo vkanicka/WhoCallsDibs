@@ -3,8 +3,8 @@
  */
 'use client'
 
-import { CreateUser } from "@/data/client"
-import User from "@/data/models/user"
+import { CreateUser } from "@data/client"
+import User from "@models/user"
 import { useRouter } from 'next/navigation'
 
 
