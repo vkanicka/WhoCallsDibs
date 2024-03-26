@@ -84,7 +84,7 @@ const ItemPage = () => {
             )}
             {!!clickedCallDibs && !!item && (
                 <div className="bg-green-900 flex flex-col place-items-center justify-center text-lime-200 absolute h-screen w-screen top-0 left-0 z-999">
-                    <h1 className="text-3xl">Confirm Calling Dibs</h1>
+                    <h1>Confirm Calling Dibs</h1>
                     <div className="w-full m-4 flex flex-col items-center space-y-4">
                         <h3 className="text-xl">{item.ItemName}</h3>
                         {item.ImageURL && (<Image

@@ -22,7 +22,7 @@ const Browse = () => {
     return (
         <div>
             <div className='flex justify-between'>
-                <h1 className='text-2xl font-bold mb-4 text-green-400'>Browse</h1>
+                <h1 className='font-bold mb-4 text-green-400'>Browse</h1>
             </div>
             <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 w-full gap-2'>
                 {!!allItems?.length ? allItems.filter(item=>!item.isDibbed).map((item, index) => {

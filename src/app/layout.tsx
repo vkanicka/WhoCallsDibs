@@ -12,7 +12,7 @@ const cabin = Cabin({
 
 export const metadata: Metadata = {
   title: "Who calls dibs?",
-  description: "A virtual space to post and call dibs on previously owned items with people you know",
+  description: "A virtual space to post and call dibs on previously owned items",
 };
 
 export default function RootLayout({

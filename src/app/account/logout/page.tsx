@@ -27,8 +27,7 @@ const LoginPage = () => {
     }
     return (
         <div>
-            <h1>Logout</h1>
-            <button onClick={submitLogout}>Logout</button>
+            <button className="btn-a" onClick={submitLogout}>Logout</button>
         </div>
     )
 }
