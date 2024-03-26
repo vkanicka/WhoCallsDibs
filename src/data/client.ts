@@ -122,3 +122,14 @@ export const LogoutUser = async () => {
         console.log(error)
     }
 }
+
+export const GetSessions = async () => {
+    try {
+        const response = await account.listSessions();
+        console.log(response)
+        return response
+    }
+    catch (error) {
+        console.log(error)
+    }
+}
