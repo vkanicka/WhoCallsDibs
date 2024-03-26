@@ -133,3 +133,14 @@ export const GetSessions = async () => {
         console.log(error)
     }
 }
+
+export const GetAccount = async () => {
+    try {
+        const response = await account.get();
+        // console.log(response)
+        return response
+    }
+    catch (error) {
+        console.log(error)
+    }
+}
