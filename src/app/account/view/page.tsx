@@ -1,37 +1,17 @@
 'use client'
-import { GetAccount } from "@/data/client";
-import { Models } from "appwrite";
-import { useEffect, useState } from "react";
+import { useContext } from 'react';
+import { UserContext } from '@data/context/user';
 
 const ViewAccount = () => {
-    let [userAccount, setUserAccount] = useState<Partial<Models.Preferences>>()
-    const handleSession = () => {
-        try {
-            GetAccount().then((result) => {
-                if (result) {
-                        console.log(result)
-                        setUserAccount(result)
-                }
-            })
-        }
-        catch (error) {
-            console.log(error)
-        }
-    }
-    
-
-    useEffect(() => {
-        handleSession()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-
+    const userCtx = useContext(UserContext);
+    console.log(userCtx)
     return (
         <div>
             <h1>View Account</h1>
-            {!!userAccount && (
+            {!!userCtx.user.email && (
                 <div>
-                    <p>Username: {userAccount.name}</p>
-                    <p>Email: {userAccount.email}</p>
+                    <p>Username: {userCtx.user.name}</p>
+                    <p>Email: {userCtx.user.email}</p>
                 </div>
             )}
         </div>

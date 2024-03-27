@@ -4,23 +4,33 @@
 
 'use client'
 import { createContext, useState, ReactNode } from 'react';
-import User from '../models/user';
+import { Models } from 'appwrite';
 
-const defaultUser: User = {
-    email: 'email@gmail.com',
-    name: 'User Name',
+const defaultUser: Models.User<Models.Preferences> = {
+    email: '',
+    name: '',
     password: '',
     $id: '',
-    $collectionId: '',
-    $databaseId: '',
     $createdAt: '',
     $updatedAt: '',
-    $permissions: []
+    registration: '',
+    status: false,
+    labels: [],
+    passwordUpdate: '',
+    phone: '',
+    emailVerification: false,
+    phoneVerification: false,
+    mfa: false,
+    totp: false,
+    prefs: {},
+    targets: [],
+    accessedAt: ''
 }
 
 export const UserContext = createContext({
-    user: defaultUser,
-    updateUser: ()=>{},
+    user: undefined,
+    updateUser: () => { },
+    loginUser: (newUser: Models.User<Models.Preferences>) => { },
 })
 
 interface childrenProps {
@@ -30,30 +40,50 @@ interface childrenProps {
 const UserContextProvider = ({ children, ...childrenProps }: childrenProps) => {
     const [user, setUser] = useState({
         user: defaultUser,
-        updateUser: ()=>{},
+        updateUser: () => { },
+        loginUser: (newUser: Models.User<Models.Preferences>) => { },
     })
     const handleUpdateUser = () => {
         const isDefaultUser = user.user.name === 'User Name'
-        const newUser: User = {
-            email: 'newUser@gmail.com',
-            name: 'New User Name',
+        const newUser: Models.User<Models.Preferences> = {
+            email: '',
+            name: '',
             password: '',
             $id: '',
-            $collectionId: '',
-            $databaseId: '',
             $createdAt: '',
             $updatedAt: '',
-            $permissions: []
+            registration: '',
+            status: false,
+            labels: [],
+            passwordUpdate: '',
+            phone: '',
+            emailVerification: false,
+            phoneVerification: false,
+            mfa: false,
+            totp: false,
+            prefs: {},
+            targets: [],
+            accessedAt: ''
         };
         setUser({
             user: isDefaultUser ? newUser : defaultUser,
-            updateUser: ()=>{},
+            updateUser: () => { },
+            loginUser: () => { },
             })
+    }
+    const handleLoginUser = (newUser: Models.User<Models.Preferences>) => {
+        setUser({
+            user: newUser,
+            updateUser: () => { },
+            loginUser: (newUser: Models.User<Models.Preferences>) => { },
+            })
+
     }
 
     const ctxValue = {
         user: user.user,
         updateUser: handleUpdateUser,
+        loginUser: handleLoginUser,
     }
 
     return <UserContext.Provider value={ctxValue}>

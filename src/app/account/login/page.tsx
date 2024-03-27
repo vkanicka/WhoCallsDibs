@@ -3,14 +3,18 @@
  */
 'use client'
 
-import { LoginUser } from "@/data/client"
+import { GetAccount, LoginUser } from "@/data/client";
 import { useRouter } from "next/navigation";
+import { useContext } from 'react';
+import { UserContext } from '@data/context/user';
 
 const LoginPage = () => {
-        const router = useRouter()
-        const Success = (newItemPath: string) => {
-            router.push(newItemPath)
-        }
+    const userCtx = useContext(UserContext);
+
+    const router = useRouter()
+    const Success = (newItemPath: string) => {
+        router.push(newItemPath)
+    }
     
     const submitForm = async (e) => {
         e.preventDefault();
@@ -20,7 +24,18 @@ const LoginPage = () => {
         
         try {
             LoginUser({ email: email.toString(), password: password.toString() }).then((loginUserResponse) => {
-        }).then(() => {
+        }).then((loginUserResponse) => {
+            try {
+            GetAccount().then((result) => {
+                if (result) {
+                    userCtx.loginUser(result)
+                }
+            })
+        }
+        catch (error) {
+            console.log(error)
+        }
+            }).then(() => {
                 Success(`/browse/`)
             })
         }

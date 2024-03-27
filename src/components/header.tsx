@@ -1,12 +1,26 @@
 'use client'
 
-import Link from 'next/link'
-import { useContext } from 'react'
-import { UserContext } from '@data/context/user'
+import Link from 'next/link';
+import { useContext, useEffect } from 'react';
+import { UserContext } from '@data/context/user';
+import { GetAccount } from '@/data/client';
 const Header = () => {
-    const userCtx = useContext(UserContext)
-    console.log('userCtx')
-    console.log(userCtx)
+    const userCtx = useContext(UserContext);
+
+    useEffect(() => {
+        // userCtx.loginUser()
+
+        try {
+            GetAccount().then((result) => {
+                if (result) {
+                    userCtx.loginUser(result)
+                }
+            })
+            }
+            catch (error) {
+                console.log(error)
+            }
+    },[])
     return (
         <header className="w-full bg-green-950 fixed p-2 text-green-200 flex justify-between">
             <Link href='/'>
