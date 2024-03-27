@@ -6,21 +6,24 @@
 import { createContext, useState } from 'react';
 
 export const TestContext = createContext({
-    word: 'green'
+    word: 'green',
+    toggleTest: ()=>{},
 })
 
 const TestContextProvider = ({ children }) => {
     const [test, setTest] = useState({
         word: 'green',
+        toggleTest: ()=>{},
     })
-    // update fx
-    // const handleUpdateTest = () => {
-    //     setTest('blue')
-    // }
-    // console.log(handleUpdateTest)
+    const handleUpdateTest = () => {
+        setTest({
+                word: test.word === 'green' ? 'blue' : 'green'
+            })
+    }
 
     const ctxValue = {
-        word: test.word
+        word: test.word,
+        toggleTest: handleUpdateTest,
     }
 
     return <TestContext.Provider value={ctxValue}>

@@ -10,7 +10,7 @@ const Header = () => {
             <Link href='/'>
                 <h1>Who Calls Dibs?</h1>
             </Link>
-            <button>{ testCtx.word }</button>
+            <button onClick={testCtx.toggleTest}>{ testCtx.word }</button>
         </header>
     )
 }
