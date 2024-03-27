@@ -9,12 +9,15 @@ import Item from "@models/item";
 import Image from 'next/image'
 import { useParams, useRouter } from 'next/navigation'
 import { useEffect, useState } from "react";
+import { UserContext } from '@/data/context/user'
+import { useContext } from 'react'
 
 const ItemPage = () => {
     const [item, setItem] = useState<Item>()
     const [clickedCallDibs, setClickedCallDibs] = useState(false)
     const params = useParams()
     const { id: itemId } = params
+    const userCtx = useContext(UserContext)
 
     const getAndSetItem = async (id: string) => {
         const gottenItem = await GetItem(id)
@@ -27,7 +30,7 @@ const ItemPage = () => {
     }
 
     const confirmCallingDibs = async () => {
-        const hasUpdated = await UpdateItemIsDibbed(item?.$id as string)
+        const hasUpdated = await UpdateItemIsDibbed(item?.$id as string, userCtx.user.$id)
         const nextPagePath = `/item/${item?.$id}/calledDibs`
         !!hasUpdated && hasUpdated.isDibbed == true && SendToNextPage(nextPagePath)
     }

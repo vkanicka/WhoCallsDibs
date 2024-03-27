@@ -26,7 +26,7 @@ const AddItem = () => {
         e.preventDefault();
         const formData = new FormData(e.target)
         const payload = Object.fromEntries(formData)
-        const { name, email, description, listingUrl } = payload
+        const { name, description, listingUrl, itemOwnerId } = payload
         let imageUrl: string;
         AddImageStorageFx().then((addImageResult) => {
             GetImageStorageFx(addImageResult as string).then((getImageResult) => {
@@ -36,7 +36,7 @@ const AddItem = () => {
                     ItemName: name.toString(),
                     ImageURL: imageUrl,
                     Description: description.toString(),
-                    userId: userCtx.user.$id.toString()
+                    itemOwnerId: userCtx.user.$id.toString()
                 }
                 if (!!listingUrl) {
                     itemToAdd['ListingURL'] = listingUrl.toString()
@@ -54,7 +54,7 @@ const AddItem = () => {
                 // add error response path if undefined
                 const newItemPath = `/item/${addItemResponse?.$id}`
                 console.log(newItemPath)
-                // Success(newItemPath)
+                Success(newItemPath)
                 })
         })
     }
@@ -69,10 +69,6 @@ const AddItem = () => {
                 <label>Photo  <OptionalComponent/></label>
                 <input id="uploader" name='photo' className="text-green-950" type="file"></input>
             </div>
-            {/* <div className="flex flex-col text-green-100">
-                <label>Email</label>
-                <input name='email' id='email' className="text-green-950" required type="email"></input>
-            </div> */}
             <div className="flex flex-col text-green-100">
                 <label>Item Listing URL<OptionalComponent/></label>
                 <input name='listingUrl' id='listingUrl' className="text-green-950" type="url"></input>

@@ -7,7 +7,8 @@ interface Item extends Models.Document {
     isDibbed?: boolean;
     Description?: string;
     ListingURL?: string;
-    userId: string;
+    itemOwnerId: string;
+    dibsCallerId?: string;
     // $id?: string;
     // $collectionId?: string;
     // $databaseId?: string;

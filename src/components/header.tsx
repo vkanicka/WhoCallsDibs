@@ -28,7 +28,7 @@ const Header = () => {
             <Link href='/'>
                 <h1>Who Calls Dibs?</h1>
             </Link>
-            {!!userCtx?.user?.email ? (<Link href='/account/view' >{ userCtx?.user?.name}</Link>) : (<Link href={'/account/login'}>Login</Link>)}
+            {!!userCtx?.user?.email ? (<Link className='link-account-header' href='/account/view' >{ userCtx?.user?.name}</Link>) : (<Link className='link-account-header' href={'/account/login'}>Login</Link>)}
         </header>
     )
 }

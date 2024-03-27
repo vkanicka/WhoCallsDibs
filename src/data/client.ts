@@ -12,13 +12,13 @@ client
     .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID as string);
 
 
-export const AddItemFx = async ({ ItemName, ImageURL, Email, ListingURL, Description, userId }: Item) => {
+export const AddItemFx = async ({ ItemName, ImageURL, ListingURL, Description, itemOwnerId }: Item) => {
     try {
             const response = await databases.createDocument(
                 process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string, 
                 process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID as string, 
                 ID.unique(),
-                { "ItemName": ItemName, "ImageURL": ImageURL, "ListingURL": ListingURL, "Description": Description, userId: userId }
+                { "ItemName": ItemName, "ImageURL": ImageURL, "ListingURL": ListingURL, "Description": Description, itemOwnerId: itemOwnerId}
             );
         // console.log(response)
         return response
@@ -77,12 +77,13 @@ export const GetItem = async (id:string) => {
     }
 }
 
-export const UpdateItemIsDibbed = async (id: string) => {
+export const UpdateItemIsDibbed = async (id: string, dibsCallerId: string) => {
     try {
         const response = await databases.updateDocument(
             process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string, process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID as string, id,
             {
-            "isDibbed": true
+                "isDibbed": true,
+                "dibsCallerId": dibsCallerId
             }
         )
         return response
