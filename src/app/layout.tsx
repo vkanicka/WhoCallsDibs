@@ -3,8 +3,8 @@ import "./globals.css";
 import Header from "@components/header";
 // import Footer from "@/components/footer";
 import Subnav from "@components/subnav"
-import TestContextProvider from '@data/context/test'
-import { useContext } from 'react'
+import UserContextProvider from '@data/context/user'
+
 import { Cabin } from 'next/font/google'
 const cabin = Cabin({
   subsets: ['latin'],
@@ -22,9 +22,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html className={`${cabin.className} h-screen`} lang="en">
-      <TestContextProvider>
+      <UserContextProvider>
         <body className='min-h-screen w-screen min-w-[375px] overflow-x-hidden bg-green-950'>
           <div className="sticky top-0 right-0 left-0">
             <Header />
@@ -35,7 +36,7 @@ export default function RootLayout({
           </div>
           {/* <Footer /> */}
         </body>
-      </TestContextProvider>
+      </UserContextProvider>
     </html>
   );
 }
