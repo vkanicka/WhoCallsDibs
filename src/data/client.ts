@@ -12,13 +12,13 @@ client
     .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID as string);
 
 
-export const AddItemFx = async ({ ItemName, ImageURL, Email, ListingURL, Description }: Item) => {
+export const AddItemFx = async ({ ItemName, ImageURL, Email, ListingURL, Description, userId }: Item) => {
     try {
             const response = await databases.createDocument(
                 process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string, 
                 process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID as string, 
                 ID.unique(),
-                { "ItemName": ItemName, "ImageURL": ImageURL, "Email": Email, "ListingURL": ListingURL, "Description": Description }
+                { "ItemName": ItemName, "ImageURL": ImageURL, "ListingURL": ListingURL, "Description": Description, userId: userId }
             );
         // console.log(response)
         return response

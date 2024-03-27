@@ -10,6 +10,6 @@
 
 @layer components {
   .btn-a {
-    @apply text-2xl w-full bg-lime-600 px-4 py-2 border-2 rounded-xl border-green-600 border-solid text-green-900 font-semibold
+    @apply text-2xl w-full bg-lime-600 px-4 py-2 border-2 rounded-xl border-green-600 border-solid text-green-900 font-semibold text-center
   }
 }

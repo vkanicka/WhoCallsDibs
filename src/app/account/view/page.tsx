@@ -1,6 +1,7 @@
 'use client'
 import { useContext } from 'react';
 import { UserContext } from '@data/context/user';
+import Logout from '@/components/logout';
 
 const ViewAccount = () => {
     const userCtx = useContext(UserContext);
@@ -12,6 +13,7 @@ const ViewAccount = () => {
                 <div>
                     <p>Username: {userCtx.user.name}</p>
                     <p>Email: {userCtx.user.email}</p>
+                    <Logout />
                 </div>
             )}
         </div>

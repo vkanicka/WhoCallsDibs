@@ -8,6 +8,9 @@ import { AddItemFx } from '@data/client'
 import { AddImageStorageFx } from '@data/client'
 import { GetImageStorageFx } from '@data/client'
 import OptionalComponent from '@components/optional'
+import { UserContext } from '@/data/context/user'
+import { useContext } from 'react'
+import Item from '@models/item'
 
 const AddItem = () => {
 
@@ -16,6 +19,8 @@ const AddItem = () => {
     const Success = (newItemPath: string) => {
         router.push(newItemPath)
     }
+
+    const userCtx = useContext(UserContext)
 
     const submitForm = async (e) => {
         e.preventDefault();
@@ -27,9 +32,18 @@ const AddItem = () => {
             GetImageStorageFx(addImageResult as string).then((getImageResult) => {
                 imageUrl = getImageResult as string;
             }).then(() => {
+                const itemToAdd: Item = {
+                    ItemName: name.toString(),
+                    ImageURL: imageUrl,
+                    Description: description.toString(),
+                    userId: userCtx.user.$id.toString()
+                }
+                if (!!listingUrl) {
+                    itemToAdd['ListingURL'] = listingUrl.toString()
+                }
                 try {
-                    const addItemResponse = AddItemFx({ ItemName: name.toString(), ImageURL: imageUrl, ListingURL: listingUrl.toString(), Email: email.toString(), Description: description.toString() })
-                    // console.log(addItemResponse)
+                    const addItemResponse = AddItemFx(itemToAdd)
+                    console.log(addItemResponse)
                     return addItemResponse
                 }
                 catch (error) {
@@ -39,7 +53,8 @@ const AddItem = () => {
             ).then((addItemResponse) => {
                 // add error response path if undefined
                 const newItemPath = `/item/${addItemResponse?.$id}`
-                Success(newItemPath)
+                console.log(newItemPath)
+                // Success(newItemPath)
                 })
         })
     }
@@ -54,10 +69,10 @@ const AddItem = () => {
                 <label>Photo  <OptionalComponent/></label>
                 <input id="uploader" name='photo' className="text-green-950" type="file"></input>
             </div>
-            <div className="flex flex-col text-green-100">
+            {/* <div className="flex flex-col text-green-100">
                 <label>Email</label>
                 <input name='email' id='email' className="text-green-950" required type="email"></input>
-            </div>
+            </div> */}
             <div className="flex flex-col text-green-100">
                 <label>Item Listing URL<OptionalComponent/></label>
                 <input name='listingUrl' id='listingUrl' className="text-green-950" type="url"></input>

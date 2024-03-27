@@ -28,9 +28,10 @@ const defaultUser: Models.User<Models.Preferences> = {
 }
 
 export const UserContext = createContext({
-    user: undefined,
+    user: defaultUser,
     updateUser: () => { },
     loginUser: (newUser: Models.User<Models.Preferences>) => { },
+    logoutUser: () => { },
 })
 
 interface childrenProps {
@@ -42,6 +43,7 @@ const UserContextProvider = ({ children, ...childrenProps }: childrenProps) => {
         user: defaultUser,
         updateUser: () => { },
         loginUser: (newUser: Models.User<Models.Preferences>) => { },
+        logoutUser: () => { },
     })
     const handleUpdateUser = () => {
         const isDefaultUser = user.user.name === 'User Name'
@@ -69,6 +71,7 @@ const UserContextProvider = ({ children, ...childrenProps }: childrenProps) => {
             user: isDefaultUser ? newUser : defaultUser,
             updateUser: () => { },
             loginUser: () => { },
+            logoutUser: () => { },
             })
     }
     const handleLoginUser = (newUser: Models.User<Models.Preferences>) => {
@@ -76,14 +79,19 @@ const UserContextProvider = ({ children, ...childrenProps }: childrenProps) => {
             user: newUser,
             updateUser: () => { },
             loginUser: (newUser: Models.User<Models.Preferences>) => { },
+            logoutUser: () => {},
             })
 
+    }
+    const handleLogoutUser = () => {
+        handleLoginUser(defaultUser)
     }
 
     const ctxValue = {
         user: user.user,
         updateUser: handleUpdateUser,
         loginUser: handleLoginUser,
+        logoutUser: handleLogoutUser,
     }
 
     return <UserContext.Provider value={ctxValue}>

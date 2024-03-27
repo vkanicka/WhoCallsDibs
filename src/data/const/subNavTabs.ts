@@ -18,22 +18,22 @@ const SUBNAV_TABS = {
             // }
         },
         accountTabs: {
-            viewAccount: {
-                path: '/account/view',
-                text: 'View Account'
-            },
-            createAccount: {
-                path: '/account/create',
-                text: 'Create Account'
-            },
-            loginAccount: {
-                path: '/account/login',
-                text: 'Login'
-            },
-            logoutAccount: {
-                path: '/account/logout',
-                text: 'Logout'
-            }
+            // viewAccount: {
+            //     path: '/account/view',
+            //     text: 'View Account'
+            // },
+            // createAccount: {
+            //     path: '/account/create',
+            //     text: 'Create Account'
+            // },
+            // loginAccount: {
+            //     path: '/account/login',
+            //     text: 'Login'
+            // },
+            // logoutAccount: {
+            //     path: '/account/logout',
+            //     text: 'Logout'
+            // }
         }
 }
 export default SUBNAV_TABS;

@@ -8,17 +8,19 @@ const Header = () => {
     const userCtx = useContext(UserContext);
 
     useEffect(() => {
-        // userCtx.loginUser()
-
         try {
             GetAccount().then((result) => {
                 if (result) {
                     userCtx.loginUser(result)
                 }
+                // else {
+                //     userCtx.logoutUser()
+                // }
             })
             }
             catch (error) {
                 console.log(error)
+                userCtx.logoutUser()
             }
     },[])
     return (
@@ -26,7 +28,7 @@ const Header = () => {
             <Link href='/'>
                 <h1>Who Calls Dibs?</h1>
             </Link>
-            <button onClick={userCtx.updateUser}>{ userCtx.user.name }</button>
+            {!!userCtx?.user?.email ? (<Link href='/account/view' >{ userCtx?.user?.name}</Link>) : (<Link href={'/account/login'}>Login</Link>)}
         </header>
     )
 }

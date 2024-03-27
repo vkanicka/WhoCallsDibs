@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { useContext } from 'react';
 import { UserContext } from '@data/context/user';
 
-const LogoutPage = () => {
+const Logout = () => {
     const router = useRouter()
     const Success = (newItemPath: string) => {
         router.push(newItemPath)
@@ -36,4 +36,4 @@ const LogoutPage = () => {
         </div>
     )
 }
-export default LogoutPage;
+export default Logout;
