@@ -21,7 +21,7 @@ const LoginPage = () => {
         try {
             LoginUser({ email: email.toString(), password: password.toString() }).then((loginUserResponse) => {
         }).then(() => {
-                Success(`/account/view/`)
+                Success(`/browse/`)
             })
         }
         catch (error) {
