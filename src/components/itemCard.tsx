@@ -8,7 +8,7 @@ type Props = {
 
 const ItemCard = ({ item }: Props) => {
     return (
-        <Link className="item-card flex flex-col rounded-lg w-full p-2 hover:cursor-pointer" href={`/item/${item.$id}/`}>
+        <Link className="item-card" href={`/item/${item.$id}/`}>
             <h3 className="text-plum-800 text-xl font-semibold">{item.ItemName}</h3>
             {item.ImageURL && (
                 <Image

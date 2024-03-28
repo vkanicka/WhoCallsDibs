@@ -7,7 +7,7 @@ const Subnav = () => {
     const pathname = usePathname();
 
     return (
-        <nav className="pt-14 pb-2 text-green-400">
+        <nav className="px-2 pt-14 pb-2 text-green-400">
             <div className="space-x-2 pt-2 pb-6">
                 {Object.entries(SUBNAV_TABS.itemTabs).map((tab, tabIndex) => {
                     return (
