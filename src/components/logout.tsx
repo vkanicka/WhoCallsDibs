@@ -31,8 +31,8 @@ const Logout = () => {
         }
     }
     return (
-        <div>
-            <button className="btn-a" onClick={submitLogout}>Logout</button>
+        <div className="bottom-tray">
+            <button className="btn-v" onClick={submitLogout}>Logout</button>
         </div>
     )
 }

@@ -24,9 +24,9 @@ const Header = () => {
             }
     },[])
     return (
-        <header className="w-full bg-green-950 fixed p-2 text-green-200 flex justify-between">
+        <header className="w-full fixed p-2 text-green-200 flex justify-between">
             <Link href='/'>
-                <h1>Who Calls Dibs?</h1>
+                <h1 className='text-verbena-900 text-3xl'>Who Calls Dibs?</h1>
             </Link>
             {!!userCtx?.user?.email ? (<Link className='link-account-header' href='/account/view' >{ userCtx?.user?.name}</Link>) : (<Link className='link-account-header' href={'/account/login'}>Login</Link>)}
         </header>

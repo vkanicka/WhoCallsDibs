@@ -76,8 +76,8 @@ const ItemPage = () => {
                             </div>
                     )}
 
-                    <div className="sticky w-full bottom-0 left-0 right-0 p-2">
-                        <button onClick={()=>setClickedCallDibs(true)} className="w-full border-2 border-solid border-violet-400 rounded-xl py-4 px-4 bg-green-600 text-violet-900">
+                    <div className="bottom-tray">
+                        <button onClick={()=>setClickedCallDibs(true)} className="btn-v">
                     I call dibs!
                         </button>
                     </div>
@@ -86,7 +86,7 @@ const ItemPage = () => {
                     <p>Loading...</p>
             )}
             {!!clickedCallDibs && !!item && (
-                <div className="bg-green-900 flex flex-col place-items-center justify-center text-lime-200 absolute h-screen w-screen top-0 left-0 z-999">
+                <div className="bg-ikigai-800 flex flex-col place-items-center justify-center text-lime-200 absolute h-screen w-screen top-0 left-0 z-999">
                     <h1>Confirm Calling Dibs</h1>
                     <div className="w-full m-4 flex flex-col items-center space-y-4">
                         <h3 className="text-xl">{item.ItemName}</h3>
@@ -98,9 +98,9 @@ const ItemPage = () => {
                             alt={`User photo of item ${item.ItemName}`}
                         />)}
                     </div>
-                    <div className="flex gap-4 absolute bottom-0 w-full left-0 right-0 p-4">
-                        <button className="w-1/2 bg-green-700 ring-2 ring-violet-300 py-4 px-8 rounded-xl" onClick={handleBackButton}>Back</button>
-                        <button className="w-1/2 bg-green-700 ring-2 ring-violet-300 py-4 px-8 rounded-xl" onClick={confirmCallingDibs}>Confirm</button>
+                    <div className="flex gap-6 absolute bottom-0 w-full left-0 right-0 p-6">
+                        <button className="btn-v w-1/2 ring-2 ring-violet-300 py-4 px-8 rounded-xl" onClick={handleBackButton}>Back</button>
+                        <button className="btn-v w-1/2 ring-2 ring-violet-300 py-4 px-8 rounded-xl" onClick={confirmCallingDibs}>Confirm</button>
                     </div>
                 </div>
 

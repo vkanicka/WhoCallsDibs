@@ -54,10 +54,9 @@ const CreateAccountPage = () => {
                 <label>Password</label>
                 <input name='password' id='password' className="text-green-950" required type="password"></input>
             </div>
-            {/* <button className="border p-1 border-solid border-green-300 rounded-lg hover:font-bold" type="submit">Submit</button> */}
-                <div className='bg-green-800 sticky bottom-0 top-0 left-0 right-0 w-full py-2 flex space-x-4'>
-                <Link className="btn-a font-normal text-sm" href='/account/login'>Have an Account?<br></br> Login</Link>
-                <button type='submit' className='text-2xl w-full bg-lime-600 px-4 py-2 border-2 rounded-xl border-green-600 border-solid text-green-900 font-semibold'>Submit</button>
+                <div className='bottom-tray'>
+                <Link className="btn-v font-normal text-sm" href='/account/login'>Have an Account?<br></br> Login</Link>
+                <button type='submit' className='btn-v'>Submit</button>
             </div>
         </form>
         </div>

@@ -55,9 +55,9 @@ const LoginPage = () => {
                     <label>Password</label>
                     <input name='password' id='password' className="text-green-950" required type="password"></input>
                 </div>
-                <div className='bg-green-800 sticky bottom-0 top-0 left-0 right-0 w-full py-2 flex  space-x-4'>
-                    <Link className="btn-a font-normal text-sm" href='/account/create'>New Here?<br></br> Create Account</Link>
-                    <button type='submit' className='btn-a'>Login</button>
+                <div className='bottom-tray'>
+                    <Link className="btn-v font-normal text-sm" href='/account/create'>New Here?<br></br> Create Account</Link>
+                    <button type='submit' className='btn-v'>Login</button>
                 </div>
             </form>
         </div>

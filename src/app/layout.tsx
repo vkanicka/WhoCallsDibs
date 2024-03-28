@@ -26,12 +26,12 @@ export default function RootLayout({
   return (
     <html className={`${cabin.className} h-screen`} lang="en">
       <UserContextProvider>
-        <body className='min-h-screen w-screen min-w-[375px] overflow-x-hidden bg-green-950'>
-          <div className="sticky top-0 right-0 left-0">
+        <body className='bg-gradient-to-b from-ikigai-600 to-ikigai-200 min-h-screen w-screen min-w-[375px] overflow-x-hidden'>
+          <div className="sticky top-0 right-0 left-0 space-y-2">
             <Header />
             <Subnav />
           </div>
-          <div className="bg-green-800 h-full flex flex-col p-2">
+          <div className="h-full flex flex-col p-2 px-6">
             {children}
           </div>
           {/* <Footer /> */}

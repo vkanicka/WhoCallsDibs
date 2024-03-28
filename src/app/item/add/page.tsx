@@ -77,9 +77,8 @@ const AddItem = () => {
                 <label>Description <OptionalComponent/></label>
                 <input maxLength={300} id="description" name='description' className="text-green-950 p-2 text-left justify-start align-top text-wrap row-span-5 flex-wrap whitespace-pre-wrap cols-50 columns-10" type='text'></input>
             </div>
-            {/* <button className="border p-1 border-solid border-green-300 rounded-lg hover:font-bold" type="submit">Submit</button> */}
-            <div className='bg-green-800 sticky bottom-0 top-0 left-0 right-0 w-full py-2'>
-                <button type='submit' className='text-2xl w-full bg-lime-600 px-4 py-2 border-2 rounded-xl border-green-600 border-solid text-green-900 font-semibold'>Submit</button>
+            <div className='bottom-tray'>
+                <button type='submit' className='btn-v'>Submit</button>
             </div>
         </form>
     )
