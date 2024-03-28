@@ -15,6 +15,7 @@ const LogoutPage = () => {
     }
     const userCtx = useContext(UserContext);
     
+    // @ts-expect-error
     const submitLogout = async (e) => {
         e.preventDefault();
         try {

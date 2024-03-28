@@ -22,6 +22,7 @@ const AddItem = () => {
 
     const userCtx = useContext(UserContext)
 
+    // @ts-expect-error
     const submitForm = async (e) => {
         e.preventDefault();
         const formData = new FormData(e.target)
@@ -32,6 +33,7 @@ const AddItem = () => {
             GetImageStorageFx(addImageResult as string).then((getImageResult) => {
                 imageUrl = getImageResult as string;
             }).then(() => {
+                // @ts-expect-error
                 const itemToAdd: Item = {
                     ItemName: name.toString(),
                     ImageURL: imageUrl,

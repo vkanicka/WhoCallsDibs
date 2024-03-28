@@ -5,6 +5,7 @@
 
 import { CreateUser } from "@data/client"
 import User from "@models/user"
+import { Models } from "appwrite"
 import Link from "next/link"
 import { useRouter } from 'next/navigation'
 
@@ -15,19 +16,20 @@ const CreateAccountPage = () => {
             router.push(newItemPath)
         }
 
-        const submitForm = async (e) => {
+        const submitForm = async (e: any) => {
         e.preventDefault();
         const formData = new FormData(e.target)
         const payload = Object.fromEntries(formData)
         const { name, email, password } = payload
         
-        const newUser: User = {
+        const newUser: Partial<Models.User<Models.Preferences>> | Partial<User> = {
             email: email.toString(),
             password: password.toString(),
             name: name.toString(),
         }
 
         try {
+            // @ts-expect-error
             CreateUser(newUser).then((createUserResponse) => {
                     console.log(createUserResponse)
             }).then(() => {

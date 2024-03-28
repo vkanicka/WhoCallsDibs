@@ -21,7 +21,6 @@ const defaultUser: Models.User<Models.Preferences> = {
     emailVerification: false,
     phoneVerification: false,
     mfa: false,
-    totp: false,
     prefs: {},
     targets: [],
     accessedAt: ''
@@ -62,7 +61,6 @@ const UserContextProvider = ({ children, ...childrenProps }: childrenProps) => {
             emailVerification: false,
             phoneVerification: false,
             mfa: false,
-            totp: false,
             prefs: {},
             targets: [],
             accessedAt: ''

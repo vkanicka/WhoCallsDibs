@@ -17,6 +17,7 @@ const LoginPage = () => {
         router.push(newItemPath)
     }
     
+    // @ts-expect-error
     const submitForm = async (e) => {
         e.preventDefault();
         const formData = new FormData(e.target)
@@ -24,6 +25,7 @@ const LoginPage = () => {
         const { email, password } = payload
         
         try {
+            // @ts-expect-error
             LoginUser({ email: email.toString(), password: password.toString() }).then((loginUserResponse) => {
         }).then((loginUserResponse) => {
             try {
