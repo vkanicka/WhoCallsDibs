@@ -18,6 +18,7 @@ const ItemPage = () => {
     const params = useParams()
     const { id: itemId } = params
     const userCtx = useContext(UserContext)
+    const isDibbed = item?.isDibbed
 
     const getAndSetItem = async (id: string) => {
         const gottenItem = await GetItem(id)
@@ -75,12 +76,21 @@ const ItemPage = () => {
                             </Link>
                             </div>
                     )}
-
-                    <div className="bottom-tray">
-                        <button onClick={()=>setClickedCallDibs(true)} className="btn-v">
-                    I call dibs!
-                        </button>
-                    </div>
+                    {!isDibbed && (
+                        <div className="bottom-tray">
+                            <button onClick={()=>setClickedCallDibs(true)} className='btn-v'>
+                        I call dibs!
+                            </button>
+                        </div>
+                    )}
+                    {!!isDibbed && (
+                        <div className="bottom-tray">
+                            <p className='dibs-called'>
+                        Dibs called
+                            </p>
+                        </div>
+                    
+                    )}
                 </div>
             ) : (
                     <p>Loading...</p>
