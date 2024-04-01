@@ -21,7 +21,7 @@ const sendMail = ({ user, item }: Props) => {
         from: `Who Called Dibs App <mailgun@${process.env.NEXT_PUBLIC_MAILGUN_DOMAIN as string}>`,
         to: [item.itemOwnerEmail, user.email],
         subject: "Dibs Called!",
-        text: "...",
+        text: `${user.name} Called Dibs on ${item.itemOwnerName}'s Item! Item dibbed: ${item.ItemName}. Connect via email: ${user.email} and ${item.itemOwnerEmail}.`,
         html: `<h1>${user.name} Called Dibs on ${item.itemOwnerName}'s Item!</h1><br><h3>Item dibbed: ${item.ItemName}</h3><br><h4>Connect via email: ${user.email} and ${item.itemOwnerEmail}</h4>`
     })
     .then(msg => console.log(msg)) // logs response data
