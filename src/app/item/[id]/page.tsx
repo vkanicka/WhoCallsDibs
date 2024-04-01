@@ -33,8 +33,7 @@ const ItemPage = () => {
     }
 
     const confirmCallingDibs = async () => {
-        console.log(item?.itemOwnerId)
-        await UpdateItemIsDibbed(item?.$id as string, userCtx.user.$id).then(()=>sendMail()).then(()=>SendToNextPage(`/item/${item?.$id}/calledDibs`))
+        await UpdateItemIsDibbed(item?.$id as string, userCtx.user.$id, userCtx.user.email, userCtx.user.name).then(()=>!!item && sendMail({user: userCtx.user, item})).then(()=>SendToNextPage(`/item/${item?.$id}/calledDibs`))
     }
 
     const handleBackButton = () => {

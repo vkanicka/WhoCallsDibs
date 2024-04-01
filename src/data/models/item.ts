@@ -8,7 +8,11 @@ interface Item extends Models.Document {
     Description?: string;
     ListingURL?: string;
     itemOwnerId: string;
+    itemOwnerEmail: string;
+    itemOwnerName: string;
     dibsCallerId?: string;
+    dibsCallerEmail?: string;
+    dibsCallerName?: string;
     // $id?: string;
     // $collectionId?: string;
     // $databaseId?: string;

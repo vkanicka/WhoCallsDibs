@@ -27,7 +27,7 @@ const AddItem = () => {
         e.preventDefault();
         const formData = new FormData(e.target)
         const payload = Object.fromEntries(formData)
-        const { name, description, listingUrl, itemOwnerId } = payload
+        const { name, description, listingUrl } = payload
         let imageUrl: string;
         AddImageStorageFx().then((addImageResult) => {
             GetImageStorageFx(addImageResult as string).then((getImageResult) => {
@@ -38,7 +38,9 @@ const AddItem = () => {
                     ItemName: name.toString(),
                     ImageURL: imageUrl,
                     Description: description.toString(),
-                    itemOwnerId: userCtx.user.$id.toString()
+                    itemOwnerId: userCtx.user.$id.toString(),
+                    itemOwnerEmail: userCtx.user.email.toString(),
+                    itemOwnerName: userCtx.user.name.toString()
                 }
                 if (!!listingUrl) {
                     itemToAdd['ListingURL'] = listingUrl.toString()
@@ -54,6 +56,7 @@ const AddItem = () => {
             ).then((addItemResponse) => {
                 // add error response path if undefined
                 const newItemPath = `/item/${addItemResponse?.$id}`
+                // console.log(newItemPath)
                 Success(newItemPath)
                 })
         })
