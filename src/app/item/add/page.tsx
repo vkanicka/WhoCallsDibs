@@ -45,7 +45,6 @@ const AddItem = () => {
                 }
                 try {
                     const addItemResponse = AddItemFx(itemToAdd)
-                    console.log(addItemResponse)
                     return addItemResponse
                 }
                 catch (error) {
@@ -55,7 +54,6 @@ const AddItem = () => {
             ).then((addItemResponse) => {
                 // add error response path if undefined
                 const newItemPath = `/item/${addItemResponse?.$id}`
-                console.log(newItemPath)
                 Success(newItemPath)
                 })
         })

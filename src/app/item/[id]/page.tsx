@@ -11,6 +11,8 @@ import { useParams, useRouter } from 'next/navigation'
 import { useEffect, useState } from "react";
 import { UserContext } from '@/data/context/user'
 import { useContext } from 'react'
+import sendMail from '@/utils/sendMail';
+import { Models } from 'appwrite';
 
 const ItemPage = () => {
     const [item, setItem] = useState<Item>()
@@ -31,9 +33,8 @@ const ItemPage = () => {
     }
 
     const confirmCallingDibs = async () => {
-        const hasUpdated = await UpdateItemIsDibbed(item?.$id as string, userCtx.user.$id)
-        const nextPagePath = `/item/${item?.$id}/calledDibs`
-        !!hasUpdated && hasUpdated.isDibbed == true && SendToNextPage(nextPagePath)
+        console.log(item?.itemOwnerId)
+        await UpdateItemIsDibbed(item?.$id as string, userCtx.user.$id).then(()=>sendMail()).then(()=>SendToNextPage(`/item/${item?.$id}/calledDibs`))
     }
 
     const handleBackButton = () => {

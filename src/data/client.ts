@@ -6,7 +6,6 @@ const storage = new Storage(client);
 const databases = new Databases(client);
 const account = new Account(client);
 
-
 client
     .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT_ID as string)
     .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID as string);
