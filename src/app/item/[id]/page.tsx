@@ -49,6 +49,7 @@ const ItemPage = () => {
             {!!item ? (
                 <div className="flex flex-col">
                     <p className="text-green-950 text-2xl">{item.ItemName}</p>
+                    <p className="text-gray-600 text-lg">Owner: {item.itemOwnerName}</p>
                     <div className="flex justify-center">
                         {item.ImageURL && (
                             <Image
