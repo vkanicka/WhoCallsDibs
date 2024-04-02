@@ -19,6 +19,8 @@ const Browse = () => {
         getStarted()
     }, [])
 
+    console.log(allItems)
+
     return (
         <div>
             <div className='flex justify-between'>
