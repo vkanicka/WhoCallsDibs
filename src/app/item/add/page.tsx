@@ -49,7 +49,7 @@ const AddItem = () => {
                     itemOwnerId: userCtx.user.$id.toString(),
                     itemOwnerEmail: userCtx.user.email.toString(),
                     itemOwnerName: userCtx.user.name.toString(),
-                    // categories: categories
+                    categories: categories
                 }
                 // categories: categories.length ? [...categories] : ['Other']
                 console.log(itemToAdd)
