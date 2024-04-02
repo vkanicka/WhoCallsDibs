@@ -13,6 +13,7 @@ interface Item extends Models.Document {
     dibsCallerId?: string;
     dibsCallerEmail?: string;
     dibsCallerName?: string;
+    categories?: string[];
     // $id?: string;
     // $collectionId?: string;
     // $databaseId?: string;

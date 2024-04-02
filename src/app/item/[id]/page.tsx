@@ -44,6 +44,8 @@ const ItemPage = () => {
         getAndSetItem(itemId as string)
     }, [])
 
+    console.log(item)
+
     return (
         <div className="flex flex-col">
             {!!item ? (

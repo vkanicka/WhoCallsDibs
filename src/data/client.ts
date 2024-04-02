@@ -11,15 +11,17 @@ client
     .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID as string);
 
 
-export const AddItemFx = async ({ ItemName, ImageURL, ListingURL, Description, itemOwnerId, itemOwnerEmail, itemOwnerName }: Item) => {
+export const AddItemFx = async ({ ItemName, ImageURL, ListingURL, Description, itemOwnerId, itemOwnerEmail, itemOwnerName, categories }: Item) => {
+    console.log('potato categories')
+    console.log(categories)
     try {
             const response = await databases.createDocument(
                 process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string, 
                 process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID as string, 
                 ID.unique(),
-                { "ItemName": ItemName, "ImageURL": ImageURL, "ListingURL": ListingURL, "Description": Description, "itemOwnerId": itemOwnerId, "itemOwnerEmail": itemOwnerEmail, "itemOwnerName": itemOwnerName}
+                { "ItemName": ItemName, "ImageURL": ImageURL, "ListingURL": ListingURL, "Description": Description, "itemOwnerId": itemOwnerId, "itemOwnerEmail": itemOwnerEmail, "itemOwnerName": itemOwnerName, "categories": categories}
             );
-        // console.log(response)
+        console.log(response)
         return response
     } catch (error) {
         console.error(error)

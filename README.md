@@ -15,6 +15,9 @@ As an individual decluttering my physical environment, before dropping off items
 - As a user, I want to add my friends and family so that my item sharing experience is comfortably limited to people I know and trust
 - As an item owner, if my item does not get dibs called on it by my connections after some time, I would like to receive an email notification so that I can donate it locally instead
 
+### Notes:
+- Current limit for number of contacts is 50
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started

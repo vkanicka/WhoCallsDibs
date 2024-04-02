@@ -6,8 +6,9 @@ const CATEGORIES = [
     'Office and Electronics',
     'Fashion',
     'Hobbies',
-    'Decore',
+    'Decor',
     'Home Improvement',
     'Other'
 
 ]
+export default CATEGORIES
