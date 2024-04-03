@@ -5,7 +5,7 @@ import Logout from '@/components/logout';
 
 const ViewAccount = () => {
     const userCtx = useContext(UserContext);
-    console.log(userCtx)
+    // console.log(userCtx)
     return (
         <div>
             <h1>View Account</h1>

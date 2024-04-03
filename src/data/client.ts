@@ -1,4 +1,4 @@
-import { Client, Databases, ID, Storage, Account } from 'appwrite';
+import { Client, Databases, ID, Storage, Account, Query } from 'appwrite';
 import Item from '@models/item'
 import User from '@models/user'
 const client = new Client();
@@ -12,8 +12,6 @@ client
 
 
 export const AddItemFx = async ({ ItemName, ImageURL, ListingURL, Description, itemOwnerId, itemOwnerEmail, itemOwnerName, categories }: Item) => {
-    console.log('potato categories')
-    console.log(categories)
     try {
             const response = await databases.createDocument(
                 process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string, 
@@ -21,7 +19,7 @@ export const AddItemFx = async ({ ItemName, ImageURL, ListingURL, Description, i
                 ID.unique(),
                 { "ItemName": ItemName, "ImageURL": ImageURL, "ListingURL": ListingURL, "Description": Description, "itemOwnerId": itemOwnerId, "itemOwnerEmail": itemOwnerEmail, "itemOwnerName": itemOwnerName, "categories": categories}
             );
-        console.log(response)
+        // console.log(response)
         return response
     } catch (error) {
         console.error(error)
@@ -58,6 +56,23 @@ export const GetAllItems = async () => {
     try {
         const response = await databases.listDocuments(process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string,
             process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID as string,)
+        const items = response.documents as Item[]
+        return items
+    }
+    catch (error) {
+        console.error(error)
+    }
+}
+export const GetCategoryFilteredItems = async (catParams: string[]) => {
+    try {
+        const response = await databases.listDocuments(process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string,
+            process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID as string,
+            [
+                Query.equal('categories', catParams)
+                // Query.equal('ItemName', 'print')
+                // Query.equal("ItemName", ['print'])
+            ]
+        )
         const items = response.documents as Item[]
         return items
     }
@@ -119,7 +134,7 @@ export const LoginUser = async ({ email, password }: User) => {
 export const LogoutUser = async () => {
     try {
         const response = await account.deleteSession('current');
-        console.log(response)
+        // console.log(response)
         return response
     }
     catch (error) {
@@ -130,7 +145,7 @@ export const LogoutUser = async () => {
 export const GetSessions = async () => {
     try {
         const response = await account.listSessions();
-        console.log(response)
+        // console.log(response)
         return response
     }
     catch (error) {

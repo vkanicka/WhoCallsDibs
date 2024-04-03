@@ -35,7 +35,7 @@ const AddItem = () => {
             }
             return acc;
         }, []);
-        console.log(categories)
+        // console.log(categories)
         let imageUrl: string;
         AddImageStorageFx().then((addImageResult) => {
             GetImageStorageFx(addImageResult as string).then((getImageResult) => {
@@ -49,12 +49,11 @@ const AddItem = () => {
                     itemOwnerId: userCtx.user.$id.toString(),
                     itemOwnerEmail: userCtx.user.email.toString(),
                     itemOwnerName: userCtx.user.name.toString(),
-                    categories: categories
+                    categories: categories.length ? categories : ['Other']
                 }
-                // categories: categories.length ? [...categories] : ['Other']
-                console.log(itemToAdd)
+                // console.log(itemToAdd)
                 if (!!listingUrl) {
-                    console.log(`ListingURL: ${listingUrl}`)
+                    // console.log(`ListingURL: ${listingUrl}`)
                     itemToAdd['ListingURL'] = listingUrl.toString()
                 }
                 try {
@@ -68,8 +67,8 @@ const AddItem = () => {
             ).then((addItemResponse) => {
                 // add error response path if undefined
                 const newItemPath = `/item/${addItemResponse?.$id}`
-                console.log(newItemPath)
-                // Success(newItemPath)
+                // console.log(newItemPath)
+                Success(newItemPath)
                 })
         })
     }

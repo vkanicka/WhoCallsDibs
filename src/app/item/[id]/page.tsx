@@ -44,8 +44,6 @@ const ItemPage = () => {
         getAndSetItem(itemId as string)
     }, [])
 
-    console.log(item)
-
     return (
         <div className="flex flex-col">
             {!!item ? (
@@ -70,6 +68,16 @@ const ItemPage = () => {
                     {/* Is owner offering to pay postage */}
                     {/* Ask quesiton / message owner if consent */}
                     {/* View Q&A */}
+                    <div>
+                        <h3>Categories</h3>
+                        <ul>
+                            {item.categories?.map((category, index) => {
+                                return (
+                                    <li key={index}>{category}</li>
+                                )
+                            })}
+                        </ul>
+                    </div>
 
                     {item.ListingURL && (
                         <div>
