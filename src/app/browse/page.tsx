@@ -12,9 +12,9 @@ import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/navigation'
 
 const Browse = () => {
+    const ItemsList = () => {
     const [allItems, setAllItems] = useState<Item[]>()
     const [showCatFilter, setShowCatFilter] = useState(false)
-    
     const searchParams = useSearchParams()
     let catParams: string[];
     catParams = searchParams.getAll('categories')
@@ -44,16 +44,15 @@ const Browse = () => {
         const newCatPath = `?${newArr.map(x=>`categories=${x.replaceAll(' ','+')}`).join('&')}`
         // console.log(newCatPath)
         router.push(newCatPath)
+
+        
     }
-
-    useEffect(() => {
-        getStarted()
-    }, [])
-
-
-
-    return (
-        <div>
+        useEffect(() => {
+            getStarted()
+        }, [])
+        
+        return (
+            <div>
             <div className="flex space-y-2 flex-col space-x-2 text-green-100 overlflow-y-scroll pb-8">
                 <h4 className='border border-solid border-violet-400 bg-violet-500 rounded-2xl p-2' onClick={()=>setShowCatFilter(!showCatFilter)}>{showCatFilter ? 'Hide Filter' : 'Filter'} By Categories</h4>
                 <div className={`${showCatFilter ? 'flex' : 'hidden'} flex-wrap gap-2`}>
@@ -77,6 +76,17 @@ const Browse = () => {
                 <button className='btn-v'>Filter</button>
             </div>
         </div>
+
+        )
+    }
+
+
+
+    return (
+        <Suspense>
+            <ItemsList />
+        </Suspense>
+        
     )
 }
 export default Browse;

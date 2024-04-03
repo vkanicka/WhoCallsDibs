@@ -68,9 +68,7 @@ export const GetCategoryFilteredItems = async (catParams: string[]) => {
         const response = await databases.listDocuments(process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string,
             process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID as string,
             [
-                Query.equal('categories', catParams)
-                // Query.equal('ItemName', 'print')
-                // Query.equal("ItemName", ['print'])
+                Query.contains('categories', catParams)
             ]
         )
         const items = response.documents as Item[]
