@@ -13,6 +13,7 @@ import { useRouter } from 'next/navigation'
 
 const Browse = () => {
     const [allItems, setAllItems] = useState<Item[]>()
+    const [showCatFilter, setShowCatFilter] = useState(false)
     
     const searchParams = useSearchParams()
     let catParams: string[];
@@ -53,9 +54,9 @@ const Browse = () => {
 
     return (
         <div>
-            <div className="flex flex-wrap space-x-2 text-green-100 overlflow-y-scroll pb-8">
-                <h4>Categories</h4>
-                <div className='flex flex-wrap gap-2'>
+            <div className="flex space-y-2 flex-col space-x-2 text-green-100 overlflow-y-scroll pb-8">
+                <h4 className='border border-solid border-violet-400 bg-violet-500 rounded-2xl p-2' onClick={()=>setShowCatFilter(!showCatFilter)}>{showCatFilter ? 'Hide Filter' : 'Filter'} By Categories</h4>
+                <div className={`${showCatFilter ? 'flex' : 'hidden'} flex-wrap gap-2`}>
                     {CATEGORIES.map((category, index) => {
                         return (
                             <button onClick={()=>handleCatParams(category)} className={`flex px-2 py-[2px] border border-solid border-gray-400 rounded-2xl ${catParams.includes(category) ? 'text-lime-300' : 'text-gray-100'}`} key={index}>
