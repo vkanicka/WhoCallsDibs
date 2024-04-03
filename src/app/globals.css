@@ -25,6 +25,6 @@
     @apply bg-primrose-600 border-primrose-500 border-solid border-4 border-t-primrose-400 border-b-primrose-800 rounded-3xl flex flex-col w-full p-2 hover:cursor-pointer
   }
   .bottom-tray {
-    @apply flex gap-6 absolute bottom-0 w-full left-0 right-0 p-6
+    @apply flex gap-6 absolute bottom-0 w-full left-0 right-0 p-6 bg-ikigai-200 bg-opacity-100
   }
 }

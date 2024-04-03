@@ -10,14 +10,16 @@ import ItemCard from '@components/itemCard'
 import CATEGORIES from '@/data/const/categories'
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/navigation'
+import { X } from 'react-feather'
 
 const Browse = () => {
     const ItemsList = () => {
         const [allItems, setAllItems] = useState<Item[]>()
-        const [showCatFilter, setShowCatFilter] = useState(false)
         const searchParams = useSearchParams()
         let catParams: string[];
+        let showFiltersParams: boolean;
         catParams = searchParams.getAll('categories')
+        showFiltersParams = searchParams.get('showFiltersParams') == 'true'
 
         const getStarted = async () => {
             let gottenItems: Item[] | undefined;
@@ -29,7 +31,6 @@ const Browse = () => {
                 gottenItems = await GetAllItems()
             }
             setAllItems(gottenItems)
-            catParams = searchParams.getAll('categories')
         }
     
         const router = useRouter()
@@ -41,9 +42,19 @@ const Browse = () => {
             } else {
                 newArr.splice(catIndex,1)
             }
-            const newCatPath = `?${newArr.map(x=>`categories=${x.replaceAll(' ','+')}`).join('&')}`
-            // console.log(newCatPath)
-            router.push(newCatPath)
+            const newPath = `?${newArr.map(x=>`categories=${x.replaceAll(' ','+')}`).join('&')}&showFiltersParams=${showFiltersParams}`
+            // console.log(newPath)
+            router.push(newPath)
+        }
+        const handleShowFiltersParams = () => {
+            const newPath = `?${catParams.map(x=>`categories=${x.replaceAll(' ','+')}`).join('&')}&showFiltersParams=${!showFiltersParams}`
+            // console.log(newPath)
+            router.push(newPath)
+        }
+        const handleClearFilters = () => {
+            const newPath = `/browse?showFiltersParams=${showFiltersParams}`
+            // console.log(newPath)
+            router.push(newPath)
         }
         useEffect(() => {
             getStarted()
@@ -51,32 +62,29 @@ const Browse = () => {
         
         return (
             <div>
-            <div className="flex space-y-2 flex-col space-x-2 text-green-100 overlflow-y-scroll pb-8">
-                <h4 className='border border-solid border-violet-400 bg-violet-500 rounded-2xl p-2' onClick={()=>setShowCatFilter(!showCatFilter)}>{showCatFilter ? 'Hide Filter' : 'Filter'} By Categories</h4>
-                <div className={`${showCatFilter ? 'flex' : 'hidden'} flex-wrap gap-2`}>
-                    {CATEGORIES.map((category, index) => {
-                        return (
-                            <button onClick={()=>handleCatParams(category)} className={`flex px-2 py-[2px] border border-solid border-gray-400 rounded-2xl ${catParams.includes(category) ? 'text-lime-300' : 'text-gray-100'}`} key={index}>
-                                {category}
-                            </button>
-                        )
-                    })}
+                <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 w-full gap-6'>
+                    {!!allItems?.length && allItems.filter(item=>!item.isDibbed).map((item, index) => {
+                        return <ItemCard key={index} item={item} />
+                    }) 
+                    // : (
+                    //     <p>Loading...</p> 
+                    // )
+                    }
+                </div>
+                <div className='bottom-tray'>
+                    <div className={`${showFiltersParams ? 'absolute flex flex-wrap bottom-24 right-0 bg-ikigai-200 opacity-100 p-4 gap-3 rounded-t-3xl' : 'hidden'}`}>
+                        {CATEGORIES.map((category, index) => {
+                            return (
+                                <button onClick={()=>handleCatParams(category)} className={`px-3 py-[4px] border border-solid border-gray-400 rounded-2xl text-2xl bg-ikigai-600 bg-opacity-50 ${catParams.includes(category) ? 'text-lime-300 bg-opacity-70 flex' : 'text-gray-100'}`} key={index}>
+                                    {category}{catParams.includes(category) && <X size={25} className='self-center ml-1 text-primrose-500 hover:text-lime-300' />}
+                                </button>
+                            )
+                        })}
+                    </div>
+                    <button className='btn-v' onClick={handleClearFilters}>Clear Filters</button>
+                    <button className='btn-v' onClick={handleShowFiltersParams}>{showFiltersParams ? 'Hide Filters' : 'Filter'}</button>
                 </div>
             </div>
-            <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 w-full gap-6'>
-                {!!allItems?.length && allItems.filter(item=>!item.isDibbed).map((item, index) => {
-                    return <ItemCard key={index} item={item} />
-                }) 
-                // : (
-                //     <p>Loading...</p> 
-                // )
-                }
-            </div>
-            <div className='bottom-tray'>
-                <button className='btn-v'>Clear Filter</button>
-                <button className='btn-v' onClick={()=>setShowCatFilter(!showCatFilter)}>{showCatFilter ? 'Hide Filter' : 'Filter'}</button>
-            </div>
-        </div>
 
         )
     }
