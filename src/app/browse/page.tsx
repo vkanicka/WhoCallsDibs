@@ -13,40 +13,38 @@ import { useRouter } from 'next/navigation'
 
 const Browse = () => {
     const ItemsList = () => {
-    const [allItems, setAllItems] = useState<Item[]>()
-    const [showCatFilter, setShowCatFilter] = useState(false)
-    const searchParams = useSearchParams()
-    let catParams: string[];
-    catParams = searchParams.getAll('categories')
-
-    const getStarted = async () => {
-        let gottenItems: Item[] | undefined;
-        
-        if (catParams.length) {
-            // gottenItems = await GetCategoryFilteredItems(catParams)
-            gottenItems = await GetAllItems()
-        } else {
-            gottenItems = await GetAllItems()
-        }
-        setAllItems(gottenItems)
+        const [allItems, setAllItems] = useState<Item[]>()
+        const [showCatFilter, setShowCatFilter] = useState(false)
+        const searchParams = useSearchParams()
+        let catParams: string[];
         catParams = searchParams.getAll('categories')
-    }
-    
-    const router = useRouter()
-    const handleCatParams = (category: string) => {
-        const catIndex = catParams.indexOf(category)
-        let newArr: string[] = [...catParams]
-        if (catIndex === -1) {
-            newArr.push(category)
-        } else {
-            newArr.splice(catIndex,1)
-        }
-        const newCatPath = `?${newArr.map(x=>`categories=${x.replaceAll(' ','+')}`).join('&')}`
-        // console.log(newCatPath)
-        router.push(newCatPath)
 
-        
-    }
+        const getStarted = async () => {
+            let gottenItems: Item[] | undefined;
+            if (catParams.length) {
+                // gottenItems = await GetCategoryFilteredItems(catParams)
+                gottenItems = await GetAllItems()
+                gottenItems = gottenItems?.filter((item: Item)=> item.categories?.some(x=>catParams.includes(x)))
+            } else {
+                gottenItems = await GetAllItems()
+            }
+            setAllItems(gottenItems)
+            catParams = searchParams.getAll('categories')
+        }
+    
+        const router = useRouter()
+        const handleCatParams = (category: string) => {
+            const catIndex = catParams.indexOf(category)
+            let newArr: string[] = [...catParams]
+            if (catIndex === -1) {
+                newArr.push(category)
+            } else {
+                newArr.splice(catIndex,1)
+            }
+            const newCatPath = `?${newArr.map(x=>`categories=${x.replaceAll(' ','+')}`).join('&')}`
+            // console.log(newCatPath)
+            router.push(newCatPath)
+        }
         useEffect(() => {
             getStarted()
         }, [])
@@ -66,21 +64,22 @@ const Browse = () => {
                 </div>
             </div>
             <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 w-full gap-6'>
-                {!!allItems?.length ? allItems.filter(item=>!item.isDibbed).map((item, index) => {
+                {!!allItems?.length && allItems.filter(item=>!item.isDibbed).map((item, index) => {
                     return <ItemCard key={index} item={item} />
-                }) : (
-                    <p>Loading...</p> 
-                )}
+                }) 
+                // : (
+                //     <p>Loading...</p> 
+                // )
+                }
             </div>
             <div className='bottom-tray'>
-                <button className='btn-v'>Filter</button>
+                <button className='btn-v'>Clear Filter</button>
+                <button className='btn-v' onClick={()=>setShowCatFilter(!showCatFilter)}>{showCatFilter ? 'Hide Filter' : 'Filter'}</button>
             </div>
         </div>
 
         )
     }
-
-
 
     return (
         <Suspense>
