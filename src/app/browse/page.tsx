@@ -82,7 +82,7 @@ const Browse = () => {
                         })}
                     </div>
                     <button className='btn-v' onClick={handleClearFilters}>Clear Filters</button>
-                    <button className='btn-v' onClick={handleShowFiltersParams}>{showFiltersParams ? 'Hide Filters' : 'Filter'}</button>
+                    <button className='btn-v' onClick={handleShowFiltersParams}>{showFiltersParams ? 'Hide Filters' : `Filter${catParams.length ? `s (${catParams.length})` : ''}`}</button>
                 </div>
             </div>
 
