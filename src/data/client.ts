@@ -83,10 +83,10 @@ export const GetCategoryFilteredItems = async (catParams: string[]) => {
 
 export const GetItem = async (id:string) => {
     try {
-        const response = await databases.getDocument(process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string,
+        const response: Item = await databases.getDocument(process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string,
             process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_ITEMS as string, id)
-        const item = response as Item
-        return item
+        // const item = response as Item
+        return response
     }
     catch (error) {
         console.error(error)
@@ -178,6 +178,19 @@ export const CreateInvite = async ({ userAEmail, userAId, userAName }: Partial<I
         console.error(error)
     }
 }
+export const GetInvite = async ( id : string) => {
+    try {
+            const response: Invite = await databases.getDocument(
+                process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string, 
+                process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_INVITES as string, 
+                id,
+            );
+        console.log(response)
+        return response
+    } catch (error) {
+        console.error(error)
+    }
+}
 export const CreateUserDetails = async ({ authId, email, name  }: Partial<UserDetails>) => {
     try {
             const response = await databases.createDocument(
@@ -193,6 +206,24 @@ export const CreateUserDetails = async ({ authId, email, name  }: Partial<UserDe
         console.log(response)
         return response
     } catch (error) {
+        console.error(error)
+    }
+}
+
+export const UpdateInvite = async ({id, userBId, userBEmail, userBName}: Partial<Invite>) => {
+    try {
+        const response = await databases.updateDocument(
+            process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string, process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_INVITES as string, id,
+            {
+                "userBId": userBId,
+                "userBEmail": userBEmail,
+                "userBName": userBName,
+            }
+        )
+        console.log(response)
+        return response
+    }
+    catch (error) {
         console.error(error)
     }
 }

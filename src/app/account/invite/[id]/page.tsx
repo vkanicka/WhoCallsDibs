@@ -8,13 +8,17 @@
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '@data/context/user';
+import { GetInvite, UpdateInvite } from "@/data/client";
+import Invite from "@/data/models/invite";
 
 const InvitePage = () => {
+    const [invite, setInvite] = useState<Invite>()
     const params = useParams()
     const userCtx = useContext(UserContext)
     const isUserLoggedIn = !!userCtx.user.$id
+    const { id: inviteId } = params
 
     const handleIgnoreClick = () => {
         console.log('ignore click')
@@ -26,13 +30,33 @@ const InvitePage = () => {
         // is friend request document deleted? or saved with updated status = Accepted ?
     }
 
+        const getAndSetInvite = async (id: string) => {
+            const gottenInvite = await GetInvite(id)
+            setInvite(gottenInvite)
+            if (gottenInvite?.userAId !== userCtx.user.$id) {
+                const inviteResponse = UpdateInvite({
+                    id: id,
+                    userBId: userCtx.user.$id,
+                    userBEmail: userCtx.user.email,
+                    userBName: userCtx.user.name
+                })
+                console.log('updateInvite response')
+                console.log(inviteResponse)
+            }
+            // console.log(invite)
+    }
+
+    useEffect(() => {
+        getAndSetInvite(inviteId as string)
+    }, [])
+    
+
 
     return (
         <div>
             <h1>Invite Page</h1>
 
-            {/* <p>{_UserA_} has invited you to be friends!</p>
-            <p>user A profile page link and image</p> */}
+            <p>{invite?.userAName} has invited you to be friends!</p>
 
             {!isUserLoggedIn && (
                 <div>
