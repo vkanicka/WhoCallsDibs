@@ -7,39 +7,43 @@ import { CreateUser } from "@data/client"
 import User from "@models/user"
 import { Models } from "appwrite"
 import Link from "next/link"
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 
 const CreateAccountPage = () => {
+    const params = useSearchParams()
+    const inviteId: string | null = params.get('invite') 
+
         const router = useRouter()
-        const Success = (newItemPath: string) => {
-            router.push(newItemPath)
+        const Success = (newPath: string) => {
+            router.push(newPath)
         }
 
         const submitForm = async (e: any) => {
-        e.preventDefault();
-        const formData = new FormData(e.target)
-        const payload = Object.fromEntries(formData)
-        const { name, email, password } = payload
-        
-        const newUser: Partial<Models.User<Models.Preferences>> | Partial<User> = {
-            email: email.toString(),
-            password: password.toString(),
-            name: name.toString(),
-        }
+            e.preventDefault();
+            const formData = new FormData(e.target)
+            const payload = Object.fromEntries(formData)
+            const { name, email, password } = payload
+            
+            const newUser: Partial<Models.User<Models.Preferences>> | Partial<User> = {
+                email: email.toString(),
+                password: password.toString(),
+                name: name.toString(),
+            }
 
-        try {
-            // @ts-expect-error
-            CreateUser(newUser).then((createUserResponse) => {
-                    console.log(createUserResponse)
-            }).then(() => {
-                    Success(`/account/login/`)
-                })
-        }
-        catch (error) {
-            console.log(error)
-        }
-    }   
+            try {
+                // @ts-expect-error
+                CreateUser(newUser).then((createUserResponse) => {
+                        console.log(createUserResponse)
+                }).then(() => {
+                        // if !! inviteId:  user B details added to friend rec doc
+                        Success(inviteId ? `/account/login/?invite=${inviteId}` : `/account/login/`)
+                    })
+            }
+            catch (error) {
+                console.log(error)
+            }
+        }   
     return (
         <div>
             <h1>Create Account</h1>

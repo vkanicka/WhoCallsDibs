@@ -4,17 +4,20 @@
 'use client'
 
 import { GetAccount, LoginUser } from "@/data/client";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useContext } from 'react';
 import { UserContext } from '@data/context/user';
 import Link from "next/link";
 
 const LoginPage = () => {
+    const params = useSearchParams()
+    const inviteId: string | null = params.get('invite') 
+
     const userCtx = useContext(UserContext);
 
     const router = useRouter()
-    const Success = (newItemPath: string) => {
-        router.push(newItemPath)
+    const Success = (newPath: string) => {
+        router.push(newPath)
     }
     
     // @ts-expect-error
@@ -38,8 +41,9 @@ const LoginPage = () => {
             catch (error) {
                 console.log(error)
             }
-            }).then(() => {
-                Success(`/browse/`)
+        }).then(() => {
+                // if !! inviteId:  user B details added to friend rec doc
+                Success(!!inviteId ? `/account/invite/${inviteId}` : `/browse/`)
             })
         }
         catch (error) {

@@ -12,7 +12,6 @@ import { useEffect, useState } from "react";
 import { UserContext } from '@/data/context/user'
 import { useContext } from 'react'
 import sendMail from '@/utils/sendMail';
-import { Models } from 'appwrite';
 
 const ItemPage = () => {
     const [item, setItem] = useState<Item>()
