@@ -10,7 +10,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '@data/context/user';
-import { GetInvite, UpdateInvite } from "@/data/client";
+import { GetInvite, UpdateInvite, UpdateUserDetails } from "@/data/client";
 import Invite from "@/data/models/invite";
 
 const InvitePage = () => {
@@ -27,13 +27,19 @@ const InvitePage = () => {
     const handleAcceptClick = () => {
         console.log('accept click')
         // (if logged in user === user B and !== user A) adds friend ID/email/user relationship to user A AND user B's friends array
+        if (userCtx.user.$id === invite?.userBId && userCtx.user.$id !== invite?.userAId) {
+            // const userDetailsId = 
+            // UpdateUserDetails()
+            console.log('get user update id and add friend')
+
+        }
         // is friend request document deleted? or saved with updated status = Accepted ?
     }
 
         const getAndSetInvite = async (id: string) => {
             const gottenInvite = await GetInvite(id)
             setInvite(gottenInvite)
-            if (gottenInvite?.userAId !== userCtx.user.$id) {
+            if (gottenInvite?.userAId !== userCtx.user.$id && !gottenInvite?.userBId) {
                 UpdateInvite({
                     id: id,
                     userBId: userCtx.user.$id,
@@ -53,7 +59,7 @@ const InvitePage = () => {
         <div>
             <h1>Invite Page</h1>
 
-            <p>{invite?.userAName} has invited you to be friends!</p>
+            <p>{invite?.userAName} has invited {invite?.userBName ?? 'you'} to be friends!</p>
 
             {!isUserLoggedIn && (
                 <div>

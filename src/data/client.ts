@@ -172,7 +172,7 @@ export const CreateInvite = async ({ userAEmail, userAId, userAName }: Partial<I
                 ID.unique(),
                 { 'userAEmail': userAEmail, 'userAId': userAId, 'userAName': userAName }
             );
-        console.log(response)
+        // console.log(response)
         return response
     } catch (error) {
         console.error(error)
@@ -185,7 +185,7 @@ export const GetInvite = async ( id : string) => {
                 process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_INVITES as string, 
                 id,
             );
-        console.log(response)
+        // console.log(response)
         return response
     } catch (error) {
         console.error(error)
@@ -203,7 +203,25 @@ export const CreateUserDetails = async ({ authId, email, name  }: Partial<UserDe
                     'name': name
                 }
             );
-        console.log(response)
+        // console.log(response)
+        return response
+    } catch (error) {
+        console.error(error)
+    }
+}
+export const GetUserDetails = async ({ authId, email, name  }: Partial<UserDetails>) => {
+    try {
+            const response = await databases.createDocument(
+                process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string, 
+                process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_USER_DETAILS as string, 
+                ID.unique(),
+                {
+                    'authId': authId,
+                    'email': email,
+                    'name': name
+                }
+            );
+        // console.log(response)
         return response
     } catch (error) {
         console.error(error)
@@ -218,6 +236,21 @@ export const UpdateInvite = async ({id, userBId, userBEmail, userBName}: Partial
                 "userBId": userBId,
                 "userBEmail": userBEmail,
                 "userBName": userBName,
+            }
+        )
+        // console.log(response)
+        return response
+    }
+    catch (error) {
+        console.error(error)
+    }
+}
+export const UpdateUserDetails = async ({id, friends}: Partial<Invite>) => {
+    try {
+        const response = await databases.updateDocument(
+            process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string, process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_USER_DETAILS as string, id,
+            {
+                "friends": friends,
             }
         )
         console.log(response)
