@@ -11,8 +11,8 @@ const Bubble = () => {
         router.push(isBrowsePage ? '/item/add' : '/browse')
     }
     return (
-        <div onClick={handleClick} className="absolute right-6 bottom-32 rounded-full h-12 w-12 bg-verbena-600  bg-opacity-100 z-bubble flex place-content-center shadow-glow shadow-lime-100">
-            {isBrowsePage ? <Plus size={50} className='self-center text-limeshine-300 opacity-100' /> : <Search size={50} className='self-center text-limeshine-300 opacity-100' />}
+        <div onClick={handleClick} className="absolute right-6 bottom-32 rounded-full h-12 w-12 bg-verbena-600 z-bubble flex place-content-center shadow-glow shadow-lime-100">
+            {isBrowsePage ? <Plus size={50} className='self-center text-limeshine-300' /> : <Search size={50} className='self-center text-limeshine-300' />}
         </div>
     )
 }
