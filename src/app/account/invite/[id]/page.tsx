@@ -34,7 +34,7 @@ const InvitePage = () => {
             const gottenInvite = await GetInvite(id)
             setInvite(gottenInvite)
             if (gottenInvite?.userAId !== userCtx.user.$id) {
-                const inviteResponse = UpdateInvite({
+                UpdateInvite({
                     id: id,
                     userBId: userCtx.user.$id,
                     userBEmail: userCtx.user.email,
