@@ -56,7 +56,7 @@ const Browse = () => {
             window.history.pushState({ path: newurl }, '', newurl);
         }
         const handleClearFilters = () => {
-            const newPath = `/browse?showFiltersParams=${showFiltersParams}`
+            const newPath = `?showFiltersParams=${showFiltersParams}`
             // console.log(newPath)
             // router.push(newPath)
             const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + newPath;
