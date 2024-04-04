@@ -37,7 +37,7 @@ const CreateAccountPage = () => {
                         console.log(createUserResponse)
                 }).then(() => {
                         // if !! inviteId:  user B details added to friend rec doc
-                        Success(inviteId ? `/account/login/?invite=${inviteId}` : `/account/login/`)
+                        Success(`/account/login${!!inviteId ? `?invite=${inviteId}`:''}`)
                     })
             }
             catch (error) {
@@ -61,7 +61,7 @@ const CreateAccountPage = () => {
                 <input name='password' id='password' className="text-green-950" required type="password"></input>
             </div>
                 <div className='bottom-tray'>
-                <Link className="btn-v font-normal text-sm" href='/account/login'>Have an Account?<br></br> Login</Link>
+                <Link className="btn-v font-normal text-sm" href={`/account/login${!!inviteId ? `?invite=${inviteId}`:''}`}>Have an Account?<br></br> Login</Link>
                 <button type='submit' className='btn-v'>Submit</button>
             </div>
         </form>

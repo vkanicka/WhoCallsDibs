@@ -16,7 +16,6 @@ import CATEGORIES from '@data/const/categories'
 const AddItem = () => {
 
     const router = useRouter()
-
     const Success = (newItemPath: string) => {
         router.push(newItemPath)
     }

@@ -1,6 +1,7 @@
 import { Client, Databases, ID, Storage, Account, Query } from 'appwrite';
 import Item from '@models/item'
 import User from '@models/user'
+import Invite from './models/invite';
 const client = new Client();
 const storage = new Storage(client);
 const databases = new Databases(client);
@@ -15,7 +16,7 @@ export const AddItemFx = async ({ ItemName, ImageURL, ListingURL, Description, i
     try {
             const response = await databases.createDocument(
                 process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string, 
-                process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID as string, 
+                process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_ITEMS as string, 
                 ID.unique(),
                 { "ItemName": ItemName, "ImageURL": ImageURL, "ListingURL": ListingURL, "Description": Description, "itemOwnerId": itemOwnerId, "itemOwnerEmail": itemOwnerEmail, "itemOwnerName": itemOwnerName, "categories": categories}
             );
@@ -55,7 +56,7 @@ export const GetImageStorageFx = async (imageId: string) => {
 export const GetAllItems = async () => {
     try {
         const response = await databases.listDocuments(process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string,
-            process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID as string,)
+            process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_ITEMS as string,)
         const items = response.documents as Item[]
         return items
     }
@@ -66,7 +67,7 @@ export const GetAllItems = async () => {
 export const GetCategoryFilteredItems = async (catParams: string[]) => {
     try {
         const response = await databases.listDocuments(process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string,
-            process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID as string,
+            process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_ITEMS as string,
             [
                 Query.contains('categories', catParams)
             ]
@@ -82,7 +83,7 @@ export const GetCategoryFilteredItems = async (catParams: string[]) => {
 export const GetItem = async (id:string) => {
     try {
         const response = await databases.getDocument(process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string,
-            process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID as string, id)
+            process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_ITEMS as string, id)
         const item = response as Item
         return item
     }
@@ -94,7 +95,7 @@ export const GetItem = async (id:string) => {
 export const UpdateItemIsDibbed = async (id: string, dibsCallerId: string, dibsCallerEmail: string, dibsCallerName: string) => {
     try {
         const response = await databases.updateDocument(
-            process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string, process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID as string, id,
+            process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string, process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_ITEMS as string, id,
             {
                 "isDibbed": true,
                 "dibsCallerId": dibsCallerId,
@@ -159,5 +160,20 @@ export const GetAccount = async () => {
     }
     catch (error) {
         console.log(error)
+    }
+}
+
+export const CreateInvite = async ({ userAEmail, userAId, userAName }: Partial<Invite>) => {
+    try {
+            const response = await databases.createDocument(
+                process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string, 
+                process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_INVITES as string, 
+                ID.unique(),
+                { 'userAEmail': userAEmail, 'userAId': userAId, 'userAName': userAName }
+            );
+        console.log(response)
+        return response
+    } catch (error) {
+        console.error(error)
     }
 }

@@ -26,15 +26,13 @@ const InvitePage = () => {
         // is friend request document deleted? or saved with updated status = Accepted ?
     }
 
+
     return (
         <div>
             <h1>Invite Page</h1>
-            <h3>{params.id}</h3>
 
-            <p>_UserA_ has invited you to be friends!</p>
-            <p>user A profile page link and image</p>
-
-            {/* If user is not logged in */}
+            {/* <p>{_UserA_} has invited you to be friends!</p>
+            <p>user A profile page link and image</p> */}
 
             {!isUserLoggedIn && (
                 <div>
@@ -49,12 +47,9 @@ const InvitePage = () => {
             )}
             {isUserLoggedIn && (
                 <div>
-                    <p>Login or create an account first</p>
-                    <p>To learn more click link to homepage</p>
-
                     <div className="bottom-tray">
-                        <button className="btn-v font-normal text-3xl">Ignore</button>
-                        <button className="btn-v font-normal text-3xl self-center">Accept</button>
+                        <button onClick={handleIgnoreClick} className="btn-v font-normal text-3xl">Ignore</button>
+                        <button onClick={handleAcceptClick} className="btn-v font-normal text-3xl self-center">Accept</button>
                     </div>
                 </div>
             )}

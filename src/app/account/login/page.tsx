@@ -62,7 +62,7 @@ const LoginPage = () => {
                     <input name='password' id='password' className="text-green-950" required type="password"></input>
                 </div>
                 <div className='bottom-tray'>
-                    <Link className="btn-v font-normal text-sm" href='/account/create'>New Here?<br></br> Create Account</Link>
+                    <Link className="btn-v font-normal text-sm" href={`/account/create${inviteId ? `?invite=${inviteId}`:''}`}>New Here?<br></br> Create Account</Link>
                     <button type='submit' className='btn-v'>Login</button>
                 </div>
             </form>
