@@ -2,6 +2,7 @@ import { Client, Databases, ID, Storage, Account, Query } from 'appwrite';
 import Item from '@models/item'
 import User from '@models/user'
 import Invite from './models/invite';
+import UserDetails from './models/userDetails';
 const client = new Client();
 const storage = new Storage(client);
 const databases = new Databases(client);
@@ -170,6 +171,24 @@ export const CreateInvite = async ({ userAEmail, userAId, userAName }: Partial<I
                 process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_INVITES as string, 
                 ID.unique(),
                 { 'userAEmail': userAEmail, 'userAId': userAId, 'userAName': userAName }
+            );
+        console.log(response)
+        return response
+    } catch (error) {
+        console.error(error)
+    }
+}
+export const CreateUserDetails = async ({ authId, email, name  }: Partial<UserDetails>) => {
+    try {
+            const response = await databases.createDocument(
+                process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string, 
+                process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_USER_DETAILS as string, 
+                ID.unique(),
+                {
+                    'authId': authId,
+                    'email': email,
+                    'name': name
+                }
             );
         console.log(response)
         return response

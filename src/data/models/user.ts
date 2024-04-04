@@ -5,13 +5,6 @@ interface User extends Models.Document {
     name: string;
     password: string;
     isLoggedIn?: boolean;
-
-    // $id?: string;
-    // $collectionId?: string;
-    // $databaseId?: string;
-    // $createdAt?: string;
-    // $updatedAt?: string;
-    // $permissions?: string;
 }
 
 export default User;

@@ -3,7 +3,7 @@
  */
 'use client'
 
-import { CreateUser } from "@data/client"
+import { CreateUser, CreateUserDetails } from "@data/client"
 import User from "@models/user"
 import { Models } from "appwrite"
 import Link from "next/link"
@@ -34,9 +34,14 @@ const CreateAccountPage = () => {
             try {
                 // @ts-expect-error
                 CreateUser(newUser).then((createUserResponse) => {
-                        console.log(createUserResponse)
-                }).then(() => {
+                    return createUserResponse
+                }).then((result) => {
+                    // if !! inviteId:  user B details added to friend rec doc
+                    CreateUserDetails({authId: result?.$id, email: result?.email, name: result?.name})
+                        
+                    }).then((detailResult) => {
                         // if !! inviteId:  user B details added to friend rec doc
+                        console.log(detailResult)
                         Success(`/account/login${!!inviteId ? `?invite=${inviteId}`:''}`)
                     })
             }
