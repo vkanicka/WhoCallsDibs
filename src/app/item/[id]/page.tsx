@@ -107,7 +107,7 @@ const ItemPage = () => {
                     <p>Loading...</p>
             )}
             {!!clickedCallDibs && !!item && (
-                <div className="bg-ikigai-800 flex flex-col place-items-center justify-center text-lime-200 absolute h-screen w-screen top-0 left-0 z-999">
+                <div className="bg-ikigai-800 flex flex-col place-items-center justify-center text-lime-200 absolute h-screen w-screen top-0 left-0 z-thumb">
                     <h1>Confirm Calling Dibs</h1>
                     <div className="w-full m-4 flex flex-col items-center space-y-4">
                         <h3 className="text-xl">{item.ItemName}</h3>

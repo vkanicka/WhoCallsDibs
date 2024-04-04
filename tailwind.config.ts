@@ -37,7 +37,14 @@ const config: Config = {
         'plum': {
           800: '#511052'
         }
-      }
+      },
+      zIndex: {
+        thumb: '999',
+        bubble: '899'
+      },
+      boxShadow: {
+        glow: "0px 0px 18px .4px rgba(160, 221, 227, 0.1)",
+      },
     },
   },
   plugins: [],
