@@ -9,7 +9,7 @@ import Item from '@models/item'
 import ItemCard from '@components/itemCard'
 import CATEGORIES from '@/data/const/categories'
 import { useSearchParams } from 'next/navigation'
-import { useRouter } from 'next/navigation'
+// import { useRouter } from 'next/navigation'
 import { X } from 'react-feather'
 
 const Browse = () => {
@@ -33,7 +33,7 @@ const Browse = () => {
             setAllItems(gottenItems)
         }
     
-        const router = useRouter()
+        // const router = useRouter()
         const handleCatParams = (category: string) => {
             const catIndex = catParams.indexOf(category)
             let newArr: string[] = [...catParams]
@@ -44,21 +44,27 @@ const Browse = () => {
             }
             const newPath = `?${newArr.map(x=>`categories=${x.replaceAll(' ','+')}`).join('&')}&showFiltersParams=${showFiltersParams}`
             // console.log(newPath)
-            router.push(newPath)
+            // router.push(newPath)
+            const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + newPath;
+            window.history.pushState({ path: newurl }, '', newurl);
         }
         const handleShowFiltersParams = () => {
             const newPath = `?${catParams.map(x=>`categories=${x.replaceAll(' ','+')}`).join('&')}&showFiltersParams=${!showFiltersParams}`
             // console.log(newPath)
-            router.push(newPath)
+            // router.push(newPath)
+            const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + newPath;
+            window.history.pushState({ path: newurl }, '', newurl);
         }
         const handleClearFilters = () => {
             const newPath = `/browse?showFiltersParams=${showFiltersParams}`
             // console.log(newPath)
-            router.push(newPath)
+            // router.push(newPath)
+            const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + newPath;
+            window.history.pushState({ path: newurl }, '', newurl);
         }
         useEffect(() => {
             getStarted()
-        }, [])
+        }, [catParams])
         
         return (
             <div>
@@ -72,7 +78,7 @@ const Browse = () => {
                     }
                 </div>
                 <div className='bottom-tray'>
-                    <div className={`${showFiltersParams ? 'absolute flex flex-wrap bottom-24 right-0 bg-ikigai-200 opacity-100 p-4 gap-3 rounded-t-3xl' : 'hidden'}`}>
+                    <div className={`${showFiltersParams ? 'absolute flex flex-wrap bottom-24 right-0 bg-ikigai-200 opacity-100 p-6 gap-3 rounded-t-3xl' : 'hidden'}`}>
                         {CATEGORIES.map((category, index) => {
                             return (
                                 <button onClick={()=>handleCatParams(category)} className={`px-3 py-[4px] border border-solid border-gray-400 rounded-2xl text-2xl bg-ikigai-600 bg-opacity-50 ${catParams.includes(category) ? 'text-lime-300 bg-opacity-70 flex' : 'text-gray-100'}`} key={index}>
