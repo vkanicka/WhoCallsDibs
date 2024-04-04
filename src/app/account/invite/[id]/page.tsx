@@ -40,10 +40,7 @@ const InvitePage = () => {
                     userBEmail: userCtx.user.email,
                     userBName: userCtx.user.name
                 })
-                console.log('updateInvite response')
-                console.log(inviteResponse)
             }
-            // console.log(invite)
     }
 
     useEffect(() => {
