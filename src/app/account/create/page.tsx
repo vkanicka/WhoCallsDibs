@@ -3,16 +3,19 @@
  */
 'use client'
 
+import { UserContext } from "@/data/context/user"
 import { CreateUser, CreateUserDetails } from "@data/client"
 import User from "@models/user"
 import { Models } from "appwrite"
 import Link from "next/link"
 import { useRouter, useSearchParams } from 'next/navigation'
+import { useContext } from "react"
 
 
 const CreateAccountPage = () => {
     const params = useSearchParams()
     const inviteId: string | null = params.get('invite') 
+    const userCtx = useContext(UserContext)
 
         const router = useRouter()
         const Success = (newPath: string) => {
@@ -37,12 +40,23 @@ const CreateAccountPage = () => {
                     return createUserResponse
                 }).then((result) => {
                     // if !! inviteId:  user B details added to friend rec doc
-                    CreateUserDetails({authId: result?.$id, email: result?.email, name: result?.name})
-                        
-                    }).then((detailResult) => {
+                    const createResult = CreateUserDetails({ authId: result?.$id, email: result?.email, name: result?.name })
+                    console.log('createResult')
+                    console.log(createResult)
+                    return createResult
+                }).then((createResult) => {
+                    if (!!createResult) {
+                        // take out not working bc user ctx not created until login, using query params instead
+                        userCtx.updateUserDetailsId(createResult?.$id)
+                    }
+                    return createResult?.$id
+                    }).then((detailId) => {
                         // if !! inviteId:  user B details added to friend rec doc
-                        console.log(detailResult)
-                        Success(`/account/login${!!inviteId ? `?invite=${inviteId}`:''}`)
+                        console.log('detailId')
+                        console.log(detailId)
+                        console.log('userCtx')
+                        console.log(userCtx)
+                        Success(`/account/login${!!inviteId ? `?invite=${inviteId}&detail=${detailId}`:`?detail=${detailId}`}`)
                     })
             }
             catch (error) {

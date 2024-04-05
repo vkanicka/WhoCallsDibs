@@ -20,7 +20,7 @@ const InvitePage = () => {
                 userAId: userCtx.user.$id as string,
                 userAEmail: userCtx.user.email as string,
                 userAName: userCtx.user.name as string,
-                userADetails: userCtx.user.$id as string
+                userADetailsId: userCtx.userDetailsId as string
             }
             const response = CreateInvite(inputData).then((response)=>Success(`/account/invite/${response?.$id}`))
             return response
@@ -29,6 +29,8 @@ const InvitePage = () => {
             console.log(error)
         }
     }
+
+    console.log(userCtx)
     
     return (
         <div className="flex flex-col justify-between h-full space-y-6 text-2xl">

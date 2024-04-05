@@ -29,8 +29,10 @@ const defaultUser: Models.User<Models.Preferences> = {
 export const UserContext = createContext({
     user: defaultUser,
     updateUser: () => { },
-    loginUser: (newUser: Models.User<Models.Preferences>) => { },
+    loginUser: (newUser: Models.User<Models.Preferences>, userDetailsId: string) => { },
     logoutUser: () => { },
+    updateUserDetailsId: (userDetailsId: string) => { },
+    userDetailsId: ''
 })
 
 interface childrenProps {
@@ -41,8 +43,10 @@ const UserContextProvider = ({ children, ...childrenProps }: childrenProps) => {
     const [user, setUser] = useState({
         user: defaultUser,
         updateUser: () => { },
-        loginUser: (newUser: Models.User<Models.Preferences>) => { },
+        loginUser: (newUser: Models.User<Models.Preferences>, userDetailsId: string) => { },
         logoutUser: () => { },
+        updateUserDetailsId: (userDetailsId: string) => { },
+        userDetailsId: '',
     })
     const handleUpdateUser = () => {
         const isDefaultUser = user.user.name === 'User Name'
@@ -70,14 +74,18 @@ const UserContextProvider = ({ children, ...childrenProps }: childrenProps) => {
             updateUser: () => { },
             loginUser: () => { },
             logoutUser: () => { },
+            updateUserDetailsId: (userDetailsId: string) => { },
+            userDetailsId: user.userDetailsId
             })
     }
-    const handleLoginUser = (newUser: Models.User<Models.Preferences>) => {
+    const handleLoginUser = (newUser: Models.User<Models.Preferences>, userDetailsId = '') => {
         setUser({
             user: newUser,
             updateUser: () => { },
-            loginUser: (newUser: Models.User<Models.Preferences>) => { },
-            logoutUser: () => {},
+            loginUser: (newUser: Models.User<Models.Preferences>, userDetailsId: string) => { },
+            logoutUser: () => { },
+            updateUserDetailsId: (userDetailsId: string) => { },
+            userDetailsId: userDetailsId
             })
 
     }
@@ -85,11 +93,24 @@ const UserContextProvider = ({ children, ...childrenProps }: childrenProps) => {
         handleLoginUser(defaultUser)
     }
 
+    const handleUpdateUserDetailsId = (userDetailsId: string) => {
+        setUser({
+            user: user.user,
+            updateUser: ()=>{},
+            loginUser: ()=>{},
+            logoutUser: ()=>{},
+            updateUserDetailsId: (userDetailsId: string)=>{},
+            userDetailsId: userDetailsId
+        })
+    }
+
     const ctxValue = {
         user: user.user,
         updateUser: handleUpdateUser,
         loginUser: handleLoginUser,
         logoutUser: handleLogoutUser,
+        updateUserDetailsId: handleUpdateUserDetailsId,
+        userDetailsId: user.userDetailsId
     }
 
     return <UserContext.Provider value={ctxValue}>

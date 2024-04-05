@@ -164,13 +164,13 @@ export const GetAccount = async () => {
     }
 }
 
-export const CreateInvite = async ({ userAEmail, userAId, userAName }: Partial<Invite>) => {
+export const CreateInvite = async ({ userAEmail, userAId, userAName, userADetailsId }: Partial<Invite>) => {
     try {
             const response = await databases.createDocument(
                 process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string, 
                 process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_INVITES as string, 
                 ID.unique(),
-                { 'userAEmail': userAEmail, 'userAId': userAId, 'userAName': userAName }
+                { 'userAEmail': userAEmail, 'userAId': userAId, 'userAName': userAName, 'userADetailsId': userADetailsId }
             );
         // console.log(response)
         return response
@@ -200,25 +200,7 @@ export const CreateUserDetails = async ({ authId, email, name  }: Partial<UserDe
                 {
                     'authId': authId,
                     'email': email,
-                    'name': name
-                }
-            );
-        // console.log(response)
-        return response
-    } catch (error) {
-        console.error(error)
-    }
-}
-export const GetUserDetails = async ({ authId, email, name  }: Partial<UserDetails>) => {
-    try {
-            const response = await databases.createDocument(
-                process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string, 
-                process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_USER_DETAILS as string, 
-                ID.unique(),
-                {
-                    'authId': authId,
-                    'email': email,
-                    'name': name
+                    'name': name,
                 }
             );
         // console.log(response)
