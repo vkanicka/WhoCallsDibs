@@ -246,6 +246,49 @@ export const UpdateUserDetails = async ({id, newFriends}: Partial<Invite>) => {
                 "friends": newFriends,
             }
         )
+        // console.log(response)
+        return response
+    }
+    catch (error) {
+        console.error(error)
+    }
+}
+export const DeleteInvite = async ( id : string) => {
+    try {
+            const response = await databases.deleteDocument(
+                process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string, 
+                process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_INVITES as string, 
+                id,
+            );
+        // console.log(response)
+        return response
+    } catch (error) {
+        console.error(error)
+    }
+}
+export const AcceptInvite = async (id: string) => {
+    try {
+        const response = await databases.updateDocument(
+            process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string, process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_INVITES as string, id,
+            {
+                "Status": 'Accepted'
+            }
+        )
+        console.log(response)
+        return response
+    }
+    catch (error) {
+        console.error(error)
+    }
+}
+export const IgnoreInvite = async (id: string) => {
+    try {
+        const response = await databases.updateDocument(
+            process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string, process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_INVITES as string, id,
+            {
+                "Status": 'Ignored'
+            }
+        )
         console.log(response)
         return response
     }

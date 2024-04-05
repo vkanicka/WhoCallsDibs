@@ -10,9 +10,8 @@ import Link from "next/link";
 import { useParams, useSearchParams } from "next/navigation";
 import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '@data/context/user';
-import { GetInvite, GetUserDetails, UpdateInvite, UpdateUserDetails } from "@/data/client";
+import { AcceptInvite, GetInvite, GetUserDetails, IgnoreInvite, UpdateInvite, UpdateUserDetails } from "@/data/client";
 import Invite from "@/data/models/invite";
-import UserDetails from "@/data/models/userDetails";
 
 const InvitePage = () => {
     const [invite, setInvite] = useState<Invite>()
@@ -24,13 +23,13 @@ const InvitePage = () => {
     const userDetailsIdParam = searchParams.get('detail')
 
     const handleIgnoreClick = () => {
-        console.log('ignore click')
-        // if user denies request, is that saved in req table or is rec doc deleted ?
+        inviteId && IgnoreInvite(inviteId as string)
     }
     const handleAcceptClick = () => {
         const userBDetailId = userDetailsIdParam ?? userCtx.userDetailsId
+        inviteId && AcceptInvite(inviteId as string)
+        
         if (userCtx.user.$id !== invite?.userAId) {
-            let userADetails: Partial<UserDetails>;
             const userADetailId = invite?.userADetailsId
             if (!!userADetailId && !!userBDetailId) {
                 GetUserDetails(userADetailId).then((userADetails) => {
