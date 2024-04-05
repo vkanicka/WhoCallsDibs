@@ -3,14 +3,16 @@
  */
 
 'use client'
-import { useEffect, useState, Suspense } from 'react'
-import { GetAllItems, GetCategoryFilteredItems } from '@data/client'
+import { useEffect, useState, Suspense, useContext } from 'react'
+import { GetAllItems, GetCategoryFilteredItems, GetUserDetailsByAuthId } from '@data/client'
 import Item from '@models/item'
 import ItemCard from '@components/itemCard'
 import CATEGORIES from '@/data/const/categories'
 import { useSearchParams } from 'next/navigation'
 // import { useRouter } from 'next/navigation'
 import { X } from 'react-feather'
+import { UserContext } from '@/data/context/user'
+import UserDetails from '@/data/models/userDetails'
 
 const Browse = () => {
     const ItemsList = () => {
@@ -20,6 +22,7 @@ const Browse = () => {
         let showFilters: boolean;
         catParams = searchParams.getAll('categories')
         showFilters = searchParams.get('showFilters') == 'true'
+        const userCtx = useContext(UserContext)
 
         const getStarted = async () => {
             let gottenItems: Item[] | undefined;
@@ -31,6 +34,11 @@ const Browse = () => {
                 gottenItems = await GetAllItems()
             }
             setAllItems(gottenItems)
+        }
+        const getDetails = async () => {
+            let details: Partial<UserDetails>
+            details = GetUserDetailsByAuthId(userCtx.user.$id)
+            console.log(details)
         }
     
         // const router = useRouter()
@@ -58,7 +66,9 @@ const Browse = () => {
         }
         useEffect(() => {
             getStarted()
-        }, [catParams])
+            // getDetails()
+        }, [])
+
         
         return (
             <div>

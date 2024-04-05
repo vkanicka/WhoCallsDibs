@@ -296,3 +296,18 @@ export const IgnoreInvite = async (id: string) => {
         console.error(error)
     }
 }
+export const GetUserDetailsByAuthId = async (id: string) => {
+    try {
+        const response = await databases.listDocuments(
+            process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string, process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_USER_DETAILS as string, 
+                [
+                    Query.equal('authId', id)
+                ]
+            )
+        console.log(response)
+        return response
+    }
+    catch (error) {
+        console.error(error)
+    }
+}

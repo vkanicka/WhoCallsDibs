@@ -30,7 +30,7 @@ const Header = () => {
             }
     },[])
     return (
-        <header className="w-full mb-1 p-2 px-6 text-green-200 flex justify-between">
+        <header className="w-full p-6 text-green-200 flex justify-between">
             <Link href='/'>
                 <h1 className='text-verbena-900 text-3xl'>Who Calls Dibs?</h1>
             </Link>
