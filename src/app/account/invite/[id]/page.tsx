@@ -16,9 +16,11 @@ import Invite from "@/data/models/invite";
 const InvitePage = () => {
     const [invite, setInvite] = useState<Invite>()
     const params = useParams()
+    console.log(params)
     const userCtx = useContext(UserContext)
     const isUserLoggedIn = !!userCtx.user.$id
     const { id: inviteId } = params
+    console.log(`inviteId: ${inviteId}`)
 
     const handleIgnoreClick = () => {
         console.log('ignore click')
@@ -53,13 +55,13 @@ const InvitePage = () => {
         getAndSetInvite(inviteId as string)
     }, [])
     
-
+    console.log(invite)
 
     return (
         <div>
             <h1>Invite Page</h1>
 
-            <p>{invite?.userAName} has invited {invite?.userBName ?? 'you'} to be friends!</p>
+            <p>{invite?.userAName ? invite.userAName : 'Someone'} has invited {invite?.userBName ? invite.userBName : 'you'} to be friends!</p>
 
             {!isUserLoggedIn && (
                 <div>

@@ -48,7 +48,7 @@ const LoginPage = () => {
             console.log('userCtx.userDetailsId')
             console.log(userCtx.userDetailsId)
                 // if !! inviteId:  user B details added to friend rec doc
-                Success(!!inviteId ? `/account/invite/${inviteId}${detailsId ? `&detail=${detailsId}`:''}` : `/browse/${detailsId ? `?detail=${detailsId}`:''}`)
+                Success(!!inviteId ? `/account/invite/${inviteId}${detailsId ? `?detail=${detailsId}`:''}` : `/browse/${detailsId ? `?detail=${detailsId}`:''}`)
             })
         }
         catch (error) {
