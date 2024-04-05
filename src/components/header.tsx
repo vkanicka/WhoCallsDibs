@@ -1,5 +1,5 @@
 'use client'
-
+import Image from 'next/image'
 import Link from 'next/link';
 import { useContext, useEffect } from 'react';
 import { UserContext } from '@data/context/user';
@@ -30,10 +30,13 @@ const Header = () => {
             }
     },[])
     return (
-        <header className="w-full p-6 text-green-200 flex justify-between">
-            <Link href='/'>
-                <h1 className='text-verbena-900 text-3xl'>Who Calls Dibs?</h1>
-            </Link>
+        <header className="w-full p-6 text-green-200 flex justify-between align-middle">
+            <div className='flex gap-1'>
+                {/* <Image src={'/favicon.ico'} alt={'icon'} width={40} height={40} className='rounded-full'/> */}
+                <Link className='self-center' href='/'>
+                    <h1 className='text-verbena-900 text-3xl'>Who Calls Dibs?</h1>
+                </Link>
+            </div>
             {!!userCtx?.user?.email ? (<Link className='link-account-header' href='/account/view' >{ userCtx?.user?.name}</Link>) : (<Link className='link-account-header' href={`/account/login${!!inviteId ? '?invite='+inviteId : ''}`}>Login</Link>)}
         </header>
     )
