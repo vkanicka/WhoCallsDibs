@@ -41,13 +41,6 @@ const LoginPage = () => {
                 console.log(error)
             }
         }).then(() => {
-            console.log('detailsId')
-            console.log(userCtx.userDetailsId)
-            // !!detailsId && userCtx.updateUserDetailsId(detailsId)
-        }).then(() => {
-            console.log('userCtx.userDetailsId')
-            console.log(userCtx.userDetailsId)
-                // if !! inviteId:  user B details added to friend rec doc
                 Success(!!inviteId ? `/account/invite/${inviteId}${detailsId ? `?detail=${detailsId}`:''}` : `/browse/${detailsId ? `?detail=${detailsId}`:''}`)
             })
         }
@@ -55,8 +48,6 @@ const LoginPage = () => {
             console.log(error)
         }
     }
-    console.log(userCtx)
-    console.log(detailsId)
     return (
         <div>
             <form onSubmit={submitForm} className="flex flex-col gap-2">

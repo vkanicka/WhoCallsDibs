@@ -20,7 +20,6 @@ const LogoutPage = () => {
         e.preventDefault();
         try {
             LogoutUser().then((logoutUserResponse) => {
-                console.log(logoutUserResponse)
                 userCtx.logoutUser()
 
         }).then(() => {

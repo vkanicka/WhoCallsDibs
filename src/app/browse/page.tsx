@@ -43,22 +43,16 @@ const Browse = () => {
                 newArr.splice(catIndex,1)
             }
             const newPath = `?${newArr.map(x=>`categories=${x.replaceAll(' ','+')}`).join('&')}&showFilters=${showFilters}`
-            // console.log(newPath)
-            // router.push(newPath)
             const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + newPath;
             window.history.pushState({ path: newurl }, '', newurl);
         }
         const handleShowFilters = () => {
             const newPath = `?${catParams.map(x=>`categories=${x.replaceAll(' ','+')}`).join('&')}&showFilters=${!showFilters}`
-            // console.log(newPath)
-            // router.push(newPath)
             const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + newPath;
             window.history.pushState({ path: newurl }, '', newurl);
         }
         const handleClearFilters = () => {
             const newPath = `?showFilters=${showFilters}`
-            // console.log(newPath)
-            // router.push(newPath)
             const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + newPath;
             window.history.pushState({ path: newurl }, '', newurl);
         }

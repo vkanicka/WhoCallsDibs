@@ -7,35 +7,48 @@
 'use client'
 
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '@data/context/user';
-import { GetInvite, UpdateInvite, UpdateUserDetails } from "@/data/client";
+import { GetInvite, GetUserDetails, UpdateInvite, UpdateUserDetails } from "@/data/client";
 import Invite from "@/data/models/invite";
+import UserDetails from "@/data/models/userDetails";
 
 const InvitePage = () => {
     const [invite, setInvite] = useState<Invite>()
     const params = useParams()
-    console.log(params)
     const userCtx = useContext(UserContext)
     const isUserLoggedIn = !!userCtx.user.$id
     const { id: inviteId } = params
-    console.log(`inviteId: ${inviteId}`)
+    const searchParams = useSearchParams()
+    const userDetailsIdParam = searchParams.get('detail')
 
     const handleIgnoreClick = () => {
         console.log('ignore click')
         // if user denies request, is that saved in req table or is rec doc deleted ?
     }
     const handleAcceptClick = () => {
-        console.log('accept click')
-        // (if logged in user === user B and !== user A) adds friend ID/email/user relationship to user A AND user B's friends array
-        if (userCtx.user.$id === invite?.userBId && userCtx.user.$id !== invite?.userAId) {
-            // const userDetailsId = 
-            // UpdateUserDetails()
-            console.log('get user update id and add friend')
-
+        const userBDetailId = userDetailsIdParam ?? userCtx.userDetailsId
+        if (userCtx.user.$id !== invite?.userAId) {
+            let userADetails: Partial<UserDetails>;
+            const userADetailId = invite?.userADetailsId
+            if (!!userADetailId && !!userBDetailId) {
+                GetUserDetails(userADetailId).then((userADetails) => {
+                    const newFriends: string[] = userADetails?.friends ?? []
+                    if (!newFriends.includes(userBDetailId)) {
+                        newFriends.push(userBDetailId)
+                        UpdateUserDetails({id: userADetailId, newFriends: newFriends})
+                    }
+                })
+                GetUserDetails(userBDetailId).then((userBDetails) => {
+                    const newFriends: string[] = userBDetails?.friends ?? []
+                    if (!newFriends.includes(userADetailId)) {
+                        newFriends.push(userADetailId)
+                        UpdateUserDetails({id: userBDetailId, newFriends: newFriends})
+                    }
+                })
+            }
         }
-        // is friend request document deleted? or saved with updated status = Accepted ?
     }
 
         const getAndSetInvite = async (id: string) => {
@@ -54,8 +67,6 @@ const InvitePage = () => {
     useEffect(() => {
         getAndSetInvite(inviteId as string)
     }, [])
-    
-    console.log(invite)
 
     return (
         <div>

@@ -227,12 +227,23 @@ export const UpdateInvite = async ({id, userBId, userBEmail, userBName}: Partial
         console.error(error)
     }
 }
-export const UpdateUserDetails = async ({id, friends}: Partial<Invite>) => {
+export const GetUserDetails = async (id: string) => {
+    try {
+        const response = await databases.getDocument(
+            process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string, process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_USER_DETAILS as string, id        )
+        console.log(response)
+        return response
+    }
+    catch (error) {
+        console.error(error)
+    }
+}
+export const UpdateUserDetails = async ({id, newFriends}: Partial<Invite>) => {
     try {
         const response = await databases.updateDocument(
             process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string, process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_USER_DETAILS as string, id,
             {
-                "friends": friends,
+                "friends": newFriends,
             }
         )
         console.log(response)

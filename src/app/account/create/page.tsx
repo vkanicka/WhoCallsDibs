@@ -39,23 +39,14 @@ const CreateAccountPage = () => {
                 CreateUser(newUser).then((createUserResponse) => {
                     return createUserResponse
                 }).then((result) => {
-                    // if !! inviteId:  user B details added to friend rec doc
                     const createResult = CreateUserDetails({ authId: result?.$id, email: result?.email, name: result?.name })
-                    console.log('createResult')
-                    console.log(createResult)
                     return createResult
                 }).then((createResult) => {
                     if (!!createResult) {
-                        // take out not working bc user ctx not created until login, using query params instead
                         userCtx.updateUserDetailsId(createResult?.$id)
                     }
                     return createResult?.$id
                     }).then((detailId) => {
-                        // if !! inviteId:  user B details added to friend rec doc
-                        console.log('detailId')
-                        console.log(detailId)
-                        console.log('userCtx')
-                        console.log(userCtx)
                         Success(`/account/login${!!inviteId ? `?invite=${inviteId}&detail=${detailId}`:`?detail=${detailId}`}`)
                     })
             }

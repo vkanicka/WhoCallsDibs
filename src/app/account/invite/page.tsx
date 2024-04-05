@@ -30,8 +30,6 @@ const InvitePage = () => {
         }
     }
 
-    console.log(userCtx)
-    
     return (
         <div className="flex flex-col justify-between h-full space-y-6 text-2xl">
             {/* <h1>Create an Invite</h1> */}
