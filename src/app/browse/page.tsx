@@ -67,7 +67,7 @@ const Browse = () => {
         useEffect(() => {
             getStarted()
             // getDetails()
-        }, [])
+        }, [catParams])
 
         
         return (
