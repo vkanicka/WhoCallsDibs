@@ -2,6 +2,7 @@
 import { GetAllItems, GetCatItems, GetFriendsItems, GetUserDetailsByAuthId } from "@/data/client";
 import { UserContext } from "@/data/context/user";
 import Item from "@/data/models/item";
+import UserDetails from "@/data/models/userDetails";
 import { Models } from "appwrite";
 import { useContext, useState } from "react";
 
@@ -50,6 +51,23 @@ const Sandbox = () => {
         }).then((result) =>
         console.log(result))
     }
+    const handleDetailFriendItems = async () => {
+        console.log('handleDetailFriendItems')
+        console.log(userDetails)
+        GetUserDetailsByAuthId(userCtx.user.$id).then((userDetailsResult) => {
+            console.log(userDetailsResult)
+            setUserDetails(userDetailsResult?.documents?.[0])
+            return userDetailsResult?.documents?.[0]
+        }).then((userDetailsResult) => {
+            console.log(userDetailsResult)
+            GetFriendsItems(userDetailsResult?.friends).then((friendsItemsResult: any) => {
+            setFriendItems(friendsItemsResult)
+            return friendsItemsResult
+        }).then((friendsItemsResult) =>
+        console.log(friendsItemsResult))
+        })
+    }
+    console.log(friendItems)
     return (
         <div>
             <h1>Sandbox</h1>
@@ -59,6 +77,7 @@ const Sandbox = () => {
                 <button className="btn-test" onClick={handleAllItems}>handleAllItems</button>
                 <button className="btn-test" onClick={handleCatItems}>handleCatItems</button>
                 <button className="btn-test" onClick={handleFriendItems}>handleFriendItems</button>
+                <button className="btn-test" onClick={handleDetailFriendItems}>handleDetailFriendItems</button>
             </div>
         </div>
     )

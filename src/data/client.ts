@@ -347,7 +347,7 @@ export const GetCatItems = async (cats: string[]) => {
         const response = await databases.listDocuments(process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string,
             process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_ITEMS as string,
             [
-                Query.equal('itemOwnerId', '66102a6bc3585e087887')
+                Query.equal('categories', cats)
             ]
         )
         console.log(response)
