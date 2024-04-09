@@ -317,7 +317,8 @@ export const GetFilteredItems = async (catParams: string[], friends: string[]) =
             process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_ITEMS as string,
             [
                 Query.equal('categories', catParams),
-                Query.equal('friends', friends)
+                Query.equal('friends', friends),
+                Query.limit(100)
             ]
         )
         const items = response.documents as Item[]
@@ -333,7 +334,8 @@ export const GetFriendsItems = async (friends: string[]) => {
             process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_ITEMS as string,
             [
                 Query.equal('itemOwnerId', friends),
-                Query.equal('isDibbed', false)
+                Query.equal('isDibbed', false),
+                Query.limit(100)
             ]
         )
         const items = response.documents as Item[]
@@ -348,7 +350,8 @@ export const GetCatItems = async (cats: string[]) => {
         const response = await databases.listDocuments(process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string,
             process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_ITEMS as string,
             [
-                Query.equal('categories', cats)
+                Query.equal('categories', cats),
+                Query.limit(100)
             ]
         )
         // console.log(response)
