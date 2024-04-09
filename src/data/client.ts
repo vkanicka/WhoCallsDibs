@@ -65,21 +65,21 @@ export const GetAllItems = async () => {
         console.error(error)
     }
 }
-export const GetCategoryFilteredItems = async (catParams: string[]) => {
-    try {
-        const response = await databases.listDocuments(process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string,
-            process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_ITEMS as string,
-            [
-                Query.contains('categories', catParams)
-            ]
-        )
-        const items = response.documents as Item[]
-        return items
-    }
-    catch (error) {
-        console.error(error)
-    }
-}
+// export const GetCategoryFilteredItems = async (catParams: string[]) => {
+//     try {
+//         const response = await databases.listDocuments(process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string,
+//             process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_ITEMS as string,
+//             [
+//                 Query.contains('categories', catParams)
+//             ]
+//         )
+//         const items = response.documents as Item[]
+//         return items
+//     }
+//     catch (error) {
+//         console.error(error)
+//     }
+// }
 
 export const GetItem = async (id:string) => {
     try {
@@ -123,7 +123,7 @@ export const CreateUser = async ({ email, password, name }: User) => {
 
 export const LoginUser = async ({ email, password }: User) => {
     try {
-        const response = await account.createEmailPasswordSession(email, password)
+        const response = await account.createEmailSession(email, password)
         return response
     }
     catch (error) {
@@ -306,6 +306,54 @@ export const GetUserDetailsByAuthId = async (id: string) => {
             )
         console.log(response)
         return response
+    }
+    catch (error) {
+        console.error(error)
+    }
+}
+export const GetFilteredItems = async (catParams: string[], friends: string[]) => {
+    try {
+        const response = await databases.listDocuments(process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string,
+            process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_ITEMS as string,
+            [
+                Query.equal('categories', catParams),
+                Query.equal('friends', friends)
+            ]
+        )
+        const items = response.documents as Item[]
+        return items
+    }
+    catch (error) {
+        console.error(error)
+    }
+}
+export const GetFriendsItems = async (friends: string[]) => {
+    try {
+        const response = await databases.listDocuments(process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string,
+            process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_ITEMS as string,
+            [
+                Query.equal('itemOwnerId', friends)
+            ]
+        )
+        const items = response.documents as Item[]
+        return items
+    }
+    catch (error) {
+        console.error(error)
+    }
+}
+export const GetCatItems = async (cats: string[]) => {
+    try {
+        const response = await databases.listDocuments(process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string,
+            process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_ITEMS as string,
+            [
+                Query.equal('itemOwnerId', '66102a6bc3585e087887')
+            ]
+        )
+        console.log(response)
+        const items = response.documents as Item[]
+        console.log(items)
+        return items
     }
     catch (error) {
         console.error(error)
