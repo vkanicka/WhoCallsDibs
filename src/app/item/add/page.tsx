@@ -40,14 +40,13 @@ const AddItem = () => {
             GetImageStorageFx(addImageResult as string).then((getImageResult) => {
                 imageUrl = getImageResult as string;
             }).then(() => {
-                // @ts-expect-error
-                const itemToAdd: Item = {
+                const itemToAdd: Partial<Item> = {
                     ItemName: name.toString(),
                     ImageURL: imageUrl,
                     Description: description.toString(),
-                    itemOwnerId: userCtx.user.$id.toString(),
-                    itemOwnerEmail: userCtx.user.email.toString(),
-                    itemOwnerName: userCtx.user.name.toString(),
+                    itemOwnerId: userCtx.user.$id?.toString() ?? '',
+                    itemOwnerEmail: userCtx.user.email?.toString() ?? '',
+                    itemOwnerName: userCtx.user.name?.toString() ?? '',
                     categories: categories.length ? categories : ['Other']
                 }
                 // console.log(itemToAdd)

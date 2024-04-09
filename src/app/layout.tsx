@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@components/header";
 // import Footer from "@/components/footer";
-import Subnav from "@components/subnav"
+// import Subnav from "@components/subnav"
 import Bubble from "@components/bubble"
 import UserContextProvider from '@data/context/user'
 

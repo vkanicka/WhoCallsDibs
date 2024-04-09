@@ -31,8 +31,10 @@ const Browse = () => {
         // }
         const getDetails = async () => {
             let details: Partial<UserDetails>
-            details = GetUserDetailsByAuthId(userCtx.user.$id)
-            console.log(details)
+            if (userCtx.user.$id) {
+                details = GetUserDetailsByAuthId(userCtx.user.$id)
+                console.log(details)
+            }
         }
     
         // const router = useRouter()
@@ -63,7 +65,7 @@ const Browse = () => {
         }
         const handleDetailFriendItems = async () => {
             // console.log(userCtx.user.$id)
-            GetUserDetailsByAuthId(userCtx.user.$id).then((userDetailsResult) => {
+            userCtx.user.$id && GetUserDetailsByAuthId(userCtx.user.$id).then((userDetailsResult) => {
             // console.log(userDetailsResult)
             return userDetailsResult?.documents?.[0]
         }).then((userDetailsResult) => {

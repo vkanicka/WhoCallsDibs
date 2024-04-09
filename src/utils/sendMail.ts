@@ -9,7 +9,7 @@ import formData from 'form-data';
 import Mailgun from 'mailgun.js';
 
 type Props = {
-    user: Models.User<Models.Preferences>,
+    user: Partial<Models.User<Models.Preferences>>,
     item: Item
 }
 const sendMail = ({ user, item }: Props) => {
@@ -17,7 +17,7 @@ const sendMail = ({ user, item }: Props) => {
     const mg = mailgun.client({ username: 'api', key: process.env.NEXT_PUBLIC_MAILGUN_API_KEY_FIRST as string });
     
 
-    mg.messages.create(process.env.NEXT_PUBLIC_MAILGUN_DOMAIN as string, {
+    user.email && mg.messages.create(process.env.NEXT_PUBLIC_MAILGUN_DOMAIN as string, {
         from: `Who Called Dibs App <mailgun@${process.env.NEXT_PUBLIC_MAILGUN_DOMAIN as string}>`,
         to: [item.itemOwnerEmail, user.email],
         subject: "Dibs Called!",

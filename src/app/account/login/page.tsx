@@ -33,7 +33,7 @@ const LoginPage = () => {
             try {
             GetAccount().then((result) => {
                 if (result) {
-                    userCtx.loginUser(result, detailsId)
+                    userCtx.loginUser(result)
                 }
             })
             }

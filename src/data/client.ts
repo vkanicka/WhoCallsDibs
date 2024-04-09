@@ -13,7 +13,7 @@ client
     .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID as string);
 
 
-export const AddItemFx = async ({ ItemName, ImageURL, ListingURL, Description, itemOwnerId, itemOwnerEmail, itemOwnerName, categories }: Item) => {
+export const AddItemFx = async ({ ItemName, ImageURL, ListingURL, Description, itemOwnerId, itemOwnerEmail, itemOwnerName, categories }: Partial<Item>) => {
     try {
             const response = await databases.createDocument(
                 process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string, 

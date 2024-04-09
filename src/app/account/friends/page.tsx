@@ -5,3 +5,4 @@ const FriendsPage = () => {
         </div>
     )
 }
+export default FriendsPage;

@@ -21,7 +21,7 @@ const Sandbox = () => {
     }
     const handleUserDetails = () => {
         console.log('handleUserDetails')
-        GetUserDetailsByAuthId(userCtx.user.$id).then((result) => {
+        userCtx.user.$id && GetUserDetailsByAuthId(userCtx.user.$id).then((result) => {
             setUserDetails(result?.documents?.[0])
             return result
         }).then((result)=>console.log(result))
@@ -54,7 +54,7 @@ const Sandbox = () => {
     const handleDetailFriendItems = async () => {
         console.log('handleDetailFriendItems')
         console.log(userDetails)
-        GetUserDetailsByAuthId(userCtx.user.$id).then((userDetailsResult) => {
+        userCtx.user.$id && GetUserDetailsByAuthId(userCtx.user.$id).then((userDetailsResult) => {
             console.log(userDetailsResult)
             setUserDetails(userDetailsResult?.documents?.[0])
             return userDetailsResult?.documents?.[0]
