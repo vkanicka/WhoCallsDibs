@@ -52,9 +52,9 @@ const ItemPage = () => {
                     <div className="flex justify-center">
                         {item.ImageURL && (
                             <Image
-                                className="transition-opacity place-self-center w-1/2 md:w-1/2 lg:w-1/3 xl:w-1/4 py-2 rounded-xl aspect-square object-contain"
-                                width={100}
-                                height={100}
+                                className="transition-opacity place-self-center w-full md:w-1/2 lg:w-1/3 xl:w-1/4 py-2 rounded-xl aspect-square object-contain"
+                                width={400}
+                                height={400}
                                 src={item.ImageURL}
                                 alt={`User photo of item ${item.ItemName}`}
                             />
