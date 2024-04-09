@@ -62,15 +62,15 @@ const Browse = () => {
             router.push(newPath)
         }
         const handleDetailFriendItems = async () => {
-            console.log(userCtx.user.$id)
+            // console.log(userCtx.user.$id)
             GetUserDetailsByAuthId(userCtx.user.$id).then((userDetailsResult) => {
             // console.log(userDetailsResult)
             return userDetailsResult?.documents?.[0]
         }).then((userDetailsResult) => {
-            console.log(userDetailsResult)
+            // console.log(userDetailsResult)
             GetFriendsItems(userDetailsResult?.friends).then((friendsItemsResult: any) => {
                 // return friendsItemsResult
-                console.log(friendsItemsResult)
+                // console.log(friendsItemsResult)
                 if (catParams.length) {
                     setAllItems(friendsItemsResult.filter((item: Item)=> item.categories?.some(x=>catParams.includes(x))))
                 } else {

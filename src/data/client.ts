@@ -350,9 +350,9 @@ export const GetCatItems = async (cats: string[]) => {
                 Query.equal('categories', cats)
             ]
         )
-        console.log(response)
+        // console.log(response)
         const items = response.documents as Item[]
-        console.log(items)
+        // console.log(items)
         return items
     }
     catch (error) {
