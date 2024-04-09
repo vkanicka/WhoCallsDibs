@@ -20,7 +20,7 @@ const InvitePage = () => {
                 userAId: userCtx.user.$id as string,
                 userAEmail: userCtx.user.email as string,
                 userAName: userCtx.user.name as string,
-                userADetailsId: userCtx.userDetailsId as string
+                // userADetailsId: userCtx.userDetailsId as string
             }
             const response = CreateInvite(inputData).then((response)=>Success(`/account/invite/${response?.$id}`))
             return response

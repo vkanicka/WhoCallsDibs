@@ -7,10 +7,10 @@
 'use client'
 
 import Link from "next/link";
-import { useParams, useSearchParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '@data/context/user';
-import { AcceptInvite, GetInvite, GetUserDetails, IgnoreInvite, UpdateInvite, UpdateUserDetails } from "@/data/client";
+import { AcceptInvite, GetInvite, GetUserDetails, GetUserDetailsByAuthId, IgnoreInvite, UpdateInvite, UpdateUserDetails } from "@/data/client";
 import Invite from "@/data/models/invite";
 
 const InvitePage = () => {
@@ -19,35 +19,51 @@ const InvitePage = () => {
     const userCtx = useContext(UserContext)
     const isUserLoggedIn = !!userCtx.user.$id
     const { id: inviteId } = params
-    const searchParams = useSearchParams()
-    const userDetailsIdParam = searchParams.get('detail')
 
     const handleIgnoreClick = () => {
         inviteId && IgnoreInvite(inviteId as string)
     }
-    const handleAcceptClick = () => {
-        const userBDetailId = userDetailsIdParam ?? userCtx.userDetailsId
-        inviteId && AcceptInvite(inviteId as string)
-        
-        if (userCtx.user.$id !== invite?.userAId) {
-            const userADetailId = invite?.userADetailsId
-            if (!!userADetailId && !!userBDetailId) {
-                GetUserDetails(userADetailId).then((userADetails) => {
-                    const newFriends: string[] = userADetails?.friends ?? []
-                    if (!newFriends.includes(userBDetailId)) {
-                        newFriends.push(userBDetailId)
-                        UpdateUserDetails({id: userADetailId, newFriends: newFriends})
-                    }
-                })
-                GetUserDetails(userBDetailId).then((userBDetails) => {
-                    const newFriends: string[] = userBDetails?.friends ?? []
-                    if (!newFriends.includes(userADetailId)) {
-                        newFriends.push(userADetailId)
-                        UpdateUserDetails({id: userBDetailId, newFriends: newFriends})
-                    }
-                })
+    const handleAcceptClick = async () => {
+        const currentUserBId = userCtx.user.$id
+        const userAId = invite?.userAId
+        let userADetailId: string;
+        userAId && await GetUserDetailsByAuthId(userAId).then((result) => {
+            console.log(result)
+            if (result?.documents[0]) {
+                console.log(result.documents[0].$id)
+                userADetailId = result.documents[0].$id
             }
-        }
+        })
+        let userBDetailId: string;
+        currentUserBId && await GetUserDetailsByAuthId(currentUserBId).then((result) => {
+            // console.log(result)
+            if (result?.documents?.[0]) {
+                userBDetailId = result.documents[0].$id
+            }
+        }).then(() => {
+            inviteId && AcceptInvite(inviteId as string)
+        }).then(() => {
+            if (currentUserBId !== userAId) {
+                if (!!userAId && !!userBDetailId) {
+                    !!userAId && GetUserDetailsByAuthId(userAId).then((userADetails) => {
+                        const newFriends: string[] = userADetails?.documents?.[0]?.friends ?? []
+                        if (!!currentUserBId && !newFriends.includes(currentUserBId)) {
+                            newFriends.push(currentUserBId)
+                            UpdateUserDetails({id: userADetailId, newFriends: newFriends})
+                        }
+                    })
+                    GetUserDetails(userBDetailId).then((userBDetails) => {
+                        const newFriends: string[] = userBDetails?.friends ?? []
+                        if (!!userAId && !newFriends.includes(userAId)) {
+                            newFriends.push(userAId)
+                            UpdateUserDetails({id: userBDetailId, newFriends: newFriends})
+                        }
+                    })
+                }
+            }
+        })
+        
+        
     }
 
         const getAndSetInvite = async (id: string) => {
