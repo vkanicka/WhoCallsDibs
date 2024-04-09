@@ -4,7 +4,7 @@
 
 'use client'
 import { useEffect, useState, Suspense, useContext } from 'react'
-import { GetAllItems, GetCategoryFilteredItems, GetUserDetailsByAuthId } from '@data/client'
+import { GetFriendsItems, GetUserDetailsByAuthId } from '@data/client'
 import Item from '@models/item'
 import ItemCard from '@components/itemCard'
 import CATEGORIES from '@/data/const/categories'
@@ -26,17 +26,9 @@ const Browse = () => {
         showFilters = searchParams.get('showFilters') == 'true'
         const userCtx = useContext(UserContext)
 
-        const getStarted = async () => {
-            let gottenItems: Item[] | undefined;
-            if (catParams.length) {
-                // gottenItems = await GetCategoryFilteredItems(catParams)
-                gottenItems = await GetAllItems()
-                gottenItems = gottenItems?.filter((item: Item)=> item.categories?.some(x=>catParams.includes(x)))
-            } else {
-                gottenItems = await GetAllItems()
-            }
-            setAllItems(gottenItems)
-        }
+        // const getStarted = async () => {
+        //     await handleDetailFriendItems()
+        // }
         const getDetails = async () => {
             let details: Partial<UserDetails>
             details = GetUserDetailsByAuthId(userCtx.user.$id)
@@ -69,8 +61,25 @@ const Browse = () => {
             // window.history.pushState({ path: newurl }, '', newurl);
             router.push(newPath)
         }
+        const handleDetailFriendItems = async () => {
+            GetUserDetailsByAuthId(userCtx.user.$id).then((userDetailsResult) => {
+            // console.log(userDetailsResult)
+            return userDetailsResult?.documents?.[0]
+        }).then((userDetailsResult) => {
+            console.log(userDetailsResult)
+            GetFriendsItems(userDetailsResult?.friends).then((friendsItemsResult: any) => {
+                // return friendsItemsResult
+                console.log(friendsItemsResult)
+                if (catParams.length) {
+                    setAllItems(friendsItemsResult.filter((item: Item)=> item.categories?.some(x=>catParams.includes(x))))
+                } else {
+                    setAllItems(friendsItemsResult)
+                }
+        })
+        })
+    }
         useEffect(() => {
-            getStarted()
+            handleDetailFriendItems()
             // getDetails()
         }, [])
 
