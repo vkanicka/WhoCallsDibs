@@ -62,6 +62,7 @@ const Browse = () => {
             router.push(newPath)
         }
         const handleDetailFriendItems = async () => {
+            console.log(userCtx.user.$id)
             GetUserDetailsByAuthId(userCtx.user.$id).then((userDetailsResult) => {
             // console.log(userDetailsResult)
             return userDetailsResult?.documents?.[0]
@@ -81,7 +82,7 @@ const Browse = () => {
         useEffect(() => {
             handleDetailFriendItems()
             // getDetails()
-        }, [])
+        }, [userCtx])
 
         
         return (
