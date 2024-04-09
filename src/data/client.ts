@@ -304,7 +304,7 @@ export const GetUserDetailsByAuthId = async (id: string) => {
                     Query.equal('authId', id)
                 ]
             )
-        console.log(response)
+        // console.log(response)
         return response
     }
     catch (error) {
@@ -332,7 +332,8 @@ export const GetFriendsItems = async (friends: string[]) => {
         const response = await databases.listDocuments(process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string,
             process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_ITEMS as string,
             [
-                Query.equal('itemOwnerId', friends)
+                Query.equal('itemOwnerId', friends),
+                Query.equal('isDibbed', false)
             ]
         )
         const items = response.documents as Item[]

@@ -28,9 +28,9 @@ const InvitePage = () => {
         const userAId = invite?.userAId
         let userADetailId: string;
         userAId && await GetUserDetailsByAuthId(userAId).then((result) => {
-            console.log(result)
+            // console.log(result)
             if (result?.documents[0]) {
-                console.log(result.documents[0].$id)
+                // console.log(result.documents[0].$id)
                 userADetailId = result.documents[0].$id
             }
         })
