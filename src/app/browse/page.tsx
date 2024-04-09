@@ -9,13 +9,15 @@ import Item from '@models/item'
 import ItemCard from '@components/itemCard'
 import CATEGORIES from '@/data/const/categories'
 import { useSearchParams } from 'next/navigation'
-// import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { X } from 'react-feather'
 import { UserContext } from '@/data/context/user'
 import UserDetails from '@/data/models/userDetails'
 
 const Browse = () => {
+    
     const ItemsList = () => {
+        const router = useRouter()
         const [allItems, setAllItems] = useState<Item[]>()
         const searchParams = useSearchParams()
         let catParams: string[];
@@ -51,23 +53,26 @@ const Browse = () => {
                 newArr.splice(catIndex,1)
             }
             const newPath = `?${newArr.map(x=>`categories=${x.replaceAll(' ','+')}`).join('&')}&showFilters=${showFilters}`
-            const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + newPath;
-            window.history.pushState({ path: newurl }, '', newurl);
+            // const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + newPath;
+            // window.history.pushState({ path: newurl }, '', newurl);
+            router.push(newPath)
         }
         const handleShowFilters = () => {
             const newPath = `?${catParams.map(x=>`categories=${x.replaceAll(' ','+')}`).join('&')}&showFilters=${!showFilters}`
-            const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + newPath;
-            window.history.pushState({ path: newurl }, '', newurl);
+            // const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + newPath;
+            // window.history.pushState({ path: newurl }, '', newurl);
+            router.push(newPath)
         }
         const handleClearFilters = () => {
             const newPath = `?showFilters=${showFilters}`
-            const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + newPath;
-            window.history.pushState({ path: newurl }, '', newurl);
+            // const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + newPath;
+            // window.history.pushState({ path: newurl }, '', newurl);
+            router.push(newPath)
         }
         useEffect(() => {
             getStarted()
             // getDetails()
-        }, [catParams])
+        }, [])
 
         
         return (
