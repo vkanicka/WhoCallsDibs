@@ -45,7 +45,7 @@ const InvitePage = () => {
         }).then(() => {
             if (currentUserBId !== userAId) {
                 if (!!userAId && !!userBDetailId) {
-                    !!userAId && GetUserDetailsByAuthId(userAId).then((userADetails) => {
+                    GetUserDetails(userADetailId).then((userADetails) => {
                         const newFriends: string[] = userADetails?.documents?.[0]?.friends ?? []
                         if (!!currentUserBId && !newFriends.includes(currentUserBId)) {
                             newFriends.push(currentUserBId)
