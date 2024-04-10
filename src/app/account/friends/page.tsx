@@ -23,7 +23,6 @@ const FriendsPage = () => {
         })
         
     }, [userCtx])
-    console.log(friends)
 
     return (
         <div>
