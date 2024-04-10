@@ -78,6 +78,12 @@ const Sandbox = () => {
             return friendsItemsResult
             })
     }
+    const handleUpdateFriendDetailsByAuthId = async () => {
+        const aFriendAuthId = '66102a0f803ad05dc220'
+        const bFriendAuthId = '456'
+        
+
+    }
     return (
         <div>
             <h1>Sandbox</h1>
@@ -88,6 +94,7 @@ const Sandbox = () => {
                 <button className="btn-test" onClick={handleCatItems}>handleCatItems</button>
                 <button className="btn-test" onClick={handleFriendItems}>handleFriendItems</button>
                 <button className="btn-test" onClick={handleDetailFriendItems}>handleDetailFriendItems</button>
+                <button className="btn-test" onClick={handleUpdateFriendDetailsByAuthId}>handleUpdateFriendDetailsByAuthId</button>
             </div>
         </div>
     )

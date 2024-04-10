@@ -54,9 +54,11 @@ const InvitePage = () => {
                 if (result?.documents?.[0]) {
                     userBDetailId = result.documents[0].$id
                 }
-            }).then(() => {
+            })
+            .then(() => {
                 inviteId && AcceptInvite(inviteId as string)
-            }).then(() => {
+            })
+            .then(() => {
                 if (currentUserBId !== userAId && !!userAId && !!userBDetailId) {
                     GetUserDetails(userADetailId)
                     .then((userADetails) => {

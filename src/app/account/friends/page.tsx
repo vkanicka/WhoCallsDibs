@@ -15,15 +15,15 @@ const FriendsPage = () => {
     useEffect(() => {
         if (userCtx.user.$id) {
             GetUserDetailsByAuthId(userCtx.user.$id)
-                .then((userDetailResults) => {
-                    return userDetailResults?.documents[0].friends
-                })
-                .then((friendsIds: string[]) => {
-                    return GetFriendsDetails(friendsIds)
-                })
-                .then((friendDetailResults) => {
-                    friendDetailResults && setFriends(friendDetailResults)
-                })
+            .then((userDetailResults) => {
+                return userDetailResults?.documents[0].friends
+            })
+            .then((friendsIds: string[]) => {
+                return GetFriendsDetails(friendsIds)
+            })
+            .then((friendDetailResults) => {
+                friendDetailResults && setFriends(friendDetailResults)
+            })
         }
         
     }, [userCtx])

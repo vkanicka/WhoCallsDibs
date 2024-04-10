@@ -37,6 +37,14 @@ const CreateAccountPage = () => {
             try {
                 // @ts-expect-error
                 CreateUser(newUser)
+                .then((createdUser) => {
+                    const newUserDetails = {
+                        authId: createdUser?.$id,
+                        email: createdUser?.email,
+                        name: createdUser?.name,
+                    }
+                    createdUser?.$id && CreateUserDetails(newUserDetails)    
+                })
                 .then(() => {
                     Success(`/account/login${!!inviteId ? `?invite=${inviteId}`: ''}`)
                 })
