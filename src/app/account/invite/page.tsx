@@ -34,14 +34,13 @@ const InvitePage = () => {
         <div className="flex flex-col justify-between h-full space-y-6 text-2xl">
             {/* <h1>Create an Invite</h1> */}
 
-            <p>Becoming friends allows you to view and call dibs on each other&#39;s items.</p>
+            <p>Only friends can view and call dibs on each other&#39;s items.</p>
 
-            <p>To add a friend, create an invite.</p>
+            <p>Generate an invite to share with one person.</p>
 
             <p>Click the button below to generate a link to share with one person.</p>
             
-            <p>From a mobile device, tap the <Share className="inline" /> icon next to the address bar, and select the app of your choice.</p>
-            <p>You can also select the copy <Copy className="inline" /> icon or just copy from the address bar and paste the URL wherever you need to. </p>
+            <p>After creating an invite below, copy paste from the address bar or tap the <Share className="inline" /> icon next to the address bar</p>
             
 
             <div className="bottom-tray">

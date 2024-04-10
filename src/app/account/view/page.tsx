@@ -4,36 +4,10 @@ import { UserContext } from '@data/context/user';
 import Logout from '@/components/logout';
 import Link from 'next/link';
 import { UserPlus } from 'react-feather';
-import { CreateInvite } from '@/data/client';
-import Invite from '@/data/models/invite';
-import { useRouter } from 'next/navigation';
 
 const ViewAccount = () => {
     const userCtx = useContext(UserContext);
 
-    const router = useRouter()
-    const Success = (newItemPath: string) => {
-        router.push(newItemPath)
-    }
-
-    const handleAddFriendClick = () => {
-        // const userADetailsId = 
-
-        try {
-            const inputData: Partial<Invite> = {
-                userAId: userCtx.user.$id as string,
-                userAEmail: userCtx.user.email as string,
-                userAName: userCtx.user.name as string,
-                userADetailsId: userCtx.userDetailsId as string,
-
-            }
-            const response = CreateInvite(inputData).then((response)=>Success(`/account/invite/${response?.$id}`))
-            return response
-        }
-        catch (error) {
-            console.log(error)
-        }
-    }
     return (
         <div>
             <h1>View Account</h1>

@@ -7,7 +7,7 @@
 'use client'
 
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '@data/context/user';
 import { AcceptInvite, GetInvite, GetUserDetails, GetUserDetailsByAuthId, IgnoreInvite, UpdateInvite, UpdateUserDetails } from "@/data/client";
@@ -17,8 +17,20 @@ const InvitePage = () => {
     const [invite, setInvite] = useState<Invite>()
     const params = useParams()
     const userCtx = useContext(UserContext)
+    const isInviteOwner = userCtx && userCtx.user && userCtx.user.$id === invite?.userAId
     const isUserLoggedIn = !!userCtx.user.$id
     const { id: inviteId } = params
+    const [hasCopied, setHasCopied] = useState(false)
+    const router = useRouter()
+    const Success = (newItemPath: string) => {
+        router.push(newItemPath)
+    }
+
+    const handleCopyClick = () => {
+        navigator.clipboard.writeText(window.location.href)
+        setHasCopied(true)
+        console.log(`Copied ${window.location.href}`)
+    }
 
     const handleIgnoreClick = () => {
         inviteId && IgnoreInvite(inviteId as string)
@@ -61,6 +73,8 @@ const InvitePage = () => {
                     })
                 }
             }
+        }).then(() => {
+            Success(`/account/friends`)
         })
         
         
@@ -100,7 +114,15 @@ const InvitePage = () => {
                     </div>
                 </div>
             )}
-            {isUserLoggedIn && (
+            {isUserLoggedIn && isInviteOwner && (
+                <div>
+                    <div className="bottom-tray">
+                        <button onClick={handleCopyClick} className="btn-v font-normal text-2xl">{!hasCopied ? 'Copy URL' : 'Copied!'}</button>
+                        {/* <button onClick={handleShareClick} className="btn-v font-normal text-2xl self-center">Share</button> */}
+                    </div>
+                </div>
+            )}
+            {isUserLoggedIn && !isInviteOwner && (
                 <div>
                     <div className="bottom-tray">
                         <button onClick={handleIgnoreClick} className="btn-v font-normal text-3xl">Ignore</button>
