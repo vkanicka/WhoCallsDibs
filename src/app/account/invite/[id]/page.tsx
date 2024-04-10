@@ -97,8 +97,6 @@ const InvitePage = () => {
         getAndSetInvite(inviteId as string)
     }, [userCtx])
 
-    console.log(invite)
-
     return (
         <div>
             <h1>Invite Page</h1>
