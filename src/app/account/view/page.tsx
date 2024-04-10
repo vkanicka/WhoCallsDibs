@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { UserContext } from '@data/context/user';
 import Logout from '@/components/logout';
 import Link from 'next/link';
-import { UserPlus } from 'react-feather';
+import { UserPlus, Users } from 'react-feather';
 
 const ViewAccount = () => {
     const userCtx = useContext(UserContext);
@@ -15,6 +15,9 @@ const ViewAccount = () => {
                 <div className='flex flex-col justify-between'>
                     <p>Username: {userCtx.user.name}</p>
                     <p>Email: {userCtx.user.email}</p>
+                    <Link href={'/account/friends'} className="absolute right-6 bottom-64 rounded-full h-12 w-12 bg-verbena-600 z-bubble flex place-content-center shadow-glow shadow-lime-100">
+                        <Users size={30} className='self-center text-limeshine-300' />
+                    </Link>
                     <Link href={'/account/invite'} className="absolute right-6 bottom-48 rounded-full h-12 w-12 bg-verbena-600 z-bubble flex place-content-center shadow-glow shadow-lime-100">
                         <UserPlus size={30} className='self-center text-limeshine-300' />
                     </Link>

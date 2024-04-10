@@ -29,7 +29,7 @@ const FriendsPage = () => {
         <div>
             <h1>My Friends</h1>
             <ul>
-                {friends.length && friends.map((friend, index) => {
+                {!!friends.length && friends.map((friend, index) => {
                     return (
                         <li key={index}>{friend.name}</li>
                     )

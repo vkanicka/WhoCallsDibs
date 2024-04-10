@@ -95,13 +95,19 @@ const InvitePage = () => {
 
     useEffect(() => {
         getAndSetInvite(inviteId as string)
-    }, [])
+    }, [userCtx])
+
+    console.log(invite)
 
     return (
         <div>
             <h1>Invite Page</h1>
 
             <p>{invite?.userAName ? invite.userAName : 'Someone'} has invited {invite?.userBName ? invite.userBName : 'you'} to be friends!</p>
+
+            {invite?.Status === 'Accepted' && (
+                <p className="text-3xl text-primrose-600">{invite?.Status}</p>
+            )}
 
             {!isUserLoggedIn && (
                 <div>
@@ -114,7 +120,7 @@ const InvitePage = () => {
                     </div>
                 </div>
             )}
-            {isUserLoggedIn && isInviteOwner && (
+            {isUserLoggedIn && isInviteOwner && invite?.Status !== 'Accepted' && (
                 <div>
                     <div className="bottom-tray">
                         <button onClick={handleCopyClick} className="btn-v font-normal text-2xl">{!hasCopied ? 'Copy URL' : 'Copied!'}</button>
@@ -122,11 +128,18 @@ const InvitePage = () => {
                     </div>
                 </div>
             )}
-            {isUserLoggedIn && !isInviteOwner && (
+            {isUserLoggedIn && !isInviteOwner && invite?.Status !== 'Accepted' && (
                 <div>
                     <div className="bottom-tray">
                         <button onClick={handleIgnoreClick} className="btn-v font-normal text-3xl">Ignore</button>
                         <button onClick={handleAcceptClick} className="btn-v font-normal text-3xl self-center">Accept</button>
+                    </div>
+                </div>
+            )}
+            {isUserLoggedIn && invite?.Status === 'Accepted' && (
+                <div>
+                    <div className="bottom-tray">
+                        <Link href='/account/friends' className="btn-v font-normal text-2xl">View Friends</Link>
                     </div>
                 </div>
             )}
