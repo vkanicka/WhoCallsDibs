@@ -36,50 +36,40 @@ const InvitePage = () => {
         inviteId && IgnoreInvite(inviteId as string)
     }
     const handleAcceptClick = async () => {
-        const currentUserBId = userCtx.user.$id
-        const userAId = invite?.userAId
-        let userADetailId: string;
-        if (userAId) {
-            await GetUserDetailsByAuthId(userAId)
-            .then((result) => {
-                if (result?.documents[0]) {
-                    userADetailId = result.documents[0].$id
-                }
-            })
-        }
-        let userBDetailId: string;
-        if (currentUserBId) {
-            await GetUserDetailsByAuthId(currentUserBId)
-            .then((result) => {
-                if (result?.documents?.[0]) {
-                    userBDetailId = result.documents[0].$id
-                }
-            })
-            .then(() => {
-                inviteId && AcceptInvite(inviteId as string)
-            })
-            .then(() => {
-                if (currentUserBId !== userAId && !!userAId && !!userBDetailId) {
-                    GetUserDetails(userADetailId)
-                    .then((userADetails) => {
-                        const newFriends: string[] = userADetails?.documents?.[0]?.friends ?? []
-                        if (!!currentUserBId && !newFriends.includes(currentUserBId)) {
-                            newFriends.push(currentUserBId)
-                            UpdateUserDetails({id: userADetailId, newFriends: newFriends})
+        // update invite to accepted
+        // get details ID A with auth ID A
+        // update A details to have friend B
+        // get details ID B with auth ID B
+        // update B details to have friend A
+        const userBAuthId = userCtx.user.$id
+        if (!!userBAuthId && invite?.userAId && (userBAuthId !== invite.userAId)) {
+            GetUserDetailsByAuthId(invite.userAId)
+                .then((userADetailResult: any) => {
+                    const userADetails = userADetailResult?.documents[0]
+                    if (!!userADetails) {
+                        const userADetailsId = userADetails.$id
+                        const friends = [...userADetails.friends] ?? []
+                        if (!friends.includes(userBAuthId)) {
+                            friends.push(userBAuthId)
                         }
-                    })
-                    GetUserDetails(userBDetailId)
-                    .then((userBDetails) => {
-                        const newFriends: string[] = userBDetails?.friends ?? []
-                        if (!!userAId && !newFriends.includes(userAId)) {
-                            newFriends.push(userAId)
-                            UpdateUserDetails({id: userBDetailId, newFriends: newFriends})
+                        UpdateUserDetails(userADetailsId, friends)
+                    }
+                })
+                .then(() => GetUserDetailsByAuthId(userBAuthId))
+                .then((userBDetailResult: any) => {
+                    const userBDetails = userBDetailResult?.documents[0]
+                    if (!!userBDetails) {
+                        const userBDetailsId = userBDetails.$id
+                        const friends = [...userBDetails.friends] ?? []
+                        if (!friends.includes(invite.userAId)) {
+                            friends.push(invite.userAId)
                         }
-                    })
-                }
-            }).then(() => {
-                Success(`/account/friends`)
-            })
+                        UpdateUserDetails(userBDetailsId, friends)
+                    }
+                })
+                .then(() => {
+                    Success('/account/friends')
+                })
         }
     }
 
@@ -98,7 +88,7 @@ const InvitePage = () => {
 
     useEffect(() => {
         getAndSetInvite(inviteId as string)
-    }, [userCtx, inviteId])
+    }, [userCtx])
 
     return (
         <div>
