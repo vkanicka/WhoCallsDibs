@@ -15,13 +15,11 @@ const Header = () => {
 
     useEffect(() => {
         try {
-            GetAccount().then((result) => {
+            GetAccount()
+            .then((result) => {
                 if (result) {
                     userCtx.loginUser(result)
                 }
-                // else {
-                //     userCtx.logoutUser()
-                // }
             })
             }
             catch (error) {

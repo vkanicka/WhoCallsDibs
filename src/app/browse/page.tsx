@@ -64,24 +64,22 @@ const Browse = () => {
             router.push(newPath)
         }
         const handleDetailFriendItems = async () => {
-            // console.log(userCtx.user.$id)
-            userCtx.user.$id && GetUserDetailsByAuthId(userCtx.user.$id).then((userDetailsResult) => {
-            // console.log(userDetailsResult)
-            return userDetailsResult?.documents?.[0]
-        }).then((userDetailsResult) => {
-            // console.log(userDetailsResult)
-            if (userDetailsResult?.friends.length) {
-                GetFriendsItems(userDetailsResult?.friends).then((friendsItemsResult: any) => {
-                    // return friendsItemsResult
-                    // console.log(friendsItemsResult)
-                    if (catParams.length) {
-                        setAllItems(friendsItemsResult.filter((item: Item)=> item.categories?.some(x=>catParams.includes(x))))
-                    } else {
-                        setAllItems(friendsItemsResult)
-                    }
-                })
-            }
-        })
+            userCtx.user.$id && GetUserDetailsByAuthId(userCtx.user.$id)
+            .then((userDetailsResult) => {
+                return userDetailsResult?.documents?.[0]
+            })
+            .then((userDetailsResult) => {
+                if (userDetailsResult?.friends.length) {
+                    return GetFriendsItems(userDetailsResult?.friends)
+                }
+            })
+            .then((friendsItemsResult: any) => {
+                if (catParams.length) {
+                    setAllItems(friendsItemsResult.filter((item: Item)=> item.categories?.some(x=>catParams.includes(x))))
+                } else {
+                    setAllItems(friendsItemsResult)
+                }
+            })
     }
         useEffect(() => {
             handleDetailFriendItems()

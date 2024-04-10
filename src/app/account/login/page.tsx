@@ -12,7 +12,6 @@ import Link from "next/link";
 const LoginPage = () => {
     const params = useSearchParams()
     const inviteId: string | null = params.get('invite') 
-    const detailsId: string | null = params.get('detail') ?? ''
     const userCtx = useContext(UserContext);
     const router = useRouter()
     const Success = (newPath: string) => {
@@ -28,25 +27,27 @@ const LoginPage = () => {
         
         try {
             // @ts-expect-error
-            LoginUser({ email: email.toString(), password: password.toString() }).then((loginUserResponse) => {
-        }).then((loginUserResponse) => {
-            try {
-            GetAccount().then((result) => {
-                if (result) {
-                    userCtx.loginUser(result)
+            LoginUser({ email: email.toString(), password: password.toString() })
+            .then((loginUserResponse) => {
+                try {
+                    GetAccount()
+                    .then((result) => {
+                        if (result) {
+                            userCtx.loginUser(result)
+                        }
+                    })
+                }
+                catch (error) {
+                    console.log(error)
                 }
             })
+            .then(() => {
+                    Success(!!inviteId ? `/account/invite/${inviteId}` : '/browse/')
+                })
             }
             catch (error) {
                 console.log(error)
             }
-        }).then(() => {
-                Success(!!inviteId ? `/account/invite/${inviteId}${detailsId ? `?detail=${detailsId}`:''}` : `/browse/${detailsId ? `?detail=${detailsId}`:''}`)
-            })
-        }
-        catch (error) {
-            console.log(error)
-        }
     }
     return (
         <div>

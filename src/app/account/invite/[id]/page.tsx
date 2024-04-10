@@ -39,32 +39,35 @@ const InvitePage = () => {
         const currentUserBId = userCtx.user.$id
         const userAId = invite?.userAId
         let userADetailId: string;
-        userAId && await GetUserDetailsByAuthId(userAId).then((result) => {
-            // console.log(result)
-            if (result?.documents[0]) {
-                // console.log(result.documents[0].$id)
-                userADetailId = result.documents[0].$id
-            }
-        })
+        if (userAId) {
+            await GetUserDetailsByAuthId(userAId)
+            .then((result) => {
+                if (result?.documents[0]) {
+                    userADetailId = result.documents[0].$id
+                }
+            })
+        }
         let userBDetailId: string;
-        currentUserBId && await GetUserDetailsByAuthId(currentUserBId).then((result) => {
-            // console.log(result)
-            if (result?.documents?.[0]) {
-                userBDetailId = result.documents[0].$id
-            }
-        }).then(() => {
-            inviteId && AcceptInvite(inviteId as string)
-        }).then(() => {
-            if (currentUserBId !== userAId) {
-                if (!!userAId && !!userBDetailId) {
-                    GetUserDetails(userADetailId).then((userADetails) => {
+        if (currentUserBId) {
+            await GetUserDetailsByAuthId(currentUserBId)
+            .then((result) => {
+                if (result?.documents?.[0]) {
+                    userBDetailId = result.documents[0].$id
+                }
+            }).then(() => {
+                inviteId && AcceptInvite(inviteId as string)
+            }).then(() => {
+                if (currentUserBId !== userAId && !!userAId && !!userBDetailId) {
+                    GetUserDetails(userADetailId)
+                    .then((userADetails) => {
                         const newFriends: string[] = userADetails?.documents?.[0]?.friends ?? []
                         if (!!currentUserBId && !newFriends.includes(currentUserBId)) {
                             newFriends.push(currentUserBId)
                             UpdateUserDetails({id: userADetailId, newFriends: newFriends})
                         }
                     })
-                    GetUserDetails(userBDetailId).then((userBDetails) => {
+                    GetUserDetails(userBDetailId)
+                    .then((userBDetails) => {
                         const newFriends: string[] = userBDetails?.friends ?? []
                         if (!!userAId && !newFriends.includes(userAId)) {
                             newFriends.push(userAId)
@@ -72,12 +75,10 @@ const InvitePage = () => {
                         }
                     })
                 }
-            }
-        }).then(() => {
-            Success(`/account/friends`)
-        })
-        
-        
+            }).then(() => {
+                Success(`/account/friends`)
+            })
+        }
     }
 
         const getAndSetInvite = async (id: string) => {
@@ -95,7 +96,7 @@ const InvitePage = () => {
 
     useEffect(() => {
         getAndSetInvite(inviteId as string)
-    }, [userCtx])
+    }, [userCtx, inviteId])
 
     return (
         <div>

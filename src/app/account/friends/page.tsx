@@ -13,14 +13,18 @@ const FriendsPage = () => {
     const [friends, setFriends] = useState<Models.Document[]>([])
 
     useEffect(() => {
-        userCtx.user.$id && GetUserDetailsByAuthId(userCtx.user.$id).then((userDetailResults) => {
-            const friendsIds: string[] = userDetailResults?.documents[0].friends
-            return friendsIds
-        }).then((friendsIds) => {
-            GetFriendsDetails(friendsIds).then((friendDetailResults) => {
-                friendDetailResults && setFriends(friendDetailResults)
-            })
-        })
+        if (userCtx.user.$id) {
+            GetUserDetailsByAuthId(userCtx.user.$id)
+                .then((userDetailResults) => {
+                    return userDetailResults?.documents[0].friends
+                })
+                .then((friendsIds: string[]) => {
+                    return GetFriendsDetails(friendsIds)
+                })
+                .then((friendDetailResults) => {
+                    friendDetailResults && setFriends(friendDetailResults)
+                })
+        }
         
     }, [userCtx])
 

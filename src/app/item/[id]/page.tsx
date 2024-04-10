@@ -33,7 +33,9 @@ const ItemPage = () => {
 
     const confirmCallingDibs = async () => {
         if (userCtx.user.$id && userCtx.user.email && userCtx.user.name) {
-            await UpdateItemIsDibbed(item?.$id as string, userCtx.user.$id, userCtx.user.email, userCtx.user.name).then(()=>!!item && sendMail({user: userCtx.user, item})).then(()=>SendToNextPage(`/item/${item?.$id}/calledDibs`))
+            await UpdateItemIsDibbed(item?.$id as string, userCtx.user.$id, userCtx.user.email, userCtx.user.name)
+            .then(() => !!item && sendMail({ user: userCtx.user, item }))
+            .then(() => SendToNextPage(`/item/${item?.$id}/calledDibs`))
         }
     }
 

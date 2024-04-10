@@ -34,42 +34,36 @@ const AddItem = () => {
             }
             return acc;
         }, []);
-        // console.log(categories)
         let imageUrl: string;
-        AddImageStorageFx().then((addImageResult) => {
-            GetImageStorageFx(addImageResult as string).then((getImageResult) => {
-                imageUrl = getImageResult as string;
-            }).then(() => {
-                const itemToAdd: Partial<Item> = {
-                    ItemName: name.toString(),
-                    ImageURL: imageUrl,
-                    Description: description.toString(),
-                    itemOwnerId: userCtx.user.$id?.toString() ?? '',
-                    itemOwnerEmail: userCtx.user.email?.toString() ?? '',
-                    itemOwnerName: userCtx.user.name?.toString() ?? '',
-                    categories: categories.length ? categories : ['Other']
-                }
-                // console.log(itemToAdd)
-                if (!!listingUrl) {
-                    // console.log(`ListingURL: ${listingUrl}`)
-                    itemToAdd['ListingURL'] = listingUrl.toString()
-                }
-                try {
-                    const addItemResponse = AddItemFx(itemToAdd)
-                    return addItemResponse
-                }
-                catch (error) {
-                    console.log(error)
-                }
+        AddImageStorageFx()
+        .then((addImageResult) =>
+            GetImageStorageFx(addImageResult as string)
+        )
+        .then((imageStorageResult) => {
+            const itemToAdd: Partial<Item> = {
+                ItemName: name.toString(),
+                ImageURL: imageStorageResult as string,
+                Description: description.toString(),
+                itemOwnerId: userCtx.user.$id?.toString() ?? '',
+                itemOwnerEmail: userCtx.user.email?.toString() ?? '',
+                itemOwnerName: userCtx.user.name?.toString() ?? '',
+                categories: categories.length ? categories : ['Other']
             }
-            ).then((addItemResponse) => {
-                // add error response path if undefined
-                const newItemPath = `/item/${addItemResponse?.$id}`
-                // console.log(newItemPath)
-                Success(newItemPath)
-                })
+            if (!!listingUrl) {
+                itemToAdd['ListingURL'] = listingUrl.toString()
+            }
+            try {
+                const addItemResponse = AddItemFx(itemToAdd)
+                return addItemResponse
+            }
+            catch (error) {
+                console.log(error)
+            }
         })
-    }
+        .then((addItemResponse) => {
+            Success(`/item/${addItemResponse?.$id}`)
+        })
+        }
     
     return (
         <form onSubmit={submitForm} className="flex flex-col gap-2">

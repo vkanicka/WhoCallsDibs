@@ -19,10 +19,11 @@ const LogoutPage = () => {
     const submitLogout = async (e) => {
         e.preventDefault();
         try {
-            LogoutUser().then((logoutUserResponse) => {
+            LogoutUser()
+            .then((logoutUserResponse) => {
                 userCtx.logoutUser()
-
-        }).then(() => {
+            })
+            .then(() => {
                 Success(`/account/login/`)
             })
         }

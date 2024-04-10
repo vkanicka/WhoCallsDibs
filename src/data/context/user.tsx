@@ -17,8 +17,6 @@ export const UserContext = createContext({
     updateUser: () => { },
     loginUser: (newUser: Partial<Models.User<Models.Preferences>>) => { },
     logoutUser: () => { },
-    updateUserDetailsId: (userDetailsId: string) => { },
-    userDetailsId: ''
 })
 
 interface childrenProps {
@@ -31,8 +29,6 @@ const UserContextProvider = ({ children, ...childrenProps }: childrenProps) => {
         updateUser: () => { },
         loginUser: (newUser: Partial<Models.User<Models.Preferences>>) => { },
         logoutUser: () => { },
-        updateUserDetailsId: (userDetailsId: string) => { },
-        userDetailsId: '',
     })
     const handleUpdateUser = () => {
         const isDefaultUser = user.user.name === 'User Name'
@@ -46,18 +42,14 @@ const UserContextProvider = ({ children, ...childrenProps }: childrenProps) => {
             updateUser: () => { },
             loginUser: () => { },
             logoutUser: () => { },
-            updateUserDetailsId: (userDetailsId: string) => { },
-            userDetailsId: user.userDetailsId
             })
     }
-    const handleLoginUser = (newUser: Partial<Models.User<Models.Preferences>>, userDetailsId = '') => {
+    const handleLoginUser = (newUser: Partial<Models.User<Models.Preferences>>) => {
         setUser({
             user: newUser,
             updateUser: () => { },
             loginUser: (newUser: Partial<Models.User<Models.Preferences>>) => { },
             logoutUser: () => { },
-            updateUserDetailsId: (userDetailsId: string) => { },
-            userDetailsId: userDetailsId
             })
 
     }
@@ -65,24 +57,11 @@ const UserContextProvider = ({ children, ...childrenProps }: childrenProps) => {
         handleLoginUser(defaultUser)
     }
 
-    const handleUpdateUserDetailsId = (userDetailsId: string) => {
-        setUser({
-            user: user.user,
-            updateUser: ()=>{},
-            loginUser: ()=>{},
-            logoutUser: ()=>{},
-            updateUserDetailsId: (userDetailsId: string)=>{},
-            userDetailsId: userDetailsId
-        })
-    }
-
     const ctxValue = {
         user: user.user,
         updateUser: handleUpdateUser,
         loginUser: handleLoginUser,
         logoutUser: handleLogoutUser,
-        updateUserDetailsId: handleUpdateUserDetailsId,
-        userDetailsId: user.userDetailsId
     }
 
     return <UserContext.Provider value={ctxValue}>

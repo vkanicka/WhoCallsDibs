@@ -21,53 +21,63 @@ const Sandbox = () => {
     }
     const handleUserDetails = () => {
         console.log('handleUserDetails')
-        userCtx.user.$id && GetUserDetailsByAuthId(userCtx.user.$id).then((result) => {
+        userCtx.user.$id && GetUserDetailsByAuthId(userCtx.user.$id)
+        .then((result) => {
             setUserDetails(result?.documents?.[0])
             return result
-        }).then((result)=>console.log(result))
+        })
+        .then((result) => console.log(result))
     }
     const handleAllItems = () => {
         console.log('handleAllItems')
-        GetAllItems().then((result) => {
+        GetAllItems()
+        .then((result) => {
             setAllItems(result)
             return result
-        }).then((result)=>{console.log(result)})
+        })
+        .then((result) => { console.log(result) })
     }
     const handleCatItems = () => {
         console.log('handleCatItems')
         console.log(tempCat)
-        GetCatItems(tempCat).then((result: any) => {
+        GetCatItems(tempCat)
+        .then((result: any) => {
             setCatItems(result)
             return result
-        }).then((result) =>
+        })
+        .then((result) =>
         console.log(result))
     }
     const handleFriendItems = () => {
         console.log('handleFriendItems')
         console.log(userDetails?.friends)
-        GetFriendsItems(userDetails?.friends).then((result: any) => {
+        GetFriendsItems(userDetails?.friends)
+        .then((result: any) => {
             setFriendItems(result)
             return result
-        }).then((result) =>
+        })
+        .then((result) =>
         console.log(result))
     }
     const handleDetailFriendItems = async () => {
         console.log('handleDetailFriendItems')
         console.log(userDetails)
-        userCtx.user.$id && GetUserDetailsByAuthId(userCtx.user.$id).then((userDetailsResult) => {
-            console.log(userDetailsResult)
-            setUserDetails(userDetailsResult?.documents?.[0])
-            return userDetailsResult?.documents?.[0]
-        }).then((userDetailsResult) => {
-            console.log(userDetailsResult)
-            GetFriendsItems(userDetailsResult?.friends).then((friendsItemsResult: any) => {
-            setFriendItems(friendsItemsResult)
+        userCtx.user.$id && GetUserDetailsByAuthId(userCtx.user.$id)
+            .then((userDetailsResult) => {
+                console.log(userDetailsResult)
+                setUserDetails(userDetailsResult?.documents?.[0])
+                return userDetailsResult?.documents?.[0]
+            })
+            .then((userDetailsResult) => {
+                console.log(userDetailsResult)
+                return GetFriendsItems(userDetailsResult?.friends)
+            })
+            .then((friendsItemsResult: any) => {
+                setFriendItems(friendsItemsResult)
+                console.log(friendsItemsResult)
             return friendsItemsResult
-        }).then((friendsItemsResult) =>
-        console.log(friendsItemsResult))
-        })
+            })
     }
-    console.log(friendItems)
     return (
         <div>
             <h1>Sandbox</h1>

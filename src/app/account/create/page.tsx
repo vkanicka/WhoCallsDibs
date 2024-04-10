@@ -36,19 +36,10 @@ const CreateAccountPage = () => {
 
             try {
                 // @ts-expect-error
-                CreateUser(newUser).then((createUserResponse) => {
-                    return createUserResponse
-                }).then((result) => {
-                    const createResult = CreateUserDetails({ authId: result?.$id, email: result?.email, name: result?.name })
-                    return createResult
-                }).then((createResult) => {
-                    if (!!createResult) {
-                        userCtx.updateUserDetailsId(createResult?.$id)
-                    }
-                    return createResult?.$id
-                    }).then((detailId) => {
-                        Success(`/account/login${!!inviteId ? `?invite=${inviteId}&detail=${detailId}`:`?detail=${detailId}`}`)
-                    })
+                CreateUser(newUser)
+                .then(() => {
+                    Success(`/account/login${!!inviteId ? `?invite=${inviteId}`: ''}`)
+                })
             }
             catch (error) {
                 console.log(error)
