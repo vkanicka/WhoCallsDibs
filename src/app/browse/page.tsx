@@ -101,7 +101,7 @@ const Browse = () => {
                     }
                 </div>
                 <div className='bottom-tray'>
-                    <div className={`${showFilters ? 'absolute flex flex-wrap bottom-24 right-0 bg-ikigai-200 p-6 gap-3 rounded-t-3xl' : 'hidden'}`}>
+                    <div className={`${showFilters ? 'w-full absolute flex flex-wrap bottom-24 right-0 bg-ikigai-200 p-6 gap-3 rounded-t-3xl' : 'hidden'}`}>
                         {CATEGORIES.map((category, index) => {
                             return (
                                 <button onClick={()=>handleCatParams(category)} className={`px-3 py-[4px] border border-solid border-gray-400 rounded-2xl text-2xl bg-ikigai-600 bg-opacity-50 ${catParams.includes(category) ? 'text-lime-300 bg-opacity-70 flex' : 'text-gray-100'}`} key={index}>
