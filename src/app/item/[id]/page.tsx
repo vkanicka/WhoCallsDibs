@@ -114,7 +114,7 @@ const ItemPage = () => {
                     <p>Loading...</p>
             )}
             {!!clickedCallDibs && !!item && (
-                <div className="bg-ikigai-800 flex flex-col place-items-center justify-center text-lime-200 absolute h-screen w-screen top-0 left-0 z-thumb">
+                <div className="bg-ikigai-800 flex flex-col place-items-center justify-center text-lime-200 fixed h-full w-full top-0 left-0 z-thumb">
                     <h1>Confirm Calling Dibs</h1>
                     <div className="w-full m-4 flex flex-col items-center space-y-4">
                         <h3 className="text-xl">{item.ItemName}</h3>
@@ -126,7 +126,7 @@ const ItemPage = () => {
                             alt={`User photo of item ${item.ItemName}`}
                         />)}
                     </div>
-                    <div className="flex gap-6 absolute bottom-0 w-full left-0 right-0 p-6">
+                    <div className="flex gap-6 fixed bottom-0 w-full left-0 right-0 p-6">
                         <button className="btn-v w-1/2 ring-2 ring-violet-300 py-4 px-8 rounded-xl" onClick={handleBackButton}>Back</button>
                         <button className="btn-v w-1/2 ring-2 ring-violet-300 py-4 px-8 rounded-xl" onClick={confirmCallingDibs}>Confirm</button>
                     </div>
