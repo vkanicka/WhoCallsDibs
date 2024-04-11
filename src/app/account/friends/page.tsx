@@ -38,7 +38,7 @@ const FriendsPage = () => {
                     )
                 })}
             </ul>
-            <Link href={'/account/invite'} className="absolute right-6 bottom-48 rounded-full h-12 w-12 bg-verbena-600 z-bubble flex place-content-center shadow-glow shadow-lime-100">
+            <Link href={'/account/invite'} className="fixed right-6 bottom-48 rounded-full h-12 w-12 bg-verbena-600 z-bubble flex place-content-center shadow-glow shadow-lime-100">
                 <UserPlus size={30} className='self-center text-limeshine-300' />
             </Link>
         </div>
