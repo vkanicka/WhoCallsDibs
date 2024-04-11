@@ -35,11 +35,9 @@ const InvitePage = () => {
 
             <p>Only friends can view and call dibs on each other&#39;s items.</p>
 
-            <p>Generate an invite to share with one person.</p>
-
-            <p>Click the button below to generate a link to share with one person.</p>
+            <p>Click the button below to generate an invite link to share with one person.</p>
             
-            <p>After creating an invite below, copy paste from the address bar or tap the <Share className="inline" /> icon next to the address bar</p>
+            <p>After creating an invite below, copy url from the address bar or tap the <Share className="inline" /> icon next to the address bar</p>
             
 
             <div className="bottom-tray">
