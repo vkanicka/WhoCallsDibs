@@ -89,7 +89,7 @@ const Browse = () => {
         
         return (
             <div>
-                <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 w-full gap-6'>
+                <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 w-full gap-6 pb-36'>
                     {!!allItems?.length && allItems.map((item, index) => {
                         return <ItemCard key={index} item={item} />
                     }) 
