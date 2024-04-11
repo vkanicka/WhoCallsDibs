@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { UserContext } from '@/data/context/user'
 import { useContext } from 'react'
 import sendMail from '@/utils/sendMail';
+import { Plus } from 'react-feather';
 
 const ItemPage = () => {
     const [item, setItem] = useState<Item>()
@@ -49,6 +50,9 @@ const ItemPage = () => {
 
     return (
         <div className="flex flex-col">
+            <Link href={'/item/add'} className="fixed right-6 bottom-48 rounded-full h-12 w-12 bg-verbena-600 z-bubble flex place-content-center shadow-glow shadow-lime-100">
+                        <Plus size={30} className='self-center text-limeshine-300' />
+            </Link>
             {!!item ? (
                 <div className="flex flex-col">
                     <p className="text-green-950 text-2xl">{item.ItemName}</p>
