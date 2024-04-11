@@ -1,9 +1,7 @@
 export default function Home() {
   return (
     <main>
-      {/* <p>Add New</p>
-      <p>Categories</p>
-      <p>Browse All</p> */}
+      <h1>How This Works</h1>
     </main>
   );
 }
