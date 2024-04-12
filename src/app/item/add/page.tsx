@@ -87,10 +87,7 @@ const AddItem = () => {
                 <h4>Categories <span className='text-sm text-gray-500 italic'>*Select all that apply</span></h4>
                 {CATEGORIES.map((category, index) => {
                     return (
-                        <div className='flex space-x-2 py-[2px]' key={index}>
-                            <input id={category} name={category} className="text-green-950" type='checkbox'></input>
-                            <label className='text-xl'>{category}</label>
-                        </div>
+                        <label key={index} className='text-xl w-full py-[3px] flex flex-row gap-2 bg-ikigai-600 bg-opacity-20 my-1 px-2 rounded-xl'><input id={category} name={category} className="text-green-950" type='checkbox'></input>{category}</label>
                     )
                 })}
             </div>
