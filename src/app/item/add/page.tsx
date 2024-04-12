@@ -66,7 +66,7 @@ const AddItem = () => {
         }
     
     return (
-        <form onSubmit={submitForm} className="flex flex-col gap-2">
+        <form onSubmit={submitForm} className="flex flex-col gap-2 mb-36">
             <div className="flex flex-col text-green-100">
                 <label>Item Name</label>
                 <input name='name' id='name' className="text-green-950" required type="text"></input>
@@ -83,7 +83,7 @@ const AddItem = () => {
                 <label>Description <OptionalComponent/></label>
                 <input maxLength={300} id="description" name='description' className="text-green-950 p-2 text-left justify-start align-top text-wrap row-span-5 flex-wrap whitespace-pre-wrap cols-50 columns-10" type='text'></input>
             </div>
-            <div className="flex flex-col text-green-100 overlflow-y-scroll pb-8">
+            <div className="flex flex-col text-green-100 overlflow-y-scroll">
                 <h4>Categories <span className='text-sm text-gray-500 italic'>*Select all that apply</span></h4>
                 {CATEGORIES.map((category, index) => {
                     return (
