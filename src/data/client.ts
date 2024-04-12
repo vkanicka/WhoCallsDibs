@@ -345,6 +345,23 @@ export const GetFriendsItems = async (friends: string[]) => {
         console.error(error)
     }
 }
+export const GetMyItems = async (id: string) => {
+    try {
+        const response = await databases.listDocuments(process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string,
+            process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_ITEMS as string,
+            [
+                Query.equal('itemOwnerId', id),
+                Query.equal('isDibbed', false),
+                Query.limit(100)
+            ]
+        )
+        const items = response.documents as Item[]
+        return items
+    }
+    catch (error) {
+        console.error(error)
+    }
+}
 export const GetFriendsDetails = async (friends: string[]) => {
     try {
         const response = await databases.listDocuments(process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string,

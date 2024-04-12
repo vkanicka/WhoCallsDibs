@@ -4,7 +4,7 @@
 
 'use client'
 import { useEffect, useState, Suspense, useContext } from 'react'
-import { GetFriendsItems, GetUserDetailsByAuthId } from '@data/client'
+import { GetFriendsItems, GetUserDetailsByAuthId, GetMyItems } from '@data/client'
 import Item from '@models/item'
 import ItemCard from '@components/itemCard'
 import CATEGORIES from '@/data/const/categories'
@@ -22,8 +22,10 @@ const Browse = () => {
         const searchParams = useSearchParams()
         let catParams: string[];
         let showFilters: boolean;
-        catParams = searchParams.getAll('categories')
-        showFilters = searchParams.get('showFilters') == 'true'
+        let myItems: boolean;
+        catParams = searchParams?.getAll('categories') ?? []
+        showFilters = searchParams?.get('showFilters') == 'true'
+        myItems = searchParams?.get('myItems') === 'true'
         const userCtx = useContext(UserContext)
 
         // const getStarted = async () => {
@@ -46,13 +48,19 @@ const Browse = () => {
             } else {
                 newArr.splice(catIndex,1)
             }
-            const newPath = `?${newArr.map(x=>`categories=${x.replaceAll(' ','+')}`).join('&')}&showFilters=${showFilters}`
+            const newPath = `?${newArr.map(x=>`categories=${x.replaceAll(' ','+')}`).join('&')}&showFilters=${showFilters}&myItems=${myItems}`
             // const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + newPath;
             // window.history.pushState({ path: newurl }, '', newurl);
             router.push(newPath)
         }
         const handleShowFilters = () => {
-            const newPath = `?${catParams.map(x=>`categories=${x.replaceAll(' ','+')}`).join('&')}&showFilters=${!showFilters}`
+            const newPath = `?${catParams.map(x=>`categories=${x.replaceAll(' ','+')}`).join('&')}&showFilters=${!showFilters}&myItems=${myItems}`
+            // const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + newPath;
+            // window.history.pushState({ path: newurl }, '', newurl);
+            router.push(newPath)
+        }
+        const handleMyItems = () => {
+            const newPath = `?${catParams.map(x=>`categories=${x.replaceAll(' ','+')}`).join('&')}&showFilters=${showFilters}&myItems=${!myItems}`
             // const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + newPath;
             // window.history.pushState({ path: newurl }, '', newurl);
             router.push(newPath)
@@ -68,10 +76,13 @@ const Browse = () => {
             .then((userDetailsResult) => {
                 return userDetailsResult?.documents?.[0]
             })
-            .then((userDetailsResult) => {
-                if (userDetailsResult?.friends.length) {
-                    return GetFriendsItems(userDetailsResult?.friends)
-                }
+                .then((userDetailsResult) => {
+                    if (!!myItems && !!userCtx.user.$id) {
+                    return GetMyItems(userCtx.user.$id)
+                    }
+                    else if (userDetailsResult?.friends.length) {
+                        return GetFriendsItems(userDetailsResult?.friends)
+                    }
             })
             .then((friendsItemsResult: any) => {
                 if (catParams.length) {
@@ -107,6 +118,9 @@ const Browse = () => {
                                 </button>
                             )
                         })}
+                        <button onClick={()=>handleMyItems()} className={`px-3 py-[4px] border border-solid border-gray-400 rounded-2xl text-2xl bg-ikigai-600 bg-opacity-50 ${!!myItems ? 'text-lime-300 bg-opacity-70 flex' : 'text-gray-100'}`} key={'viewMine'}>
+                                    {'My Items'}{myItems && <X size={25} className='self-center ml-1 text-primrose-500 hover:text-lime-300' />}
+                        </button>
                     </div>
                     <button className='btn-v text-lg' onClick={handleClearFilters}>Clear Filters</button>
                     <button className='btn-v' onClick={handleShowFilters}>{showFilters ? 'Hide Filters' : `Filter${catParams.length ? `s (${catParams.length})` : ''}`}</button>
