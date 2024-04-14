@@ -27,7 +27,7 @@ const AddItem = () => {
         e.preventDefault();
         const formData = new FormData(e.target)
         const payload = Object.fromEntries(formData)
-        const { name, description, listingUrl, ...CATEGORIES } = payload
+        const { name, description, listingUrl } = payload
         const categories = Object.entries(payload).reduce((acc: string[], [key, value]) => {
             if (value === 'on') {
                 acc.push(key);
@@ -87,7 +87,7 @@ const AddItem = () => {
                 <h4>Categories <span className='text-sm text-gray-500 italic'>*Select all that apply</span></h4>
                 {CATEGORIES.map((category, index) => {
                     return (
-                        <label key={index} className='text-xl w-full md:w-fit py-[3px] flex flex-row gap-2 bg-ikigai-600 bg-opacity-20 my-1 px-2 items-center rounded-xl'><input id={category} name={category} className="text-green-950 self-center" type='checkbox'></input>{category}</label>
+                        <label key={index} className='text-xl w-full md:w-fit py-[3px] flex flex-row gap-2 bg-ikigai-600 bg-opacity-20 my-1 px-2 items-center rounded-xl'><input id={category} name={category} className="text-green-950 self-center my-auto" type='checkbox'></input>{category}</label>
                     )
                 })}
             </div>
