@@ -65,6 +65,7 @@ const ItemPage = () => {
                                 height={400}
                                 src={item.ImageURL}
                                 alt={`User photo of item ${item.ItemName}`}
+                                priority
                             />
                         )}
                     </div>
@@ -124,6 +125,7 @@ const ItemPage = () => {
                             height={100}
                             src={item?.ImageURL}
                             alt={`User photo of item ${item.ItemName}`}
+                            priority
                         />)}
                     </div>
                     <div className="flex gap-6 fixed bottom-0 w-full left-0 right-0 p-6">
