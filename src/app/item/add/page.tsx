@@ -34,7 +34,6 @@ const AddItem = () => {
             }
             return acc;
         }, []);
-        let imageUrl: string;
         AddImageStorageFx()
         .then((addImageResult) =>
             GetImageStorageFx(addImageResult as string)
