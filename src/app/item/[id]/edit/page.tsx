@@ -18,8 +18,7 @@ import { X } from 'react-feather'
 const AddItem = () => {
     const [item, setItem] = useState<Item>()
     const params = useParams()
-    //@ts-expect-error
-    const { id: itemId } = params
+    const itemId = params?.id
 
     const router = useRouter()
     const Success = (newItemPath: string) => {
