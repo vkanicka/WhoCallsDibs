@@ -57,6 +57,19 @@ export const AddImageStorageFx = async () => {
         console.error(error)
     }
 }
+export const AddResizedImageToStorage = async (resizedImage: File) => {
+    try {
+        const response = await storage.createFile(
+            process.env.NEXT_PUBLIC_APPWRITE_BUCKET_ID as string,
+            ID.unique(),
+            resizedImage as File
+        )
+        console.log(response)
+        return response
+    } catch (error) {
+        console.error(error)
+    }
+}
 
 export const GetImageStorageFx = async (imageId: string) => {
     try {

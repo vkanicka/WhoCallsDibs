@@ -1,19 +1,14 @@
-/**
- * useRouter only works in client components
- */
-
 'use client'
 import { useRouter } from 'next/navigation'
-import { AddItemFx } from '@data/client'
-import { AddImageStorageFx } from '@data/client'
-import { GetImageStorageFx } from '@data/client'
+import { AddItemFx, AddResizedImageToStorage, GetImageStorageFx } from '@data/client'
 import OptionalComponent from '@components/optional'
 import { UserContext } from '@/data/context/user'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import Item from '@models/item'
 import CATEGORIES from '@data/const/categories'
 
 const AddItem = () => {
+    const [newFileState, setNewFileState] = useState<File>()
 
     const router = useRouter()
     const Success = (newItemPath: string) => {
@@ -21,6 +16,37 @@ const AddItem = () => {
     }
 
     const userCtx = useContext(UserContext)
+
+    //@ts-expect-error
+    const uploadImage = (event) => {
+        const [imageFile] = event.target.files;
+        const fileReader = new FileReader();
+        fileReader.readAsDataURL(imageFile);
+        fileReader.onload = (fileReaderEvent) => {
+            if (!!fileReaderEvent.target?.result) {
+                const imageAsBase64 = fileReaderEvent.target.result as string;
+                const image = new Image();
+                image.src = imageAsBase64;
+                image.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    const maxWidth = 1000; // Set your desired max width
+                    const scaleFactor = maxWidth / image.width;
+                    canvas.width = maxWidth;
+                    canvas.height = image.height * scaleFactor;
+                    const context = canvas.getContext('2d');
+                    if (!!context) {
+                        context.drawImage(image, 0, 0, canvas.width, canvas.height);
+                        canvas.toBlob((blob) => {
+                            if (!!blob) {
+                                let newFile = new File([blob], imageFile.name, { type: imageFile.type })
+                                setNewFileState(newFile)
+                            }
+                        }, imageFile.type);
+                    }
+                };
+            }
+        };
+    };
 
     // @ts-expect-error
     const submitForm = async (e) => {
@@ -34,11 +60,9 @@ const AddItem = () => {
             }
             return acc;
         }, []);
-        // const clientFile = (document?.getElementById('uploader') as HTMLInputElement)?.files?.[0] as File
-        // console.log(clientFile)
-        AddImageStorageFx()
+        !!newFileState && AddResizedImageToStorage(newFileState)
         .then((addImageResult) =>
-            GetImageStorageFx(addImageResult as string)
+            GetImageStorageFx(addImageResult?.$id as string)
         )
         .then((imageStorageResult) => {
             const itemToAdd: Partial<Item> = {
@@ -74,7 +98,7 @@ const AddItem = () => {
             </div>
             <div className="flex flex-col text-green-100">
                 <label>Photo</label>
-                <input id="uploader" name='photo' className="text-green-950" type="file" accept="image/*"></input>
+                <input onChange={uploadImage} id="uploader" name='photo' className="text-green-950" type="file" accept="image/*"></input>
             </div>
             <div className="flex flex-col text-green-100">
                 <label>Item Listing URL<OptionalComponent/></label>
