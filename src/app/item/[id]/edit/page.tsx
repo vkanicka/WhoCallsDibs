@@ -5,7 +5,6 @@
 'use client'
 import { useParams, useRouter } from 'next/navigation'
 import { AddResizedImageToStorage, GetItem, UpdateItem } from '@data/client'
-import { AddImageStorageFx } from '@data/client'
 import { GetImageStorageFx } from '@data/client'
 import OptionalComponent from '@components/optional'
 import { UserContext } from '@/data/context/user'
@@ -14,6 +13,7 @@ import Item from '@models/item'
 import CATEGORIES from '@data/const/categories'
 import Image from 'next/image'
 import { X } from 'react-feather'
+import resizeImage from '@/utils/resizeimage'
 
 const AddItem = () => {
     const [item, setItem] = useState<Item>()
@@ -64,33 +64,7 @@ const AddItem = () => {
 
     //@ts-expect-error
     const uploadImage = (event) => {
-        const [imageFile] = event.target.files;
-        const fileReader = new FileReader();
-        fileReader.readAsDataURL(imageFile);
-        fileReader.onload = (fileReaderEvent) => {
-            if (!!fileReaderEvent.target?.result) {
-                const imageAsBase64 = fileReaderEvent.target.result as string;
-                const image = new HTMLImageElement();
-                image.src = imageAsBase64;
-                image.onload = () => {
-                    const canvas = document.createElement('canvas');
-                    const maxWidth = 1000; // Set your desired max width
-                    const scaleFactor = maxWidth / image.width;
-                    canvas.width = maxWidth;
-                    canvas.height = image.height * scaleFactor;
-                    const context = canvas.getContext('2d');
-                    if (!!context) {
-                        context.drawImage(image, 0, 0, canvas.width, canvas.height);
-                        canvas.toBlob((blob) => {
-                            if (!!blob) {
-                                let newFile = new File([blob], imageFile.name, { type: imageFile.type })
-                                setNewFileState(newFile)
-                            }
-                        }, imageFile.type);
-                    }
-                };
-            }
-        };
+        resizeImage(event, setNewFileState)
     };
 
     //@ts-expect-error
@@ -119,9 +93,6 @@ const AddItem = () => {
             }
             return acc;
         }, []);
-        // const clientFile = (document?.getElementById('uploader') as HTMLInputElement)?.files?.[0] as File
-        // console.log(clientFile)
-        // AddImageStorageFx()
         !!newFileState && AddResizedImageToStorage(newFileState)
         .then((addImageResult) =>
             GetImageStorageFx(addImageResult?.$id as string)
@@ -137,7 +108,6 @@ const AddItem = () => {
                 itemOwnerName: userCtx.user.name?.toString() ?? '',
                 categories: categories.length ? categories : ['Other']
             }
-            console.log(itemToAdd)
             if (!!listingUrl) {
                 itemToAdd['ListingURL'] = listingUrl.toString()
             }
@@ -166,9 +136,9 @@ const AddItem = () => {
             <div className="flex flex-col text-green-100">
                 <label>Photo</label>
                 {item?.ImageURL ? (
-                    <div className='relative w-fit'>
-                        <Image priority src={item?.ImageURL} alt={'item image'} width={200} height={200} className='border-limeshine-300 border border-solid rounded-xl my-2' />
-                        <X onClick={deleteImage} size={30} className='rounded-full absolute top-3 right-1 self-center ml-1 text-primrose-500 hover:text-limeshine-300' />
+                    <div className='relative w-full justify-center'>
+                        <Image priority src={item?.ImageURL} alt={'item image'} width={400} height={400} className='border-limeshine-300 border border-solid rounded-xl my-2' />
+                        <X onClick={deleteImage} size={30} className='bg-verbena-900 rounded-full absolute top-3 right-1 self-center ml-1 text-limeshine-300' />
                     </div>
                 ) : (
                     <input onChange={uploadImage} id="uploader" name='photo' className="text-green-950" type="file" accept="image/*"></input>

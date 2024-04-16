@@ -64,7 +64,7 @@ export const AddResizedImageToStorage = async (resizedImage: File) => {
             ID.unique(),
             resizedImage as File
         )
-        console.log(response)
+        // console.log(response)
         return response
     } catch (error) {
         console.error(error)
