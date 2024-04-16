@@ -19,6 +19,7 @@ const InvitePage = () => {
     const userCtx = useContext(UserContext)
     const isInviteOwner = userCtx && userCtx.user && userCtx.user.$id === invite?.userAId
     const isUserLoggedIn = !!userCtx.user.$id
+    //@ts-expect-error
     const { id: inviteId } = params
     const [hasCopied, setHasCopied] = useState(false)
     const router = useRouter()
@@ -106,8 +107,8 @@ const InvitePage = () => {
                     <p>To learn more click link to homepage</p>
 
                     <div className="bottom-tray">
-                        <Link className="btn-v font-normal text-sm" href={`/account/create?invite=${params.id}`}>New Here?<br></br> Create Account</Link>
-                        <Link className="btn-v font-normal text-sm" href={`/account/login?invite=${params.id}`}>Have an Account?<br></br> Login</Link>
+                        <Link className="btn-v font-normal text-sm" href={`/account/create?invite=${params?.id}`}>New Here?<br></br> Create Account</Link>
+                        <Link className="btn-v font-normal text-sm" href={`/account/login?invite=${params?.id}`}>Have an Account?<br></br> Login</Link>
                     </div>
                 </div>
             )}

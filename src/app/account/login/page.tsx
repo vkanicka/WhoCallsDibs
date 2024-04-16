@@ -13,7 +13,7 @@ const LoginPage = () => {
 
     const SuspenseWrapper = () => {
         const params = useSearchParams()
-        const inviteId: string | null = params.get('invite') 
+        const inviteId: string | null = params?.get('invite') ?? ''
         const userCtx = useContext(UserContext);
         const router = useRouter()
         const Success = (newPath: string) => {

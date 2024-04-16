@@ -34,6 +34,8 @@ const AddItem = () => {
             }
             return acc;
         }, []);
+        const clientFile = (document?.getElementById('uploader') as HTMLInputElement)?.files?.[0] as File
+        console.log(clientFile)
         AddImageStorageFx()
         .then((addImageResult) =>
             GetImageStorageFx(addImageResult as string)
