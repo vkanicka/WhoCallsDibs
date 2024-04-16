@@ -42,15 +42,16 @@ const AddItem = () => {
 
     //@ts-expect-error
     const handleCheckboxToggle = (category) => {
-        const newItem = { ...item }
+        
         if (item?.categories?.includes(category)) {
-            newItem.categories = newItem?.categories?.filter(x=>x!==category)
+            const newItem = { ...item, categories: item.categories.filter(x => x !== category) }
+            setItem(newItem)
         } else {
+            const newItem = { ...item }
             newItem?.categories?.push(category)
+            //@ts-expect-error
+            setItem(newItem)
         }
-        //@ts-expect-error
-        setItem(newItem)
-
     }
 
     // @ts-expect-error
@@ -100,6 +101,7 @@ const AddItem = () => {
     useEffect(() => {
         getAndSetItem(itemId as string)
     }, [])
+    console.log(item?.categories)
     return !!item && (
         <form onSubmit={submitForm} className="flex flex-col gap-2 mb-36">
             <div className="flex flex-col text-green-100">
@@ -129,7 +131,7 @@ const AddItem = () => {
                 <h4>Categories <span className='text-sm text-gray-500 italic'>*Select all that apply</span></h4>
                 {CATEGORIES.map((category, index) => {
                     return (
-                        <label onChange={()=>handleCheckboxToggle(category)} key={index} className='text-xl w-full md:w-fit py-[3px] flex flex-row gap-2 bg-ikigai-600 bg-opacity-20 my-1 px-2 items-center rounded-xl'><input id={category} name={category} checked={item?.categories?.includes(category)} className="text-green-950 self-center my-auto" type='checkbox'></input>{category}</label>
+                        <label key={index} className='text-xl w-full md:w-fit py-[3px] flex flex-row gap-2 bg-ikigai-600 bg-opacity-20 my-1 px-2 items-center rounded-xl'><input id={category} name={category} onChange={()=>handleCheckboxToggle(category)} checked={item?.categories?.includes(category)} className="text-green-950 self-center my-auto" type='checkbox'></input>{category}</label>
                     )
                 })}
             </div>
