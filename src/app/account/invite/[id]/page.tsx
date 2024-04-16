@@ -10,7 +10,7 @@ import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '@data/context/user';
-import { AcceptInvite, GetInvite, GetUserDetails, GetUserDetailsByAuthId, IgnoreInvite, UpdateInvite, UpdateUserDetails } from "@/data/client";
+import { GetInvite, GetUserDetailsByAuthId, IgnoreInvite, UpdateInvite, UpdateUserDetails } from "@/data/client";
 import Invite from "@/data/models/invite";
 
 const InvitePage = () => {
@@ -19,8 +19,7 @@ const InvitePage = () => {
     const userCtx = useContext(UserContext)
     const isInviteOwner = userCtx && userCtx.user && userCtx.user.$id === invite?.userAId
     const isUserLoggedIn = !!userCtx.user.$id
-    //@ts-expect-error
-    const { id: inviteId } = params
+    const inviteId = params?.id
     const [hasCopied, setHasCopied] = useState(false)
     const router = useRouter()
     const Success = (newItemPath: string) => {

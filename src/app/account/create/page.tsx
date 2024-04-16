@@ -9,7 +9,7 @@ import User from "@models/user"
 import { Models } from "appwrite"
 import Link from "next/link"
 import { useRouter, useSearchParams } from 'next/navigation'
-import { Suspense, useContext } from "react"
+import { Suspense } from "react"
 
 
 const CreateAccountPage = () => {
@@ -17,7 +17,6 @@ const CreateAccountPage = () => {
     const SuspenseWrapper = () => {
         const params = useSearchParams()
         const inviteId: string | null = params?.get('invite') ?? ''
-        const userCtx = useContext(UserContext)
 
             const router = useRouter()
             const Success = (newPath: string) => {
