@@ -4,7 +4,7 @@
 
 'use client'
 import { useParams, useRouter } from 'next/navigation'
-import { AddItemFx, GetItem, UpdateItem } from '@data/client'
+import { AddResizedImageToStorage, GetItem, UpdateItem } from '@data/client'
 import { AddImageStorageFx } from '@data/client'
 import { GetImageStorageFx } from '@data/client'
 import OptionalComponent from '@components/optional'
@@ -17,6 +17,7 @@ import { X } from 'react-feather'
 
 const AddItem = () => {
     const [item, setItem] = useState<Item>()
+    const [newFileState, setNewFileState] = useState<File>()
     const params = useParams()
     const itemId = params?.id
 
@@ -62,6 +63,37 @@ const AddItem = () => {
     }
 
     //@ts-expect-error
+    const uploadImage = (event) => {
+        const [imageFile] = event.target.files;
+        const fileReader = new FileReader();
+        fileReader.readAsDataURL(imageFile);
+        fileReader.onload = (fileReaderEvent) => {
+            if (!!fileReaderEvent.target?.result) {
+                const imageAsBase64 = fileReaderEvent.target.result as string;
+                const image = new HTMLImageElement();
+                image.src = imageAsBase64;
+                image.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    const maxWidth = 1000; // Set your desired max width
+                    const scaleFactor = maxWidth / image.width;
+                    canvas.width = maxWidth;
+                    canvas.height = image.height * scaleFactor;
+                    const context = canvas.getContext('2d');
+                    if (!!context) {
+                        context.drawImage(image, 0, 0, canvas.width, canvas.height);
+                        canvas.toBlob((blob) => {
+                            if (!!blob) {
+                                let newFile = new File([blob], imageFile.name, { type: imageFile.type })
+                                setNewFileState(newFile)
+                            }
+                        }, imageFile.type);
+                    }
+                };
+            }
+        };
+    };
+
+    //@ts-expect-error
     const handleCheckboxToggle = (category) => {
         
         if (item?.categories?.includes(category)) {
@@ -89,9 +121,10 @@ const AddItem = () => {
         }, []);
         // const clientFile = (document?.getElementById('uploader') as HTMLInputElement)?.files?.[0] as File
         // console.log(clientFile)
-        AddImageStorageFx()
+        // AddImageStorageFx()
+        !!newFileState && AddResizedImageToStorage(newFileState)
         .then((addImageResult) =>
-            GetImageStorageFx(addImageResult as string)
+            GetImageStorageFx(addImageResult?.$id as string)
         )
         .then((imageStorageResult) => {
             const itemToAdd: Partial<Item> = {
@@ -138,7 +171,7 @@ const AddItem = () => {
                         <X onClick={deleteImage} size={30} className='rounded-full absolute top-3 right-1 self-center ml-1 text-primrose-500 hover:text-limeshine-300' />
                     </div>
                 ) : (
-                    <input id="uploader" name='photo' className="text-green-950" type="file" accept="image/*"></input>
+                    <input onChange={uploadImage} id="uploader" name='photo' className="text-green-950" type="file" accept="image/*"></input>
                 )}
             </div>
             <div className="flex flex-col text-green-100">
