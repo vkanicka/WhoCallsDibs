@@ -18,8 +18,7 @@ const ItemPage = () => {
     const [item, setItem] = useState<Item>()
     const [clickedCallDibs, setClickedCallDibs] = useState(false)
     const params = useParams()
-    //@ts-expect-error
-    const { id: itemId } = params
+    const itemId = params?.id
     const userCtx = useContext(UserContext)
     const isDibbed = item?.isDibbed
 
