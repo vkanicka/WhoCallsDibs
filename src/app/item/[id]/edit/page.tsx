@@ -115,7 +115,7 @@ const AddItem = () => {
                         <X onClick={deleteImage} size={35} className='absolute top-2 right-1 self-center ml-1 text-primrose-500 hover:text-lime-300' />
                     </div>
                 ) : (
-                    <input id="uploader" name='photo' className="text-green-950" type="file"></input>
+                    <input id="uploader" name='photo' className="text-green-950" type="file" accept="image/*"></input>
                 )}
             </div>
             <div className="flex flex-col text-green-100">
