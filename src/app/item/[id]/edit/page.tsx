@@ -101,7 +101,6 @@ const AddItem = () => {
     useEffect(() => {
         getAndSetItem(itemId as string)
     }, [])
-    console.log(item?.categories)
     return !!item && (
         <form onSubmit={submitForm} className="flex flex-col gap-2 mb-36">
             <div className="flex flex-col text-green-100">
