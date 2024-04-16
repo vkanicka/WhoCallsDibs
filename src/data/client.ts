@@ -110,6 +110,20 @@ export const UpdateItemIsDibbed = async (id: string, dibsCallerId: string, dibsC
         console.error(error)
     }
 }
+export const UpdateItemNoImage = async (id: string) => {
+    try {
+        const response = await databases.updateDocument(
+            process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string, process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_ITEMS as string, id,
+            {
+                "ImageUrl": undefined,
+            }
+        )
+        return response
+    }
+    catch (error) {
+        console.error(error)
+    }
+}
 
 export const CreateUser = async ({ email, password, name }: User) => {
     try {

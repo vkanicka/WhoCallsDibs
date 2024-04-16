@@ -4,7 +4,7 @@
 
 'use client'
 import { useParams, useRouter } from 'next/navigation'
-import { AddItemFx, GetItem } from '@data/client'
+import { AddItemFx, GetItem, UpdateItemNoImage } from '@data/client'
 import { AddImageStorageFx } from '@data/client'
 import { GetImageStorageFx } from '@data/client'
 import OptionalComponent from '@components/optional'
@@ -18,6 +18,7 @@ import { X } from 'react-feather'
 const AddItem = () => {
     const [item, setItem] = useState<Item>()
     const params = useParams()
+    //@ts-expect-error
     const { id: itemId } = params
 
     const router = useRouter()
@@ -28,9 +29,30 @@ const AddItem = () => {
     const userCtx = useContext(UserContext)
 
     const getAndSetItem = async (id: string) => {
-    const gottenItem = await GetItem(id)
-    setItem(gottenItem)
-}
+        const gottenItem = await GetItem(id)
+        setItem(gottenItem)
+    }
+    
+    const deleteImage = () => {
+        item?.$id && UpdateItemNoImage(item?.$id)
+        const newItem = { ...item }
+        delete newItem?.ImageURL
+        //@ts-expect-error
+        setItem(newItem)
+    }
+
+    //@ts-expect-error
+    const handleCheckboxToggle = (category) => {
+        const newItem = { ...item }
+        if (item?.categories?.includes(category)) {
+            newItem.categories = newItem?.categories?.filter(x=>x!==category)
+        } else {
+            newItem?.categories?.push(category)
+        }
+        //@ts-expect-error
+        setItem(newItem)
+
+    }
 
     // @ts-expect-error
     const submitForm = async (e) => {
@@ -90,7 +112,7 @@ const AddItem = () => {
                 {item?.ImageURL ? (
                     <div className='relative w-fit'>
                         <Image priority src={item?.ImageURL} alt={'item image'} width={200} height={200} className='border-limeshine-300 border border-solid rounded-xl my-2' />
-                        <X size={35} className='absolute top-2 right-1 self-center ml-1 text-primrose-500 hover:text-lime-300' />
+                        <X onClick={deleteImage} size={35} className='absolute top-2 right-1 self-center ml-1 text-primrose-500 hover:text-lime-300' />
                     </div>
                 ) : (
                     <input id="uploader" name='photo' className="text-green-950" type="file"></input>
@@ -108,7 +130,7 @@ const AddItem = () => {
                 <h4>Categories <span className='text-sm text-gray-500 italic'>*Select all that apply</span></h4>
                 {CATEGORIES.map((category, index) => {
                     return (
-                        <label key={index} className='text-xl w-full md:w-fit py-[3px] flex flex-row gap-2 bg-ikigai-600 bg-opacity-20 my-1 px-2 items-center rounded-xl'><input id={category} name={category} checked={item?.categories?.includes(category) ? 'checked' : '' } className="text-green-950 self-center my-auto" type='checkbox'></input>{category}</label>
+                        <label onChange={()=>handleCheckboxToggle(category)} key={index} className='text-xl w-full md:w-fit py-[3px] flex flex-row gap-2 bg-ikigai-600 bg-opacity-20 my-1 px-2 items-center rounded-xl'><input id={category} name={category} checked={item?.categories?.includes(category)} className="text-green-950 self-center my-auto" type='checkbox'></input>{category}</label>
                     )
                 })}
             </div>
