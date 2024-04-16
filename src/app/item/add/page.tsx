@@ -34,8 +34,8 @@ const AddItem = () => {
             }
             return acc;
         }, []);
-        const clientFile = (document?.getElementById('uploader') as HTMLInputElement)?.files?.[0] as File
-        console.log(clientFile)
+        // const clientFile = (document?.getElementById('uploader') as HTMLInputElement)?.files?.[0] as File
+        // console.log(clientFile)
         AddImageStorageFx()
         .then((addImageResult) =>
             GetImageStorageFx(addImageResult as string)
@@ -73,7 +73,7 @@ const AddItem = () => {
                 <input name='name' id='name' className="text-green-950" required type="text"></input>
             </div>
             <div className="flex flex-col text-green-100">
-                <label>Photo  <OptionalComponent/></label>
+                <label>Photo</label>
                 <input id="uploader" name='photo' className="text-green-950" type="file" accept="image/*"></input>
             </div>
             <div className="flex flex-col text-green-100">

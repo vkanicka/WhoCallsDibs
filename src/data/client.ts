@@ -27,6 +27,20 @@ export const AddItemFx = async ({ ItemName, ImageURL, ListingURL, Description, i
         console.error(error)
     }
 }
+export const UpdateItem = async ({ existingItemId, ItemName, ImageURL, ListingURL, Description, itemOwnerId, itemOwnerEmail, itemOwnerName, categories }: Partial<Item>) => {
+    try {
+            const response = await databases.updateDocument(
+                process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string, 
+                process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_ITEMS as string, 
+                existingItemId,
+                { "ItemName": ItemName, "ImageURL": ImageURL, "ListingURL": ListingURL, "Description": Description, "itemOwnerId": itemOwnerId, "itemOwnerEmail": itemOwnerEmail, "itemOwnerName": itemOwnerName, "categories": categories}
+            );
+        // console.log(response)
+        return response
+    } catch (error) {
+        console.error(error)
+    }
+}
 
 export const AddImageStorageFx = async () => {
     let imageId;
@@ -102,20 +116,6 @@ export const UpdateItemIsDibbed = async (id: string, dibsCallerId: string, dibsC
                 "dibsCallerId": dibsCallerId,
                 "dibsCallerEmail": dibsCallerEmail,
                 "dibsCallerName": dibsCallerName
-            }
-        )
-        return response
-    }
-    catch (error) {
-        console.error(error)
-    }
-}
-export const UpdateItemNoImage = async (id: string) => {
-    try {
-        const response = await databases.updateDocument(
-            process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string, process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_ITEMS as string, id,
-            {
-                "ImageUrl": undefined,
             }
         )
         return response

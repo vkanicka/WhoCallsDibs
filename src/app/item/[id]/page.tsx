@@ -17,6 +17,7 @@ import { Plus } from 'react-feather';
 const ItemPage = () => {
     const [item, setItem] = useState<Item>()
     const [clickedCallDibs, setClickedCallDibs] = useState(false)
+    const [isUserOwner, setIsUserOwner] = useState(false)
     const params = useParams()
     const itemId = params?.id
     const userCtx = useContext(UserContext)
@@ -47,6 +48,11 @@ const ItemPage = () => {
     useEffect(() => {
         getAndSetItem(itemId as string)
     }, [])
+    useEffect(() => {
+        if (!!userCtx && !!item && (userCtx.user.$id === item?.itemOwnerId)) {
+            setIsUserOwner(true)
+        }
+    }, [userCtx, item])
 
     return (
         <div className="flex flex-col">
@@ -95,7 +101,12 @@ const ItemPage = () => {
                             </Link>
                             </div>
                     )}
-                    {!isDibbed && (
+                    {!!isUserOwner && !isDibbed && (
+                        <div className='bottom-tray'>
+                            <Link className='btn-v' href={`/item/${item.$id}/edit`}>Edit Item</Link>
+                        </div>   
+                    )}
+                    {!isUserOwner && !isDibbed && (
                         <div className="bottom-tray">
                             <button onClick={()=>setClickedCallDibs(true)} className='btn-v'>
                         I call dibs!
