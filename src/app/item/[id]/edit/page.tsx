@@ -14,6 +14,7 @@ import CATEGORIES from '@data/const/categories'
 import Image from 'next/image'
 import { X } from 'react-feather'
 import resizeImage from '@/utils/resizeimage'
+import Link from 'next/link'
 
 const AddItem = () => {
     const [item, setItem] = useState<Item>()
@@ -138,7 +139,7 @@ const AddItem = () => {
                 <label>Photo</label>
                 {item?.ImageURL ? (
                     <div className='relative w-fit justify-center'>
-                        <Image priority src={item?.ImageURL} alt={'item image'} width={400} height={400} className='border-limeshine-300 border border-solid rounded-xl my-2' />
+                        <Image priority src={item?.ImageURL} alt={'item image'} width={300} height={300} className='border-limeshine-300 border border-solid rounded-xl my-2' />
                         <X onClick={deleteImage} size={30} className='bg-verbena-900 rounded-full absolute top-3 right-1 self-center ml-1 text-limeshine-300' />
                     </div>
                 ) : (
@@ -162,7 +163,8 @@ const AddItem = () => {
                 })}
             </div>
             <div className='bottom-tray'>
-                <button type='submit' className='btn-v'>Submit Edits</button>
+                <Link href={`/item/${item.$id}`} className='btn-v'>Cancel</Link>
+                <button type='submit' className='btn-v'>Update</button>
             </div>
         </form>
     )
