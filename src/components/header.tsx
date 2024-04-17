@@ -13,7 +13,7 @@ const Header = () => {
         const params = useSearchParams();
         const patternA = /^\/account\/invite\/[a-f0-9].*$/
         const isFromInvite = pathname && patternA.test(pathname)
-        const inviteId = (isFromInvite ? pathname?.split('/')[3] : null) ?? params?.get('invite') ?? 'null'
+        const inviteId = (isFromInvite && pathname?.split('/')[3]) ?? params?.get('invite')
 
         useEffect(() => {
             try {
