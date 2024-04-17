@@ -41,6 +41,19 @@ export const UpdateItem = async ({ existingItemId, ItemName, ImageURL, imageId, 
         console.error(error)
     }
 }
+export const DeleteItem = async ({ existingItemId }: Partial<Item>) => {
+    try {
+            const response = await databases.deleteDocument(
+                process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string, 
+                process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_ITEMS as string, 
+                existingItemId
+            );
+        console.log(response)
+        return response
+    } catch (error) {
+        console.error(error)
+    }
+}
 
 export const AddImageStorageFx = async () => {
     let imageId;

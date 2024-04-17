@@ -12,7 +12,7 @@ import { useContext, useEffect, useState } from 'react'
 import Item from '@models/item'
 import CATEGORIES from '@data/const/categories'
 import Image from 'next/image'
-import { X } from 'react-feather'
+import { ArrowLeft, CheckCircle,  X, } from 'react-feather'
 import resizeImage from '@/utils/resizeimage'
 import Link from 'next/link'
 
@@ -163,8 +163,8 @@ const AddItem = () => {
                 })}
             </div>
             <div className='bottom-tray'>
-                <Link href={`/item/${item.$id}`} className='btn-v'>Cancel</Link>
-                <button type='submit' className='btn-v'>Update</button>
+                <Link href={`/item/${item.$id}`} className='btn-v flex items-center justify-around'><ArrowLeft/>Cancel</Link>
+                <button type='submit' className='btn-v flex items-center justify-around'><CheckCircle/>Update</button>
             </div>
         </form>
     )

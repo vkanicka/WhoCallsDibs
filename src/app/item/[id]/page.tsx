@@ -4,7 +4,7 @@
 
 'use client'
 import Link from 'next/link'
-import { GetItem, UpdateItemIsDibbed } from "@data/client";
+import { DeleteItem, GetItem, UpdateItemIsDibbed } from "@data/client";
 import Item from "@models/item";
 import Image from 'next/image'
 import { useParams, useRouter } from 'next/navigation'
@@ -12,12 +12,13 @@ import { useEffect, useState } from "react";
 import { UserContext } from '@/data/context/user'
 import { useContext } from 'react'
 import sendMail from '@/utils/sendMail';
-import { Plus } from 'react-feather';
+import { Edit, Plus, Trash2 } from 'react-feather';
 
 const ItemPage = () => {
     const [item, setItem] = useState<Item>()
     const [clickedCallDibs, setClickedCallDibs] = useState(false)
     const [isUserOwner, setIsUserOwner] = useState(false)
+    const [isDeleteOpen, setIsDeleteOpen] = useState(false)
     const params = useParams()
     const itemId = params?.id
     const userCtx = useContext(UserContext)
@@ -38,6 +39,15 @@ const ItemPage = () => {
             await UpdateItemIsDibbed(item?.$id as string, userCtx.user.$id, userCtx.user.email, userCtx.user.name)
             .then(() => !!item && sendMail({ user: userCtx.user, item, url: window.location.href }))
             .then(() => SendToNextPage(`/item/${item?.$id}/calledDibs`))
+        }
+    }
+
+    const deleteItem = async () => {
+        if (!!item?.$id) {
+            await DeleteItem({ existingItemId: item?.$id })
+                .then(() => {
+                router.push('/browse')
+            })
         }
     }
 
@@ -103,7 +113,8 @@ const ItemPage = () => {
                     )}
                     {!!isUserOwner && !isDibbed && (
                         <div className='bottom-tray'>
-                            <Link className='btn-v' href={`/item/${item.$id}/edit`}>Edit Item</Link>
+                            <button className='btn-v flex justify-around items-center' onClick={()=>setIsDeleteOpen(true)}><Trash2/>Delete</button>
+                            <Link className='btn-v flex justify-around items-center' href={`/item/${item.$id}/edit`}><Edit/>Edit</Link>
                         </div>   
                     )}
                     {!isUserOwner && !isDibbed && (
@@ -121,30 +132,31 @@ const ItemPage = () => {
                         </div>
                     
                     )}
+                    {(!!clickedCallDibs || !!isDeleteOpen) && !!item && (
+                        <div className="bg-ikigai-800 flex flex-col place-items-center justify-center text-lime-200 fixed h-full w-full top-0 left-0 z-thumb">
+                            <h1>Confirm {!!isDeleteOpen ? 'Delete Item' : 'Calling Dibs'}</h1>
+                            {!!isDeleteOpen && <h2>Are you sure?</h2>}
+                            <div className="w-full m-4 flex flex-col items-center space-y-4">
+                                <h3 className="text-xl">{item.ItemName}</h3>
+                                {item.ImageURL && (<Image
+                                    className="self-center w-fit aspect-square object-contain"
+                                    width={100}
+                                    height={100}
+                                    src={item?.ImageURL}
+                                    alt={`User photo of item ${item.ItemName}`}
+                                    priority
+                                />)}
+                            </div>
+                            <div className="flex gap-6 fixed bottom-0 w-full left-0 right-0 p-6">
+                                <button className="btn-v w-1/2 ring-2 ring-violet-300 py-4 px-8 rounded-xl" onClick={handleBackButton}>Back</button>
+                                <button className="btn-v w-1/2 ring-2 ring-violet-300 py-4 px-8 rounded-xl" onClick={!!isDeleteOpen ? deleteItem : confirmCallingDibs}>Confirm</button>
+                            </div>
+                        </div>
+        
+                    )}
                 </div>
             ) : (
                     <p>Loading...</p>
-            )}
-            {!!clickedCallDibs && !!item && (
-                <div className="bg-ikigai-800 flex flex-col place-items-center justify-center text-lime-200 fixed h-full w-full top-0 left-0 z-thumb">
-                    <h1>Confirm Calling Dibs</h1>
-                    <div className="w-full m-4 flex flex-col items-center space-y-4">
-                        <h3 className="text-xl">{item.ItemName}</h3>
-                        {item.ImageURL && (<Image
-                            className="self-center w-fit aspect-square object-contain"
-                            width={100}
-                            height={100}
-                            src={item?.ImageURL}
-                            alt={`User photo of item ${item.ItemName}`}
-                            priority
-                        />)}
-                    </div>
-                    <div className="flex gap-6 fixed bottom-0 w-full left-0 right-0 p-6">
-                        <button className="btn-v w-1/2 ring-2 ring-violet-300 py-4 px-8 rounded-xl" onClick={handleBackButton}>Back</button>
-                        <button className="btn-v w-1/2 ring-2 ring-violet-300 py-4 px-8 rounded-xl" onClick={confirmCallingDibs}>Confirm</button>
-                    </div>
-                </div>
-
             )}
             
         </div>
