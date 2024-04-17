@@ -13,8 +13,8 @@ const ItemCard = ({ item }: Props) => {
             {item.ImageURL && (
                 <Image
                 className="transition-opacity self-center w-full aspect-square object-contain"
-                width={50}
-                height={50}
+                width={500}
+                height={500}
                 src={item.ImageURL}
                 alt={`User photo of item ${item.ItemName}`}
             />
