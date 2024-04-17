@@ -101,7 +101,8 @@ const AddItem = () => {
             const itemToAdd: Partial<Item> = {
                 existingItemId: item?.$id,
                 ItemName: name.toString(),
-                ImageURL: imageStorageResult as string,
+                ImageURL: imageStorageResult?.response.href as string,
+                imageId: imageStorageResult?.imageId as string,
                 Description: description.toString(),
                 itemOwnerId: userCtx.user.$id?.toString() ?? '',
                 itemOwnerEmail: userCtx.user.email?.toString() ?? '',
@@ -136,7 +137,7 @@ const AddItem = () => {
             <div className="flex flex-col text-green-100">
                 <label>Photo</label>
                 {item?.ImageURL ? (
-                    <div className='relative w-full justify-center'>
+                    <div className='relative w-fit justify-center'>
                         <Image priority src={item?.ImageURL} alt={'item image'} width={400} height={400} className='border-limeshine-300 border border-solid rounded-xl my-2' />
                         <X onClick={deleteImage} size={30} className='bg-verbena-900 rounded-full absolute top-3 right-1 self-center ml-1 text-limeshine-300' />
                     </div>

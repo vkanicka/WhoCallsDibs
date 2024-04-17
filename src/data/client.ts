@@ -13,13 +13,13 @@ client
     .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID as string);
 
 
-export const AddItemFx = async ({ ItemName, ImageURL, ListingURL, Description, itemOwnerId, itemOwnerEmail, itemOwnerName, categories }: Partial<Item>) => {
+export const AddItemFx = async ({ ItemName, ImageURL, imageId, ListingURL, Description, itemOwnerId, itemOwnerEmail, itemOwnerName, categories }: Partial<Item>) => {
     try {
             const response = await databases.createDocument(
                 process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string, 
                 process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_ITEMS as string, 
                 ID.unique(),
-                { "ItemName": ItemName, "ImageURL": ImageURL, "ListingURL": ListingURL, "Description": Description, "itemOwnerId": itemOwnerId, "itemOwnerEmail": itemOwnerEmail, "itemOwnerName": itemOwnerName, "categories": categories}
+                { "ItemName": ItemName, "ImageURL": ImageURL, "imageId": imageId, "ListingURL": ListingURL, "Description": Description, "itemOwnerId": itemOwnerId, "itemOwnerEmail": itemOwnerEmail, "itemOwnerName": itemOwnerName, "categories": categories}
             );
         // console.log(response)
         return response
@@ -27,13 +27,13 @@ export const AddItemFx = async ({ ItemName, ImageURL, ListingURL, Description, i
         console.error(error)
     }
 }
-export const UpdateItem = async ({ existingItemId, ItemName, ImageURL, ListingURL, Description, itemOwnerId, itemOwnerEmail, itemOwnerName, categories }: Partial<Item>) => {
+export const UpdateItem = async ({ existingItemId, ItemName, ImageURL, imageId, ListingURL, Description, itemOwnerId, itemOwnerEmail, itemOwnerName, categories }: Partial<Item>) => {
     try {
             const response = await databases.updateDocument(
                 process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string, 
                 process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_ITEMS as string, 
                 existingItemId,
-                { "ItemName": ItemName, "ImageURL": ImageURL, "ListingURL": ListingURL, "Description": Description, "itemOwnerId": itemOwnerId, "itemOwnerEmail": itemOwnerEmail, "itemOwnerName": itemOwnerName, "categories": categories}
+                { "ItemName": ItemName, "ImageURL": ImageURL, "imageId": imageId, "ListingURL": ListingURL, "Description": Description, "itemOwnerId": itemOwnerId, "itemOwnerEmail": itemOwnerEmail, "itemOwnerName": itemOwnerName, "categories": categories}
             );
         // console.log(response)
         return response
@@ -74,7 +74,7 @@ export const AddResizedImageToStorage = async (resizedImage: File) => {
 export const GetImageStorageFx = async (imageId: string) => {
     try {
         const response = await storage.getFilePreview(process.env.NEXT_PUBLIC_APPWRITE_BUCKET_ID as string, imageId)
-        return response.href
+        return {imageId, response}
     }
     catch (error) {
         console.error(error)

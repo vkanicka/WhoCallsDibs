@@ -42,7 +42,8 @@ const AddItem = () => {
         .then((imageStorageResult) => {
             const itemToAdd: Partial<Item> = {
                 ItemName: name.toString(),
-                ImageURL: imageStorageResult as string,
+                ImageURL: imageStorageResult?.response.href as string,
+                imageId: imageStorageResult?.imageId as string,
                 Description: description.toString(),
                 itemOwnerId: userCtx.user.$id?.toString() ?? '',
                 itemOwnerEmail: userCtx.user.email?.toString() ?? '',
