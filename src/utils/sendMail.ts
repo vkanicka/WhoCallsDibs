@@ -23,7 +23,7 @@ const sendMail = ({ user, item, url }: Props) => {
         to: [item.itemOwnerEmail, user.email],
         subject: "Dibs Called!",
         text: `${user.name} Called Dibs on ${item.itemOwnerName}'s Item - ${item.ItemName} (url: ${url}). Connect via email to setup transfer! Dibs Caller: ${user.email}, Item Owner: ${item.itemOwnerEmail}.`,
-        html: `<h3>${user.name} Called Dibs on ${item.itemOwnerName}'s Item - <a href=${url}>${item.ItemName}</a>.</h3><p>Connect via email to setup transfer! Dibs Caller: ${user.email}, >Item Owner: ${item.itemOwnerEmail}.</p>`
+        html: `<h3>${user.name} Called Dibs on ${item.itemOwnerName}'s Item - <a href=${url}>${item.ItemName}</a>.</h3><p>Connect via email to setup transfer! Dibs Caller: ${user.email}, Item Owner: ${item.itemOwnerEmail}.</p>`
     })
     .then(msg => console.log(msg)) // logs response data
     .catch(err => console.log(err)); // logs any error
