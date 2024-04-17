@@ -80,6 +80,29 @@ export const GetImageStorageFx = async (imageId: string) => {
         console.error(error)
     }
 }
+export const DeleteImageStorage = async (imageId: string) => {
+    try {
+        const response = await storage.deleteFile(process.env.NEXT_PUBLIC_APPWRITE_BUCKET_ID as string, imageId)
+        return response
+    }
+    catch (error) {
+        console.error(error)
+    }
+}
+export const ListImageStorage = async () => {
+    try {
+        const response = await storage.listFiles(process.env.NEXT_PUBLIC_APPWRITE_BUCKET_ID as string, 
+            [
+                Query.limit(50)
+            ]
+        )
+        console.log(response)
+        return response
+    }
+    catch (error) {
+        console.error(error)
+    }
+}
 
 export const GetAllItems = async () => {
     try {

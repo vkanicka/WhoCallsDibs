@@ -1,5 +1,5 @@
 'use client'
-import { GetAllItems, GetCatItems, GetFriendsItems, GetUserDetailsByAuthId } from "@/data/client";
+import { DeleteImageStorage, GetAllItems, GetCatItems, GetFriendsItems, GetUserDetailsByAuthId, ListImageStorage } from "@/data/client";
 import { UserContext } from "@/data/context/user";
 import Item from "@/data/models/item";
 import UserDetails from "@/data/models/userDetails";
@@ -81,9 +81,17 @@ const Sandbox = () => {
     const handleUpdateFriendDetailsByAuthId = async () => {
         const aFriendAuthId = '66102a0f803ad05dc220'
         const bFriendAuthId = '456'
-        
-
     }
+    const cleanUpStorage = async () => {
+        ListImageStorage()
+        .then((response) => response?.files.map(x => x.$id))
+        .then((idList) => {
+            idList?.forEach((id, index) => {
+                DeleteImageStorage(id)
+                .then((response)=>console.log(response))
+            })
+        })
+        }
     return (
         <div>
             <h1>Sandbox</h1>
@@ -95,6 +103,7 @@ const Sandbox = () => {
                 <button className="btn-test" onClick={handleFriendItems}>handleFriendItems</button>
                 <button className="btn-test" onClick={handleDetailFriendItems}>handleDetailFriendItems</button>
                 <button className="btn-test" onClick={handleUpdateFriendDetailsByAuthId}>handleUpdateFriendDetailsByAuthId</button>
+                <button className="btn-test" onClick={cleanUpStorage}>cleanUpStorage</button>
             </div>
         </div>
     )
