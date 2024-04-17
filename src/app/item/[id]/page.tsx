@@ -113,8 +113,8 @@ const ItemPage = () => {
                     )}
                     {!!isUserOwner && !isDibbed && (
                         <div className='bottom-tray'>
-                            <button className='btn-v flex justify-around items-center' onClick={()=>setIsDeleteOpen(true)}><Trash2/>Delete</button>
-                            <Link className='btn-v flex justify-around items-center' href={`/item/${item.$id}/edit`}><Edit/>Edit</Link>
+                            <button className='btn-v flex justify-center gap-4 items-center' onClick={()=>setIsDeleteOpen(true)}><Trash2/>Delete</button>
+                            <Link className='btn-v flex justify-center gap-4 items-center' href={`/item/${item.$id}/edit`}><Edit/>Edit</Link>
                         </div>   
                     )}
                     {!isUserOwner && !isDibbed && (

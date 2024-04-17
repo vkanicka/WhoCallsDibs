@@ -163,8 +163,8 @@ const AddItem = () => {
                 })}
             </div>
             <div className='bottom-tray'>
-                <Link href={`/item/${item.$id}`} className='btn-v flex items-center justify-around'><ArrowLeft/>Cancel</Link>
-                <button type='submit' className='btn-v flex items-center justify-around'><CheckCircle/>Update</button>
+                <Link href={`/item/${item.$id}`} className='btn-v flex items-center justify-center gap-4'><ArrowLeft/>Cancel</Link>
+                <button type='submit' className='btn-v flex items-center justify-center gap-4'><CheckCircle/>Update</button>
             </div>
         </form>
     )
