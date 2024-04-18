@@ -5,10 +5,8 @@
 'use client'
 import { useParams, useRouter } from 'next/navigation'
 import { AddResizedImageToStorage, GetItem, UpdateItem } from '@data/client'
-import { GetImageStorageFx } from '@data/client'
 import OptionalComponent from '@components/optional'
-import { UserContext } from '@/data/context/user'
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Item from '@models/item'
 import CATEGORIES from '@data/const/categories'
 import Image from 'next/image'
@@ -26,8 +24,6 @@ const AddItem = () => {
     const Success = (newItemPath: string) => {
         router.push(newItemPath)
     }
-
-    const userCtx = useContext(UserContext)
 
     const getAndSetItem = async (id: string) => {
         const gottenItem = await GetItem(id)
@@ -55,7 +51,7 @@ const AddItem = () => {
         //@ts-expect-error
         setItem({...newItem, ListingURL: value})
     }
-    
+
     const deleteImage = () => {
         const newItem = { ...item }
         delete newItem?.ImageURL
@@ -85,50 +81,45 @@ const AddItem = () => {
     // @ts-expect-error
     const submitForm = async (e) => {
         e.preventDefault();
-        const formData = new FormData(e.target)
-        const payload = Object.fromEntries(formData)
-        const { name, description, listingUrl } = payload
-        const categories = Object.entries(payload).reduce((acc: string[], [key, value]) => {
-            if (value === 'on') {
-                acc.push(key);
-            }
-            return acc;
-        }, []);
-        !!newFileState && AddResizedImageToStorage(newFileState)
-        .then((addImageResult) =>
-            GetImageStorageFx(addImageResult?.$id as string)
-        )
-        .then((imageStorageResult) => {
-            const itemToAdd: Partial<Item> = {
-                existingItemId: item?.$id,
-                ItemName: name.toString(),
-                ImageURL: imageStorageResult?.response.href as string,
-                imageId: imageStorageResult?.imageId as string,
-                Description: description.toString(),
-                itemOwnerId: userCtx.user.$id?.toString() ?? '',
-                itemOwnerEmail: userCtx.user.email?.toString() ?? '',
-                itemOwnerName: userCtx.user.name?.toString() ?? '',
-                categories: categories.length ? categories : ['Other']
-            }
-            if (!!listingUrl) {
-                itemToAdd['ListingURL'] = listingUrl.toString()
-            }
-            try {
-                const addItemResponse = UpdateItem(itemToAdd)
-                return addItemResponse
-            }
-            catch (error) {
-                console.log(error)
-            }
-        })
-        .then((addItemResponse) => {
-            Success(`/item/${addItemResponse?.$id}`)
-        })
+
+        if (newFileState) {
+            AddResizedImageToStorage(newFileState)
+                .then((AddImageResult) => {
+                    const newImageId = AddImageResult?.$id
+                    const newImageUrl = `${process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT_ID as string}/storage/buckets/${process.env.NEXT_PUBLIC_APPWRITE_BUCKET_ID as string}/files/${newImageId}/preview?project=${process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID as string}`
+                    if (!!item) {
+                        try {
+                            UpdateItem({ ...item, imageId: newImageId, ImageURL: newImageUrl })
+                                .then(() => {
+                                    Success(`/item/${item?.$id}`)
+                                })
+                        }
+                        catch (error) {
+                            console.log(error)
+                        }
+                    }
+            })
+        }
+        else {
+            if (!!item) {
+                    try {
+                        UpdateItem(item)
+                            .then(() => {
+                                Success(`/item/${item?.$id}`)
+                            })
+                    }
+                    catch (error) {
+                        console.log(error)
+                    }
+                }
+
+        }
     }
     
     useEffect(() => {
         getAndSetItem(itemId as string)
     }, [])
+
     return !!item && (
         <form onSubmit={submitForm} className="flex flex-col gap-2 mb-36">
             <div className="flex flex-col text-green-100">

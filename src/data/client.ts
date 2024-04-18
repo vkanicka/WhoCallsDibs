@@ -27,19 +27,20 @@ export const AddItemFx = async ({ ItemName, ImageURL, imageId, ListingURL, Descr
         console.error(error)
     }
 }
-export const UpdateItem = async ({ existingItemId, ItemName, ImageURL, imageId, ListingURL, Description, itemOwnerId, itemOwnerEmail, itemOwnerName, categories }: Partial<Item>) => {
-    try {
+export const UpdateItem = async ({ $id, ItemName, ImageURL, imageId, ListingURL, Description, itemOwnerId, itemOwnerEmail, itemOwnerName, categories }: Partial<Item>) => {
+    if (!!$id) {
+        try {
             const response = await databases.updateDocument(
                 process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string, 
                 process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_ITEMS as string, 
-                existingItemId,
+                $id,
                 { "ItemName": ItemName, "ImageURL": ImageURL, "imageId": imageId, "ListingURL": ListingURL, "Description": Description, "itemOwnerId": itemOwnerId, "itemOwnerEmail": itemOwnerEmail, "itemOwnerName": itemOwnerName, "categories": categories}
             );
-        // console.log(response)
+        console.log(response)
         return response
     } catch (error) {
         console.error(error)
-    }
+    }}
 }
 export const DeleteItem = async ({ existingItemId }: Partial<Item>) => {
     try {
@@ -77,7 +78,6 @@ export const AddResizedImageToStorage = async (resizedImage: File) => {
             ID.unique(),
             resizedImage as File
         )
-        // console.log(response)
         return response
     } catch (error) {
         console.error(error)
