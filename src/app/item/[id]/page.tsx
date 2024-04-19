@@ -52,7 +52,7 @@ const ItemPage = () => {
     }
 
     const handleBackButton = () => {
-        setClickedCallDibs(false)
+        !!clickedCallDibs ? setClickedCallDibs(false) : setIsDeleteOpen(false)
     }
 
     useEffect(() => {
