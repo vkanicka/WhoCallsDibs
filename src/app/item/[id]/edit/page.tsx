@@ -48,8 +48,16 @@ const AddItem = () => {
     const handleListingURLChange = async (e) => {
         const value = e.target.value
         const newItem = { ...item }
-        //@ts-expect-error
-        setItem({...newItem, ListingURL: value})
+        if (!!value) {
+            console.log('has value')
+            //@ts-expect-error
+            setItem({...newItem, ListingURL: value})
+        }
+        else {
+            delete newItem.ListingURL
+            //@ts-expect-error
+            setItem({...newItem, ListingURL: null})
+        }
     }
 
     const deleteImage = () => {
@@ -139,7 +147,7 @@ const AddItem = () => {
             </div>
             <div className="flex flex-col text-green-100">
                 <label>Item Listing URL<OptionalComponent/></label>
-                <input onChange={handleListingURLChange} name='listingUrl' id='listingUrl' className="text-green-950" type="url" placeholder={item?.ListingURL}></input>
+                <input onChange={handleListingURLChange} name='listingUrl' id='listingUrl' className="text-green-950" type="url" value={item?.ListingURL ?? ''}></input>
             </div>
             <div className="flex flex-col text-green-100">
                 <label>Description <OptionalComponent/></label>
