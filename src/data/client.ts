@@ -36,7 +36,7 @@ export const UpdateItem = async ({ $id, ItemName, ImageURL, imageId, ListingURL,
                 $id,
                 { "ItemName": ItemName, "ImageURL": ImageURL, "imageId": imageId, "ListingURL": ListingURL, "Description": Description, "itemOwnerId": itemOwnerId, "itemOwnerEmail": itemOwnerEmail, "itemOwnerName": itemOwnerName, "categories": categories}
             );
-        console.log(response)
+        // console.log(response)
         return response
     } catch (error) {
         console.error(error)
