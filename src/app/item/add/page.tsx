@@ -74,7 +74,7 @@ const AddItem = () => {
             </div>
             <div className="flex flex-col text-green-100">
                 <label>Photo</label>
-                <input onChange={uploadImage} id="uploader" name='photo' className="text-green-950" type="file" accept="image/*"></input>
+                <input required onChange={uploadImage} id="uploader" name='photo' className="text-green-950" type="file" accept="image/*"></input>
             </div>
             <div className="flex flex-col text-green-100">
                 <label>Item Listing URL<OptionalComponent/></label>
