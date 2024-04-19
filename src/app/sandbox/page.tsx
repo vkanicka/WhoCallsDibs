@@ -1,4 +1,5 @@
 'use client'
+import LoadingIndicator from "@/components/loading";
 import { DeleteImageStorage, GetAllItems, GetCatItems, GetFriendsItems, GetUserDetailsByAuthId, ListImageStorage } from "@/data/client";
 import { UserContext } from "@/data/context/user";
 import Item from "@/data/models/item";
@@ -105,6 +106,7 @@ const Sandbox = () => {
                 <button className="btn-test" onClick={handleUpdateFriendDetailsByAuthId}>handleUpdateFriendDetailsByAuthId</button>
                 <button className="btn-test" onClick={cleanUpStorage}>cleanUpStorage</button>
             </div>
+            <LoadingIndicator/>
         </div>
     )
 }

@@ -7,9 +7,11 @@ import { useContext, useState } from 'react'
 import Item from '@models/item'
 import CATEGORIES from '@data/const/categories'
 import resizeImage from '@/utils/resizeimage'
+import LoadingIndicator from '@/components/loading'
 
 const AddItem = () => {
     const [newFileState, setNewFileState] = useState<File>()
+    const [isSubmitting, setIsSubmitting] = useState(false)
 
     const router = useRouter()
     const Success = (newItemPath: string) => {
@@ -26,6 +28,7 @@ const AddItem = () => {
     // @ts-expect-error
     const submitForm = async (e) => {
         e.preventDefault();
+        setIsSubmitting(true)
         const formData = new FormData(e.target)
         const payload = Object.fromEntries(formData)
         const { name, description, listingUrl } = payload
@@ -67,7 +70,10 @@ const AddItem = () => {
         }
     
     return (
-        <form onSubmit={submitForm} className="flex flex-col gap-2 mb-36">
+        isSubmitting ? (
+            <LoadingIndicator />
+        ) :
+        (<form onSubmit={submitForm} className="flex flex-col gap-2 mb-36">
             <div className="flex flex-col text-green-100">
                 <label>Item Name</label>
                 <input name='name' id='name' className="text-green-950" required type="text"></input>
@@ -95,7 +101,7 @@ const AddItem = () => {
             <div className='bottom-tray'>
                 <button type='submit' className='btn-v'>Submit</button>
             </div>
-        </form>
+        </form>)
     )
 }
 export default AddItem

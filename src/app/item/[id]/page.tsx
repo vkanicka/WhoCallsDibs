@@ -13,8 +13,10 @@ import { UserContext } from '@/data/context/user'
 import { useContext } from 'react'
 import sendMail from '@/utils/sendMail';
 import { Edit, Plus, Trash2 } from 'react-feather';
+import LoadingIndicator from '@/components/loading';
 
 const ItemPage = () => {
+    const [isLoading, setIsLoading] = useState(false)
     const [item, setItem] = useState<Item>()
     const [clickedCallDibs, setClickedCallDibs] = useState(false)
     const [isUserOwner, setIsUserOwner] = useState(false)
@@ -25,8 +27,10 @@ const ItemPage = () => {
     const isDibbed = item?.isDibbed
 
     const getAndSetItem = async (id: string) => {
+        setIsLoading(true)
         const gottenItem = await GetItem(id)
         setItem(gottenItem)
+        setIsLoading(false)
     }
 
     const router = useRouter()
@@ -69,7 +73,10 @@ const ItemPage = () => {
             <Link href={'/item/add'} className="fixed right-6 bottom-48 rounded-full h-12 w-12 bg-verbena-600 z-bubble flex place-content-center shadow-glow shadow-lime-100">
                         <Plus size={30} className='self-center text-limeshine-300' />
             </Link>
-            {!!item ? (
+            {isLoading && (
+                <LoadingIndicator/>
+            )}
+            {!!item && (
                 <div className="flex flex-col mb-32">
                     <p className="text-green-950 text-2xl">{item.ItemName}</p>
                     <p className="text-gray-600 text-lg">Owner: {item.itemOwnerName}</p>
@@ -109,25 +116,25 @@ const ItemPage = () => {
                             <Link rel="noopener noreferrer" target="_blank" className='underline break-words text-violet-500 italic' href={item.ListingURL}>
                                 {item.ListingURL}
                             </Link>
-                            </div>
+                        </div>
                     )}
                     {!!isUserOwner && !isDibbed && (
                         <div className='bottom-tray'>
-                            <button className='btn-v flex justify-center gap-4 items-center' onClick={()=>setIsDeleteOpen(true)}><Trash2/>Delete</button>
-                            <Link className='btn-v flex justify-center gap-4 items-center' href={`/item/${item.$id}/edit`}><Edit/>Edit</Link>
-                        </div>   
+                            <button className='btn-v flex justify-center gap-4 items-center' onClick={() => setIsDeleteOpen(true)}><Trash2 />Delete</button>
+                            <Link className='btn-v flex justify-center gap-4 items-center' href={`/item/${item.$id}/edit`}><Edit />Edit</Link>
+                        </div>
                     )}
                     {!isUserOwner && !isDibbed && (
                         <div className="bottom-tray">
-                            <button onClick={()=>setClickedCallDibs(true)} className='btn-v'>
-                        I call dibs!
+                            <button onClick={() => setClickedCallDibs(true)} className='btn-v'>
+                                I call dibs!
                             </button>
                         </div>
                     )}
                     {!!isDibbed && (
                         <div className="bottom-tray">
                             <p className='dibs-called'>
-                        Dibs called
+                                Dibs called
                             </p>
                         </div>
                     
@@ -155,8 +162,6 @@ const ItemPage = () => {
         
                     )}
                 </div>
-            ) : (
-                    <p>Loading...</p>
             )}
             
         </div>

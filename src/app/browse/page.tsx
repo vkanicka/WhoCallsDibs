@@ -13,12 +13,14 @@ import { useRouter } from 'next/navigation'
 import { X } from 'react-feather'
 import { UserContext } from '@/data/context/user'
 import UserDetails from '@/data/models/userDetails'
+import LoadingIndicator from '@/components/loading'
 
 const Browse = () => {
     
     const ItemsList = () => {
         const router = useRouter()
         const [allItems, setAllItems] = useState<Item[]>()
+        const [isLoading, setIsLoading] = useState(false)
         const searchParams = useSearchParams()
         let catParams: string[];
         let showFilters: boolean;
@@ -72,6 +74,7 @@ const Browse = () => {
             router.push(newPath)
         }
         const handleDetailFriendItems = async () => {
+            setIsLoading(true)
             userCtx.user.$id && GetUserDetailsByAuthId(userCtx.user.$id)
             .then((userDetailsResult) => {
                 return userDetailsResult?.documents?.[0]
@@ -90,6 +93,7 @@ const Browse = () => {
                 } else {
                     setAllItems(friendsItemsResult)
                 }
+                setIsLoading(false)
             })
     }
         useEffect(() => {
@@ -101,6 +105,9 @@ const Browse = () => {
         return (
             <div>
                 <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 w-full gap-6 pb-36'>
+                    {isLoading && (
+                        <LoadingIndicator/>
+                    )}
                     {!!allItems?.length && allItems.map((item, index) => {
                         return <ItemCard key={index} item={item} />
                     }) 
@@ -131,7 +138,7 @@ const Browse = () => {
     }
 
     return (
-        <Suspense>
+        <Suspense fallback={<LoadingIndicator/>}>
             <ItemsList />
         </Suspense>
         
