@@ -70,7 +70,7 @@ const ItemPage = () => {
                         <Plus size={30} className='self-center text-limeshine-300' />
             </Link>
             {!!item ? (
-                <div className="flex flex-col">
+                <div className="flex flex-col mb-32">
                     <p className="text-green-950 text-2xl">{item.ItemName}</p>
                     <p className="text-gray-600 text-lg">Owner: {item.itemOwnerName}</p>
                     <div className="flex justify-center">
