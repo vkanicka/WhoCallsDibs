@@ -49,7 +49,7 @@ export const DeleteItem = async ({ existingItemId }: Partial<Item>) => {
                 process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_ITEMS as string, 
                 existingItemId
             );
-        console.log(response)
+        // console.log(response)
         return response
     } catch (error) {
         console.error(error)
@@ -109,7 +109,7 @@ export const ListImageStorage = async () => {
                 Query.limit(50)
             ]
         )
-        console.log(response)
+        // console.log(response)
         return response
     }
     catch (error) {
@@ -165,6 +165,34 @@ export const UpdateItemIsDibbed = async (id: string, dibsCallerId: string, dibsC
                 "dibsCallerId": dibsCallerId,
                 "dibsCallerEmail": dibsCallerEmail,
                 "dibsCallerName": dibsCallerName
+            }
+        )
+        return response
+    }
+    catch (error) {
+        console.error(error)
+    }
+}
+export const UpdateItemSent = async (id: string, newStatus: boolean) => {
+    try {
+        const response = await databases.updateDocument(
+            process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string, process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_ITEMS as string, id,
+            {
+                "hasSent": newStatus,
+            }
+        )
+        return response
+    }
+    catch (error) {
+        console.error(error)
+    }
+}
+export const UpdateItemReceived = async (id: string, newStatus: boolean) => {
+    try {
+        const response = await databases.updateDocument(
+            process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string, process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_ITEMS as string, id,
+            {
+                "hasReceived": newStatus,
             }
         )
         return response
@@ -294,7 +322,7 @@ export const GetUserDetails = async (id: string) => {
     try {
         const response = await databases.getDocument(
             process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string, process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_USER_DETAILS as string, id        )
-        console.log(response)
+        // console.log(response)
         return response
     }
     catch (error) {
@@ -337,7 +365,7 @@ export const AcceptInvite = async (id: string) => {
                 "Status": 'Accepted'
             }
         )
-        console.log(response)
+        // console.log(response)
         return response
     }
     catch (error) {
@@ -352,7 +380,7 @@ export const IgnoreInvite = async (id: string) => {
                 "Status": 'Ignored'
             }
         )
-        console.log(response)
+        // console.log(response)
         return response
     }
     catch (error) {

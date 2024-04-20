@@ -6,7 +6,7 @@ const Bubble = () => {
     const router = useRouter()
     const pathname = usePathname();
     const isBrowsePage = pathname === '/browse'
-    const noHideSearchPages = ['/account/login', '/account/create', '/account/invite', '/']
+    const noHideSearchPages = ['/account/login', '/account/create', '/account/invite', '/', '/sandbox', '/account/dibs']
     const patternA = /^\/account\/invite\/[a-f0-9].*$/
     const isInvite = pathname && patternA.test(pathname)
 

@@ -6,6 +6,8 @@ interface Item extends Models.Document {
     isDibbed?: boolean;
     Description?: string;
     ListingURL?: string;
+    hasReceived?: boolean;
+    hasSent?: boolean;
     imageId?: string;
     itemOwnerId: string;
     itemOwnerEmail: string;
