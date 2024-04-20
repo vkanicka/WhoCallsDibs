@@ -7,7 +7,6 @@ type Props = {
 }
 
 const ItemDetail = ({ item, userIsOwner }: Props) => {
-    console.log(item)
     return (
         !!item && (
             <li className="flex justify-between">
