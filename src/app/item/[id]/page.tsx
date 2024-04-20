@@ -77,7 +77,7 @@ const ItemPage = () => {
                 <LoadingIndicator/>
             )}
             {!!item && (
-                <div className="flex flex-col mb-32">
+                <div className="flex flex-col mb-32 gap-2">
                     <p className="text-green-950 text-2xl">{item.ItemName}</p>
                     <p className="text-gray-600 text-lg">Owner: {item.itemOwnerName}</p>
                     <div className="flex justify-center">
@@ -95,10 +95,7 @@ const ItemPage = () => {
                     {item.Description && (
                         <p className="text-lime-200">{item.Description}</p>
                     )}
-                    {/* Image gallery swipe/grid if multiple */}
-                    {/* Is owner offering to pay postage */}
-                    {/* Ask quesiton / message owner if consent */}
-                    {/* View Q&A */}
+
                     <div className='space-y-2'>
                         <h3>Categories</h3>
                         <ul className='flex gap-2'>
