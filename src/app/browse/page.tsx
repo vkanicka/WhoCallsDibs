@@ -14,6 +14,7 @@ import { X } from 'react-feather'
 import { UserContext } from '@/data/context/user'
 import UserDetails from '@/data/models/userDetails'
 import LoadingIndicator from '@/components/loading'
+import Link from 'next/link'
 
 const Browse = () => {
     
@@ -21,6 +22,7 @@ const Browse = () => {
         const router = useRouter()
         const [allItems, setAllItems] = useState<Item[]>()
         const [isLoading, setIsLoading] = useState(false)
+        const [noItemsFound, setNoItemsFound] = useState(false)
         const searchParams = useSearchParams()
         let catParams: string[];
         let showFilters: boolean;
@@ -87,7 +89,8 @@ const Browse = () => {
                         return GetFriendsItems(userDetailsResult?.friends)
                     }
             })
-            .then((friendsItemsResult: any) => {
+                .then((friendsItemsResult: any) => {
+                if (!friendsItemsResult.length) setNoItemsFound(true)
                 if (catParams.length) {
                     setAllItems(friendsItemsResult.filter((item: Item)=> item.categories?.some(x=>catParams.includes(x))))
                 } else {
@@ -100,6 +103,7 @@ const Browse = () => {
             handleDetailFriendItems()
             // getDetails()
         }, [userCtx])
+
 
         
         return (
@@ -115,23 +119,34 @@ const Browse = () => {
                     //     <p>Loading...</p> 
                     // )
                     }
+                    {noItemsFound && (
+                        <div className='flex flex-col'>
+                            <p>No items found. </p>
+                        </div>
+                    )}
                 </div>
-                <div className='bottom-tray'>
-                    <div className={`${showFilters ? 'w-full absolute flex flex-wrap bottom-24 right-0 bg-ikigai-200 p-6 gap-3 rounded-t-3xl' : 'hidden'}`}>
-                        {CATEGORIES.map((category, index) => {
-                            return (
-                                <button onClick={()=>handleCatParams(category)} className={`px-3 py-[4px] border border-solid border-gray-400 rounded-2xl text-2xl bg-ikigai-600 bg-opacity-50 ${catParams.includes(category) ? 'text-lime-300 bg-opacity-70 flex' : 'text-gray-100'}`} key={index}>
-                                    {category}{catParams.includes(category) && <X size={25} className='self-center ml-1 text-primrose-500 hover:text-lime-300' />}
-                                </button>
-                            )
-                        })}
-                        <button onClick={()=>handleMyItems()} className={`px-3 py-[4px] border border-solid border-gray-400 rounded-2xl text-2xl bg-ikigai-600 bg-opacity-50 ${!!myItems ? 'text-lime-300 bg-opacity-70 flex' : 'text-gray-100'}`} key={'viewMine'}>
-                                    {'My Items'}{myItems && <X size={25} className='self-center ml-1 text-primrose-500 hover:text-lime-300' />}
-                        </button>
+                {((noItemsFound && myItems) || !!allItems?.length) && (
+                    <div className='bottom-tray'>
+                        <div className={`${showFilters ? 'w-full absolute flex flex-wrap bottom-24 right-0 bg-ikigai-200 p-6 gap-3 rounded-t-3xl' : 'hidden'}`}>
+                            {CATEGORIES.map((category, index) => {
+                                return (
+                                    <button onClick={()=>handleCatParams(category)} className={`px-3 py-[4px] border border-solid border-gray-400 rounded-2xl text-2xl bg-ikigai-600 bg-opacity-50 ${catParams.includes(category) ? 'text-lime-300 bg-opacity-70 flex' : 'text-gray-100'}`} key={index}>
+                                        {category}{catParams.includes(category) && <X size={25} className='self-center ml-1 text-primrose-500 hover:text-lime-300' />}
+                                    </button>
+                                )
+                            })}
+                            <button onClick={()=>handleMyItems()} className={`px-3 py-[4px] border border-solid border-gray-400 rounded-2xl text-2xl bg-ikigai-600 bg-opacity-50 ${!!myItems ? 'text-lime-300 bg-opacity-70 flex' : 'text-gray-100'}`} key={'viewMine'}>
+                                        {'My Items'}{myItems && <X size={25} className='self-center ml-1 text-primrose-500 hover:text-lime-300' />}
+                            </button>
+                        </div>
+                        <button className='btn-v text-lg' onClick={handleClearFilters}>Clear Filters</button>
+                        <button className='btn-v' onClick={handleShowFilters}>{showFilters ? 'Hide Filters' : `Filter${catParams.length ? `s (${catParams.length})` : ''}`}</button>
+                    </div>)}
+                {noItemsFound && !myItems && (
+                    <div className='bottom-tray'>
+                        <Link className='btn-v' href='/account/invite'>Add Friends</Link>
                     </div>
-                    <button className='btn-v text-lg' onClick={handleClearFilters}>Clear Filters</button>
-                    <button className='btn-v' onClick={handleShowFilters}>{showFilters ? 'Hide Filters' : `Filter${catParams.length ? `s (${catParams.length})` : ''}`}</button>
-                </div>
+                )}
             </div>
 
         )
