@@ -7,10 +7,12 @@ import { CheckCircle, RefreshCw } from "react-feather"
 
 type Props = {
     item: Item
-    userIsOwner: boolean
+    userIsOwner?: boolean
+    completed?: boolean
+    processReceived?: Function
 }
 
-const ItemDetail = ({ item, userIsOwner }: Props) => {
+const ItemDetail = ({ item, userIsOwner, completed, processReceived }: Props) => {
     const [sent, setSent] = useState(item.hasSent)
     const [received, setReceived] = useState(item.hasReceived)
     const [loading, setLoading] = useState(false)
@@ -28,6 +30,7 @@ const ItemDetail = ({ item, userIsOwner }: Props) => {
         await UpdateItemReceived(item.$id, newStatus)
         setReceived(newStatus)
         setLoading(false)
+        !!processReceived && processReceived()
     }
     return (
         !!item && (
@@ -38,7 +41,7 @@ const ItemDetail = ({ item, userIsOwner }: Props) => {
                     )}
                     <Link href={`/item/${item.$id}`}>{item.ItemName} {userIsOwner ? `for ${item.dibsCallerName}` : `from ${item.itemOwnerName}`}</Link>
                 </div>
-                {!loading && <button onClick={userIsOwner ? handleSentClick : handleReceivedClick} className={`text-xs rounded-full }`}><CheckCircle className={`${(userIsOwner && !sent || !userIsOwner && !received) ? 'text-primrose-400' : 'text-limeshine-300'}`} size={48} /></button>}
+                {!loading && !completed && <button onClick={userIsOwner ? handleSentClick : handleReceivedClick} className={`text-xs rounded-full }`}><CheckCircle className={`${(userIsOwner && !sent || !userIsOwner && !received) ? 'text-primrose-400' : 'text-limeshine-300'}`} size={48} /></button>}
                 {loading && <RefreshCw size={48} className="animate-spin text-primrose-800 self-center" />}
     
             </li>

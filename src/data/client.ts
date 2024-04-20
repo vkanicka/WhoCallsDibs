@@ -460,6 +460,7 @@ export const GetMyItemsWithDibs = async (id: string) => {
             [
                 Query.equal('itemOwnerId', id),
                 Query.equal('isDibbed', true),
+                Query.equal('hasReceived', false),
                 Query.limit(100)
             ]
         )
@@ -477,11 +478,38 @@ export const GetItemsICalledDibsOn = async (id: string) => {
             [
                 Query.equal('dibsCallerId', id),
                 Query.equal('isDibbed', true),
+                Query.equal('hasReceived', false),
                 Query.limit(100)
             ]
         )
         const items = response.documents as Item[]
         return items
+    }
+    catch (error) {
+        console.error(error)
+    }
+}
+export const GetItemsCompleted = async (id: string) => {
+    try {
+        const response1 = await databases.listDocuments(process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string,
+            process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_ITEMS as string,
+            [
+                Query.equal('dibsCallerId', id),
+                Query.equal('hasReceived', true),
+                Query.limit(100)
+            ]
+        )
+        const response2 = await databases.listDocuments(process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string,
+            process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_ITEMS as string,
+            [
+                Query.equal('itemOwnerId', id),
+                Query.equal('hasReceived', true),
+                Query.limit(100)
+            ]
+        )
+        const items1 = response1.documents as Item[]
+        const items2 = response2.documents as Item[]
+        return [...items1, ...items2]
     }
     catch (error) {
         console.error(error)
