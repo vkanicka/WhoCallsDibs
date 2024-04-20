@@ -44,7 +44,7 @@ const ViewAccount = () => {
         <div>
             {/* <h1>My Dibs</h1> */}
             {!!userCtx.user.email && (
-                <div className='flex flex-col justify-between mb-128 gap-8'>
+                <div className='flex flex-col justify-between mb-32 gap-8'>
                     {!!myDibbedItems && <ItemDetailList itemList={myDibbedItems} userIsOwner={true} />}
                     {!!itemsIDibbed && <ItemDetailList itemList={itemsIDibbed} userIsOwner={false} processReceived={ processReceived} />}
                     {!!itemsCompleted && <ItemDetailList itemList={itemsCompleted} completed  processReceived={ processReceived} />}
