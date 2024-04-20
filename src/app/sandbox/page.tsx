@@ -106,7 +106,7 @@ const Sandbox = () => {
                 <button className="btn-test" onClick={handleUpdateFriendDetailsByAuthId}>handleUpdateFriendDetailsByAuthId</button>
                 <button className="btn-test" onClick={cleanUpStorage}>cleanUpStorage</button>
             </div>
-            <LoadingIndicator/>
+            {/* <LoadingIndicator/> */}
         </div>
     )
 }
