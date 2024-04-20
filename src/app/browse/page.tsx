@@ -140,7 +140,7 @@ const Browse = () => {
                             </button>
                         </div>
                         <button className='btn-v text-lg' onClick={handleClearFilters}>Clear Filters</button>
-                        <button className='btn-v' onClick={handleShowFilters}>{showFilters ? 'Hide Filters' : `Filter${catParams.length ? `s (${catParams.length})` : ''}`}</button>
+                        <button className='btn-v' onClick={handleShowFilters}>{showFilters ? 'Hide Filters' : `Filter${(catParams.length || myItems) ? `s (${catParams.length + Number(myItems)})` : ''}`}</button>
                     </div>)}
                 {noItemsFound && !myItems && (
                     <div className='bottom-tray'>
