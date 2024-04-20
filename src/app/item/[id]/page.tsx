@@ -99,12 +99,12 @@ const ItemPage = () => {
                     {/* Is owner offering to pay postage */}
                     {/* Ask quesiton / message owner if consent */}
                     {/* View Q&A */}
-                    <div>
+                    <div className='space-y-2'>
                         <h3>Categories</h3>
-                        <ul>
+                        <ul className='flex gap-2'>
                             {item.categories?.map((category, index) => {
                                 return (
-                                    <li key={index}>{category}</li>
+                                    <li className='px-3 py-[4px] border border-solid border-gray-400 rounded-2xl text-sm bg-ikigai-600 text-lime-300 bg-opacity-70' key={index}>{category}</li>
                                 )
                             })}
                         </ul>
