@@ -1,7 +1,3 @@
-/**
- * useEffect only works in cliient components
- */
-
 'use client'
 import { useEffect, useState, Suspense, useContext } from 'react'
 import { GetFriendsItems, GetUserDetailsByAuthId, GetMyItems } from '@data/client'

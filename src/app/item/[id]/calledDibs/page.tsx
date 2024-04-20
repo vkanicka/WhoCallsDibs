@@ -1,7 +1,3 @@
-/**
- * useRouter only works in Client Components
- */
-
 'use client'
 import { useRouter } from "next/navigation";
 

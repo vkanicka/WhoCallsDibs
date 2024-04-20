@@ -1,7 +1,3 @@
-/**
- * useEffect only works in client components
- */
-
 'use client'
 import Link from 'next/link'
 import { DeleteItem, GetItem, UpdateItemIsDibbed } from "@data/client";

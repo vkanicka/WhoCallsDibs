@@ -1,7 +1,3 @@
-/**
- * useRouter only works in client components
- */
-
 'use client'
 import { useParams, useRouter } from 'next/navigation'
 import { AddResizedImageToStorage, GetItem, UpdateItem } from '@data/client'
