@@ -145,6 +145,9 @@ const Browse = () => {
                 {noItemsFound && !myItems && (
                     <div className='bottom-tray'>
                         <Link className='btn-v' href='/account/invite'>Add Friends</Link>
+                        <button onClick={()=>handleMyItems()} className='btn-v'>
+                                        {'My Items'}{myItems && <X size={25} className='self-center ml-1 text-primrose-500 hover:text-lime-300' />}
+                            </button>
                     </div>
                 )}
             </div>
