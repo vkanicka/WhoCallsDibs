@@ -9,7 +9,7 @@ const resizeImage = (event: { target: { files: [any]; }; }, setNewFileState: Fun
                 image.src = imageAsBase64;
                 image.onload = () => {
                     const canvas = document.createElement('canvas');
-                    const maxWidth = 400; // Set your desired max width
+                    const maxWidth = 700; // Set your desired max width
                     const scaleFactor = maxWidth / image.width;
                     canvas.width = maxWidth;
                     canvas.height = image.height * scaleFactor;
