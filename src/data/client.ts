@@ -374,23 +374,23 @@ export const GetUserDetailsByAuthId = async (id: string) => {
         console.error(error)
     }
 }
-export const GetFilteredItems = async (catParams: string[], friends: string[]) => {
-    try {
-        const response = await databases.listDocuments(process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string,
-            process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_ITEMS as string,
-            [
-                Query.equal('categories', catParams),
-                Query.equal('friends', friends),
-                Query.limit(100)
-            ]
-        )
-        const items = response.documents as Item[]
-        return items
-    }
-    catch (error) {
-        console.error(error)
-    }
-}
+// export const GetFilteredItems = async (catParams: string[], friends: string[]) => {
+//     try {
+//         const response = await databases.listDocuments(process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string,
+//             process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_ITEMS as string,
+//             [
+//                 Query.equal('categories', catParams),
+//                 Query.equal('friends', friends),
+//                 Query.limit(100)
+//             ]
+//         )
+//         const items = response.documents as Item[]
+//         return items
+//     }
+//     catch (error) {
+//         console.error(error)
+//     }
+// }
 export const GetFriendsItems = async (friends: string[]) => {
     try {
         const response = await databases.listDocuments(process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string,
@@ -415,6 +415,40 @@ export const GetMyItems = async (id: string) => {
             [
                 Query.equal('itemOwnerId', id),
                 Query.equal('isDibbed', false),
+                Query.limit(100)
+            ]
+        )
+        const items = response.documents as Item[]
+        return items
+    }
+    catch (error) {
+        console.error(error)
+    }
+}
+export const GetMyItemsWithDibs = async (id: string) => {
+    try {
+        const response = await databases.listDocuments(process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string,
+            process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_ITEMS as string,
+            [
+                Query.equal('itemOwnerId', id),
+                Query.equal('isDibbed', true),
+                Query.limit(100)
+            ]
+        )
+        const items = response.documents as Item[]
+        return items
+    }
+    catch (error) {
+        console.error(error)
+    }
+}
+export const GetItemsICalledDibsOn = async (id: string) => {
+    try {
+        const response = await databases.listDocuments(process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string,
+            process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID_ITEMS as string,
+            [
+                Query.equal('dibsCallerId', id),
+                Query.equal('isDibbed', true),
                 Query.limit(100)
             ]
         )

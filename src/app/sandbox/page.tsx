@@ -1,6 +1,7 @@
 'use client'
+import ItemDetailList from "@/components/itemDetailList";
 import LoadingIndicator from "@/components/loading";
-import { DeleteImageStorage, GetAllItems, GetCatItems, GetFriendsItems, GetUserDetailsByAuthId, ListImageStorage } from "@/data/client";
+import { DeleteImageStorage, GetAllItems, GetCatItems, GetFriendsItems, GetItemsICalledDibsOn, GetMyItemsWithDibs, GetUserDetailsByAuthId, ListImageStorage } from "@/data/client";
 import { UserContext } from "@/data/context/user";
 import Item from "@/data/models/item";
 import UserDetails from "@/data/models/userDetails";
@@ -14,6 +15,8 @@ const Sandbox = () => {
     const [friendItems, setFriendItems] = useState<Partial<Item[]>>()
     const [catItems, setCatItems] = useState<Partial<Item[]>>()
     const tempCat = ['Pets']
+    const [itemsIDibbed, setItemsIDibbed] = useState<Partial<Item[]>>()
+    const [myDibbedItems, setMyDibbedItems] = useState<Partial<Item[]>>()
 
 
     const handleUser = () => {
@@ -92,11 +95,23 @@ const Sandbox = () => {
                 .then((response)=>console.log(response))
             })
         })
-        }
+    }
+    
+    const HandleGetMyItemsWithDibs = async () => {
+        const tempId = '66102a0f803ad05dc220'
+        const results = await GetMyItemsWithDibs(tempId)
+        !!results && setMyDibbedItems(results.filter(item => item !== undefined))
+        console.log(results)
+    }
+    const HandleGetItemsICalledDibsOn = async () => {
+        const tempId = '66102a0f803ad05dc220'
+        const results = await GetItemsICalledDibsOn(tempId)
+        !!results && setItemsIDibbed(results.filter(item => item !== undefined))
+    }
     return (
         <div>
             <h1>Sandbox</h1>
-            <div className="flex space-x-6">
+            <div className="flex flex-col gap-6 mb-32">
                 <button className="btn-test" onClick={handleUser}>handleUser</button>
                 <button className="btn-test" onClick={handleUserDetails}>handleUserDetails</button>
                 <button className="btn-test" onClick={handleAllItems}>handleAllItems</button>
@@ -105,8 +120,12 @@ const Sandbox = () => {
                 <button className="btn-test" onClick={handleDetailFriendItems}>handleDetailFriendItems</button>
                 <button className="btn-test" onClick={handleUpdateFriendDetailsByAuthId}>handleUpdateFriendDetailsByAuthId</button>
                 <button className="btn-test" onClick={cleanUpStorage}>cleanUpStorage</button>
+                <button className="btn-test" onClick={HandleGetMyItemsWithDibs}>GetMyItemsWithDibs</button>
+                <button className="btn-test" onClick={HandleGetItemsICalledDibsOn}>GetItemsICalledDibsOn</button>
             </div>
             {/* <LoadingIndicator/> */}
+            {!!myDibbedItems && <ItemDetailList itemList={myDibbedItems} userIsOwner={true} />}
+            {!!itemsIDibbed && <ItemDetailList itemList={itemsIDibbed} userIsOwner={false} />}
         </div>
     )
 }
