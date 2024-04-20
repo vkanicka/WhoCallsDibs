@@ -27,6 +27,9 @@
   .bottom-tray {
     @apply flex gap-6 fixed bottom-0 w-full left-0 right-0 p-6 bg-ikigai-200 z-thumb
   }
+  .bottom-tray-clear {
+    @apply flex gap-6 fixed bottom-0 w-full left-0 right-0 p-6 bg-gradient-to-t from-ikigai-200 to-transparent from-60% to-100% z-thumb
+  }
   .btn-test {
     @apply bg-verbena-600 text-xl px-4 py-4 rounded-2xl text-limeshine-300 font-semibold text-center ring-violet-300 ring-2
 

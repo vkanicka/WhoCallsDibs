@@ -5,7 +5,7 @@ import Bubble from "./bubble"
 
 const AccountThumbNav = () => {
     return (
-        <nav className="bottom-tray justify-around">
+        <nav className="bottom-tray-clear justify-around">
             <Link href={'/account/dibs'} className="rounded-full h-12 w-12 bg-verbena-600 z-bubble flex place-content-center shadow-glow shadow-lime-100">
                 <Gift size={30} className='self-center text-limeshine-300' />
             </Link>
