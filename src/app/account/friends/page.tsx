@@ -1,5 +1,6 @@
 'use client'
 
+import AccountThumbNav from "@/components/accountThumbNav";
 import { GetFriendsDetails, GetUserDetails, GetUserDetailsByAuthId } from "@/data/client";
 import { UserContext } from "@/data/context/user";
 import UserDetails from "@/data/models/userDetails";
@@ -38,9 +39,10 @@ const FriendsPage = () => {
                     )
                 })}
             </ul>
-            <Link href={'/account/invite'} className="fixed right-6 bottom-48 rounded-full h-12 w-12 bg-verbena-600 z-bubble flex place-content-center shadow-glow shadow-lime-100">
+            {/* <Link href={'/account/invite'} className="fixed right-6 bottom-48 rounded-full h-12 w-12 bg-verbena-600 z-bubble flex place-content-center shadow-glow shadow-lime-100">
                 <UserPlus size={30} className='self-center text-limeshine-300' />
-            </Link>
+            </Link> */}
+            <AccountThumbNav />
         </div>
     )
 }

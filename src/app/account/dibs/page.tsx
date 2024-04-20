@@ -7,6 +7,7 @@ import { UserPlus, Users } from 'react-feather';
 import ItemDetailList from '@/components/itemDetailList';
 import Item from '@/data/models/item';
 import { GetItemsCompleted, GetItemsICalledDibsOn, GetMyItemsWithDibs } from '@/data/client';
+import AccountThumbNav from '@/components/accountThumbNav';
 
 const ViewAccount = () => {
     const userCtx = useContext(UserContext);
@@ -50,6 +51,7 @@ const ViewAccount = () => {
 
                 </div>
             )}
+            <AccountThumbNav />
         </div>
     )
 }
