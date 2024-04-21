@@ -26,7 +26,6 @@ const ViewAccount = () => {
     const handleGetItemsCompleted = async () => {
         const results = userCtx.user.$id && await GetItemsCompleted(userCtx.user.$id)
         !!results && setItemsCompleted(results.filter(item => item !== undefined))
-        console.log(results)
     }
 
     const processReceived = () => {
