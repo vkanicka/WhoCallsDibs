@@ -45,6 +45,12 @@ const config: Config = {
       boxShadow: {
         glow: "0px 0px 18px .4px rgba(160, 221, 227, 0.1)",
       },
+      dropShadow: {
+        glow: [
+          "0 0px 5px #aad5b6",
+          "0 0px 65px rgba(255, 255,255, 0.2)"
+        ]
+      }
     },
   },
   plugins: [],
