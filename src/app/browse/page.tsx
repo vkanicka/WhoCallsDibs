@@ -100,6 +100,12 @@ const Browse = () => {
             // getDetails()
         }, [userCtx])
 
+        useEffect(() => {
+            if (!userCtx.user.$id) {
+                router.push('/account/login')
+            }
+        }, [userCtx])
+
 
         
         return (

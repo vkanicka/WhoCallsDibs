@@ -5,7 +5,7 @@
 
 import { GetAccount, LoginUser } from "@/data/client";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useContext } from 'react';
+import { Suspense, useContext, useEffect } from 'react';
 import { UserContext } from '@data/context/user';
 import Link from "next/link";
 
@@ -51,6 +51,11 @@ const LoginPage = () => {
                     console.log(error)
                 }
         }
+        useEffect(() => {
+            if (!!userCtx.user.$id) {
+                Success('/browse')
+            }
+        }, [userCtx])
         return (
             <div>
                 <form onSubmit={submitForm} className="flex flex-col gap-2">
