@@ -68,7 +68,7 @@ const InvitePage = () => {
                     }
                 })
                 .then(() => {
-                    Success('/account/friends')
+                    Success('/browse')
                 })
         }
     }
