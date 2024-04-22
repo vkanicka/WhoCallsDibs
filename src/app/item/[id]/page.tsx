@@ -104,7 +104,7 @@ const ItemPage = () => {
                     </div>
 
                     {item.ListingURL && (
-                        <div>
+                        <div className='mr-16'>
                             <p>Item Listing URL: </p>
                             <Link rel="noopener noreferrer" target="_blank" className='underline break-words text-violet-500 italic' href={item.ListingURL}>
                                 {item.ListingURL}
