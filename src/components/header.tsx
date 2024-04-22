@@ -28,12 +28,13 @@ const Header = () => {
                     console.log(error)
                     userCtx.logoutUser()
                 }
-        },[])
+        }, [])
+        
         return (
             <header className="w-full p-6 text-green-200 flex justify-between align-middle">
                 <div className='flex gap-1'>
                     {/* <Image src={'/favicon.ico'} alt={'icon'} width={40} height={40} className='rounded-full'/> */}
-                    <Link className='self-center' href='/'>
+                    <Link className='self-center' href={inviteId && !userCtx.user.$id ? `/account/invite/${inviteId}` : '/'}>
                         <h1 className='text-verbena-900 text-3xl drop-shadow-glow'>Who Calls Dibs?</h1>
                     </Link>
                 </div>
