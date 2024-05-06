@@ -1,4 +1,5 @@
 # Who Calls Dibs? 
+## Mobile-Optimized UI with Device-Agnostic Functionality
 
 ## User Story
 As an individual decluttering my physical environment, before dropping off items I no longer need to a donation center, I would like to give my family and friends the opportunity to view and call dibs on any items they want so that I can connect with them through secondhand gift giving while reducing waste created by unwanted gifts.
