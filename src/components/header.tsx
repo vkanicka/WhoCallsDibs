@@ -38,7 +38,7 @@ const Header = () => {
                         <h1 className='text-verbena-900 text-3xl drop-shadow-glow'>Who Calls Dibs?</h1>
                     </Link>
                 </div>
-                {!!userCtx?.user?.email ? (<Link className='link-account-header' href='/account/view' >{ userCtx?.user?.name}</Link>) : (<Link className='link-account-header' href={`/account/login${!!inviteId ? '?invite='+inviteId : ''}`}>Login</Link>)}
+                {!!userCtx?.user?.email ? (<Link className='link-account-header' href='/account/view' >{ userCtx?.user?.name}</Link>) : pathname !== '/account/login' ? (<Link className='link-account-header' href={`/account/login${!!inviteId ? '?invite='+inviteId : ''}`}>Login</Link>) : null}
             </header>
         )
     }
