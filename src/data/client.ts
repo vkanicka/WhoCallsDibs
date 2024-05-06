@@ -460,7 +460,7 @@ export const GetMyItemsWithDibs = async (id: string) => {
             [
                 Query.equal('itemOwnerId', id),
                 Query.equal('isDibbed', true),
-                Query.isNull('hasReceived'),
+                Query.equal('hasReceived', false),
                 Query.limit(100)
             ]
         )
@@ -478,7 +478,7 @@ export const GetItemsICalledDibsOn = async (id: string) => {
             [
                 Query.equal('dibsCallerId', id),
                 Query.equal('isDibbed', true),
-                Query.isNull('hasReceived'),
+                Query.equal('hasReceived', false),
                 Query.limit(100)
             ]
         )
