@@ -27,3 +27,6 @@ As an individual decluttering my physical environment, before dropping off items
 - React
 - Tailwind CSS
 - Appwrite
+
+<img width="296" alt="Screenshot 2024-05-05 at 9 28 26 PM" src="https://github.com/vkanicka/WhoCallsDibs/assets/37551471/1d69308a-0165-47ae-922f-659fc762bc68">
+<img width="295" alt="image" src="https://github.com/vkanicka/WhoCallsDibs/assets/37551471/82ea9879-ca80-4d9b-a146-4a6abb1ec55e">
