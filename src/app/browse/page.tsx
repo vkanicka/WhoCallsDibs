@@ -35,7 +35,6 @@ const Browse = () => {
             let details: Partial<UserDetails>
             if (userCtx.user.$id) {
                 details = GetUserDetailsByAuthId(userCtx.user.$id)
-                console.log(details)
             }
         }
     
@@ -74,20 +73,20 @@ const Browse = () => {
         const handleDetailFriendItems = async () => {
             setIsLoading(true)
             userCtx.user.$id && GetUserDetailsByAuthId(userCtx.user.$id)
-            .then((userDetailsResult) => {
+                .then((userDetailsResult) => {
                 return userDetailsResult?.documents?.[0]
             })
                 .then((userDetailsResult) => {
                     if (!!myItems && !!userCtx.user.$id) {
                     return GetMyItems(userCtx.user.$id)
                     }
-                    else if (userDetailsResult?.friends.length) {
+                    else if (userDetailsResult?.friends?.length) {
                         return GetFriendsItems(userDetailsResult?.friends)
                     }
             })
                 .then((friendsItemsResult: any) => {
-                if (!friendsItemsResult.length) setNoItemsFound(true)
-                if (catParams.length) {
+                if (!friendsItemsResult?.length) setNoItemsFound(true)
+                if (catParams?.length) {
                     setAllItems(friendsItemsResult.filter((item: Item)=> item.categories?.some(x=>catParams.includes(x))))
                 } else {
                     setAllItems(friendsItemsResult)
@@ -142,7 +141,7 @@ const Browse = () => {
                             </button>
                         </div>
                         <button className='btn-v text-lg' onClick={handleClearFilters}>Clear Filters</button>
-                        <button className='btn-v' onClick={handleShowFilters}>{showFilters ? 'Hide Filters' : `Filter${(catParams.length || myItems) ? `s (${catParams.length + Number(myItems)})` : ''}`}</button>
+                        <button className='btn-v' onClick={handleShowFilters}>{showFilters ? 'Hide Filters' : `Filter${(catParams?.length || myItems) ? `s (${catParams?.length + Number(myItems)})` : ''}`}</button>
                     </div>)}
                 {noItemsFound && !myItems && (
                     <div className='bottom-tray'>
